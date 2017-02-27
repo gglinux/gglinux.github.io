@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="性能优化," />
 
 
 
@@ -88,7 +88,7 @@
 我们服务端RPC框架采用RESTful，其底层是curl实现的。curl采用http协议的，另外我们服务端的技术栈是PHP。我们都">
 <meta property="og:type" content="article">
 <meta property="og:title" content="App首屏接口性能优化">
-<meta property="og:url" content="http://yoursite.com/2017/02/27/App首屏接口性能优化/index.html">
+<meta property="og:url" content="http://gglinux.com/2017/02/27/App首屏接口性能优化/index.html">
 <meta property="og:site_name" content="gglinux's blog">
 <meta property="og:description" content="目前所在项目组开发的是一款母婴产品，集工具和社区属性。截止本文发布，注册用户接近7000万，首屏接口日访问量过百万。在首屏中，会给用户展现不同的数据，比如每日任务，宝宝（婴儿）每日概述，胎教音乐，运动视频，热帖等模块。首屏接口性能的好坏，将直接影响到app的使用体验。
 我们服务端RPC框架采用RESTful，其底层是curl实现的。curl采用http协议的，另外我们服务端的技术栈是PHP。我们都">
@@ -96,7 +96,7 @@
 <meta property="og:image" content="http://img.blog.csdn.net/20170226153030013?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 <meta property="og:image" content="http://img.blog.csdn.net/20170226153342986?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 <meta property="og:image" content="http://img.blog.csdn.net/20170226153405311?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:updated_time" content="2017-02-27T13:07:30.889Z">
+<meta property="og:updated_time" content="2017-02-27T14:09:35.451Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="App首屏接口性能优化">
 <meta name="twitter:description" content="目前所在项目组开发的是一款母婴产品，集工具和社区属性。截止本文发布，注册用户接近7000万，首屏接口日访问量过百万。在首屏中，会给用户展现不同的数据，比如每日任务，宝宝（婴儿）每日概述，胎教音乐，运动视频，热帖等模块。首屏接口性能的好坏，将直接影响到app的使用体验。
@@ -287,6 +287,25 @@
           </span>
 
           
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/架构/" itemprop="url" rel="index">
+                    <span itemprop="name">架构</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
 
           
             
@@ -354,6 +373,12 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/性能优化/" rel="tag">#性能优化</a>
+          
+        </div>
+      
 
       
         <div class="post-nav">
@@ -363,8 +388,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/02/27/About-2016/" rel="prev" title="About 2016">
-                About 2016 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/02/27/InnoDB存储引擎（一）/" rel="prev" title="InnoDB存储引擎（一）">
+                InnoDB存储引擎（一） <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -392,7 +417,7 @@
   <div class="comments" id="comments">
     
       <div class="ds-thread" data-thread-key="2017/02/27/App首屏接口性能优化/"
-           data-title="App首屏接口性能优化" data-url="http://yoursite.com/2017/02/27/App首屏接口性能优化/">
+           data-title="App首屏接口性能优化" data-url="http://gglinux.com/2017/02/27/App首屏接口性能优化/">
       </div>
     
   </div>
@@ -437,13 +462,27 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">2</span>
+              <span class="site-state-item-count">3</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
 
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
           
 
         </nav>
