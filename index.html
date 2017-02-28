@@ -260,8 +260,8 @@
             
               
                 
-                <a class="post-title-link" href="/2017/02/27/About-2016/" itemprop="url">
-                  About 2016
+                <a class="post-title-link" href="/2017/02/26/App首屏接口性能优化/" itemprop="url">
+                  App首屏接口性能优化
                 </a>
               
             
@@ -274,8 +274,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-02-27T21:37:23+08:00" content="2017-02-27">
-              2017-02-27
+            <time itemprop="dateCreated" datetime="2017-02-26T21:06:24+08:00" content="2017-02-26">
+              2017-02-26
             </time>
           </span>
 
@@ -288,8 +288,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/生活/" itemprop="url" rel="index">
-                    <span itemprop="name">生活</span>
+                  <a href="/categories/架构/" itemprop="url" rel="index">
+                    <span itemprop="name">架构</span>
                   </a>
                 </span>
 
@@ -304,8 +304,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2017/02/27/About-2016/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/27/About-2016/" itemprop="commentsCount"></span>
+                <a href="/2017/02/26/App首屏接口性能优化/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/26/App首屏接口性能优化/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -330,48 +330,25 @@
       
         
           
-            <p>很久没安静下来写点什么了，太懶了。</p>
-<h2 id="Review-Plan"><a href="#Review-Plan" class="headerlink" title="Review Plan"></a>Review Plan</h2><h3 id="学习"><a href="#学习" class="headerlink" title="学习"></a>学习</h3><p>去年计划看一些底层的书籍，基本都完成了。书单是</p>
+            <p>目前所在项目组开发的是一款母婴产品，集工具和社区属性。截止本文发布，注册用户接近7000万，首屏接口日访问量过百万。在首屏中，会给用户展现不同的数据，比如每日任务，宝宝（婴儿）每日概述，胎教音乐，运动视频，热帖等模块。首屏接口性能的好坏，将直接影响到app的使用体验。</p>
+<p>我们服务端RPC框架采用RESTful，其底层是curl实现的。curl采用http协议的，另外我们服务端的技术栈是PHP。我们都知道http协议相比较TCP而言，不仅多了http的报头，PHP本身性能也是大问题。在不做大重构的情况下，怎么做最小的修改，完成最大的性能提高。还是很有挑战性的。</p>
+<p>针对首屏接口，我们针对其完成了两次性能优化。</p>
+<h2 id="分屏加载"><a href="#分屏加载" class="headerlink" title="分屏加载"></a>分屏加载</h2><p>将本来属于一个接口的内容，单独在两个请求中返回。第一屏API返回关键的数据，减少用户初次进入的等待时间。第二屏，返回剩余的大部分数据。具体API返回内容的划分，是依赖客户端渲染顺序的。也没绝对标准。但我们的原则是，第一屏API力所能及返回最少的数据，避免用户等待。剩余的留给第二屏的API去完成。分屏加载的难点有以下几个。</p>
 <ol>
-<li>redis设计与实现 100%</li>
-<li>mysql技术内幕 100%</li>
-<li>深入理解nginx 11%</li>
-<li>nginx实战开发 100%</li>
-<li>大型网站技术架构 100%</li>
-<li>Hadoop实战 70%</li>
-<li>微服务设计 21%</li>
-<li>激荡三十年 14%</li>
-<li>利用python进行数据分析 8%</li>
+<li>确定好数据加载顺序，最基础的数据肯定是需要最先返回的，另外也要客户端的同学配合 </li>
+<li>首屏内容是和用户的怀孕状态紧密联系在一起的，用户切换宝宝(怀孕中切换到宝宝已出生，宝宝A切换到宝宝B)时，API的刷新频率怎么控制。最后为了可操作性，采用了比较粗暴的做法，每次切换均会请求两次接口。</li>
 </ol>
-<p>设计模式，架构这块内容，2016年接触的还是蛮少。</p>
-<h3 id="工作"><a href="#工作" class="headerlink" title="工作"></a>工作</h3><p>5月份从美图离职，来到了喜欢的城市-深圳，也正把户口迁过来。以前，在厦门这座安逸的城市，反而有一些压力。但在深圳，感觉工作按部就班，有种温水煮青蛙之感。</p>
-<p>一直说分享有三个层次。第一层次，写博客。第二层次，分享给他人。第三层次，给大众演讲。2016年在技术上做了第一次分享，效果自己还是挺满意的。</p>
-<p>经历两次实习和半年的工作，由初入职场的菜鸟，逐渐变成了现在的团队核心。这个也蛮欣慰。在工作以前，一直坚信，技术乃技术人的立身之本。真正工作以后，反而觉得技术只是工作的一部分。沟通能力，团队协调能力，责任心，产品理解能力。这些综合素质，在团队里面更重要。在与其他人沟通的过程中，自己很急躁，说话很快。</p>
-<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>一直计划每年去一个地方，今年在厦门待了两个月，去了香港。唯一的遗憾，7天的国庆假期，没有好好利用。另外，国庆期间也发生了一件对我影响很大的事情。</p>
-<p>技术上，虽然看了一些书，但与我期望的还有很大的差距。GitHub后半年基本没更新了。博客也久未更新，简直浪费当年的精力。真正的大牛，应该是理论和实践相结合的。</p>
-<p>感情上，不知道怎么说。可能自己是很随和的人，感情很被动。真正的爱情，每个个体精神上既相互慰藉也是相互独立的。与女朋友的时间分配上，希望有所改变。</p>
-<p>健身，从大学想到了现在。依旧没能真正执行。公司每周三的篮球，也经常缺席。虽然现在工作强度不大，但想想以后，还是要多锻炼。</p>
-<p>厨艺上，很是骄傲的，后面这段时间，有空就是自己做饭吃。野外生存，至少不会饿肚子了。</p>
-<h2 id="Preview-Plan"><a href="#Preview-Plan" class="headerlink" title="Preview Plan"></a>Preview Plan</h2><h3 id="学习-1"><a href="#学习-1" class="headerlink" title="学习"></a>学习</h3><p>今年想看些架构和思维方面的书籍，暂时先列出以下这些。想到再加。</p>
+<p>完成分屏加载以后，用户进入首页的等待时间，已经由1-2S减为1S左右。不必像以前客户端拿到全部内容后，才去渲染界面。现在只需要拿到第一屏的接口，即可完成界面的渲染工作。<br>分屏后第一屏接口耗时<br><img src="http://img.blog.csdn.net/20170226153007559?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>分屏后第二屏接口耗时<br><img src="http://img.blog.csdn.net/20170226153030013?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<h2 id="xhprof性能分析"><a href="#xhprof性能分析" class="headerlink" title="xhprof性能分析"></a>xhprof性能分析</h2><p>通过在alpha坏境和beta坏境部署Xhprof性能分析工具。我们可以看到实际的API在函数级别的性能损耗。这里不详述该工具的部署方式和使用方法。在Xhprof的帮助下，我们得到了以下几个结论。</p>
 <ol>
-<li>微服务设计</li>
-<li>设计模式之禅</li>
-<li>软技能-代码之外的生存指南</li>
-<li>python-codebook</li>
-<li>高效程序员的45个习惯</li>
-<li>激荡三十年</li>
-<li>Docker——容器与容器云</li>
+<li>RPC采用的是HTTP协议，单纯的RPC调用便接近10MS的耗时。首屏RPC调用次数接近30次。</li>
+<li>每个RPC服务层内部，通过函数调用即可，也采用RPC的方式。</li>
+<li>热点数据直接查库，缓存利用率低下</li>
+<li>数据表索引乱用，存在慢查询。</li>
 </ol>
-<h3 id="工作-1"><a href="#工作-1" class="headerlink" title="工作"></a>工作</h3><p>目前在做业务开发，技术上没难点，主要提升下综合能力。沟通时，思考之后再说，慢一点。其次，对产品也要有自己的判断能力，学会反驳。明年，希望能转岗到架构组。</p>
-<h3 id="其他-1"><a href="#其他-1" class="headerlink" title="其他"></a>其他</h3><p>去年的计划完成的挺不错的，虽然计划的内容比较少。今年继续加油！</p>
-<ol>
-<li>2017年计划去趟国外，任何一个国家都可以，或者去趟西藏或者新疆。</li>
-<li>技术上，GitHub不做具体的要求。博客，一个月至少两篇。还是要有点强制的好。</li>
-<li>感情上，做的不好的地方，会改正。精神上还是需要独立一些。</li>
-<li>学会理财，每月整理自己的账单，坚持一年。</li>
-<li>健身，每周三固定打球时间，坚持一年。</li>
-<li>学习外语。空闲时间记单词，坚持用英文查资料。</li>
-</ol>
+<p>结合上面几点，在实际操作过程中，由简到难，逐步完成。第一能减少RPC，便减少RPC请求。逻辑层数据由以前的多次获取改为一次获取。其次，服务层内部，不垮服务层不走RPC，直接以函数调用的方式请求。第三，热点不变动的数据，直接在逻辑层缓存，拿到后丢给API返回。第四，追踪MYSQL慢查询，优化查询SQL。完成后，实际性能如下</p>
+<p>第二次优化第一屏接口耗时<br><img src="http://img.blog.csdn.net/20170226153342986?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="第一屏接口"></p>
+<p>第二次优化第二屏接口耗时<br><img src="http://img.blog.csdn.net/20170226153405311?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="第二屏接口"></p>
 
           
         
@@ -421,7 +398,7 @@
             
               
                 
-                <a class="post-title-link" href="/2017/02/27/InnoDB存储引擎（一）/" itemprop="url">
+                <a class="post-title-link" href="/2017/02/07/InnoDB存储引擎（一）/" itemprop="url">
                   InnoDB存储引擎（一）
                 </a>
               
@@ -435,8 +412,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-02-27T21:06:24+08:00" content="2017-02-27">
-              2017-02-27
+            <time itemprop="dateCreated" datetime="2017-02-07T21:06:24+08:00" content="2017-02-07">
+              2017-02-07
             </time>
           </span>
 
@@ -465,8 +442,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2017/02/27/InnoDB存储引擎（一）/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/27/InnoDB存储引擎（一）/" itemprop="commentsCount"></span>
+                <a href="/2017/02/07/InnoDB存储引擎（一）/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/07/InnoDB存储引擎（一）/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -579,8 +556,8 @@
             
               
                 
-                <a class="post-title-link" href="/2017/02/27/App首屏接口性能优化/" itemprop="url">
-                  App首屏接口性能优化
+                <a class="post-title-link" href="/2017/01/08/About-2016/" itemprop="url">
+                  About 2016
                 </a>
               
             
@@ -593,8 +570,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-02-27T21:06:24+08:00" content="2017-02-27">
-              2017-02-27
+            <time itemprop="dateCreated" datetime="2017-01-08T21:37:23+08:00" content="2017-01-08">
+              2017-01-08
             </time>
           </span>
 
@@ -607,8 +584,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/架构/" itemprop="url" rel="index">
-                    <span itemprop="name">架构</span>
+                  <a href="/categories/生活/" itemprop="url" rel="index">
+                    <span itemprop="name">生活</span>
                   </a>
                 </span>
 
@@ -623,8 +600,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2017/02/27/App首屏接口性能优化/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/27/App首屏接口性能优化/" itemprop="commentsCount"></span>
+                <a href="/2017/01/08/About-2016/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/08/About-2016/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -649,25 +626,48 @@
       
         
           
-            <p>目前所在项目组开发的是一款母婴产品，集工具和社区属性。截止本文发布，注册用户接近7000万，首屏接口日访问量过百万。在首屏中，会给用户展现不同的数据，比如每日任务，宝宝（婴儿）每日概述，胎教音乐，运动视频，热帖等模块。首屏接口性能的好坏，将直接影响到app的使用体验。</p>
-<p>我们服务端RPC框架采用RESTful，其底层是curl实现的。curl采用http协议的，另外我们服务端的技术栈是PHP。我们都知道http协议相比较TCP而言，不仅多了http的报头，PHP本身性能也是大问题。在不做大重构的情况下，怎么做最小的修改，完成最大的性能提高。还是很有挑战性的。</p>
-<p>针对首屏接口，我们针对其完成了两次性能优化。</p>
-<h2 id="分屏加载"><a href="#分屏加载" class="headerlink" title="分屏加载"></a>分屏加载</h2><p>将本来属于一个接口的内容，单独在两个请求中返回。第一屏API返回关键的数据，减少用户初次进入的等待时间。第二屏，返回剩余的大部分数据。具体API返回内容的划分，是依赖客户端渲染顺序的。也没绝对标准。但我们的原则是，第一屏API力所能及返回最少的数据，避免用户等待。剩余的留给第二屏的API去完成。分屏加载的难点有以下几个。</p>
+            <p>很久没安静下来写点什么了，太懶了。</p>
+<h2 id="Review-Plan"><a href="#Review-Plan" class="headerlink" title="Review Plan"></a>Review Plan</h2><h3 id="学习"><a href="#学习" class="headerlink" title="学习"></a>学习</h3><p>去年计划看一些底层的书籍，基本都完成了。书单是</p>
 <ol>
-<li>确定好数据加载顺序，最基础的数据肯定是需要最先返回的，另外也要客户端的同学配合 </li>
-<li>首屏内容是和用户的怀孕状态紧密联系在一起的，用户切换宝宝(怀孕中切换到宝宝已出生，宝宝A切换到宝宝B)时，API的刷新频率怎么控制。最后为了可操作性，采用了比较粗暴的做法，每次切换均会请求两次接口。</li>
+<li>redis设计与实现 100%</li>
+<li>mysql技术内幕 100%</li>
+<li>深入理解nginx 11%</li>
+<li>nginx实战开发 100%</li>
+<li>大型网站技术架构 100%</li>
+<li>Hadoop实战 70%</li>
+<li>微服务设计 21%</li>
+<li>激荡三十年 14%</li>
+<li>利用python进行数据分析 8%</li>
 </ol>
-<p>完成分屏加载以后，用户进入首页的等待时间，已经由1-2S减为1S左右。不必像以前客户端拿到全部内容后，才去渲染界面。现在只需要拿到第一屏的接口，即可完成界面的渲染工作。<br>分屏后第一屏接口耗时<br><img src="http://img.blog.csdn.net/20170226153007559?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>分屏后第二屏接口耗时<br><img src="http://img.blog.csdn.net/20170226153030013?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
-<h2 id="xhprof性能分析"><a href="#xhprof性能分析" class="headerlink" title="xhprof性能分析"></a>xhprof性能分析</h2><p>通过在alpha坏境和beta坏境部署Xhprof性能分析工具。我们可以看到实际的API在函数级别的性能损耗。这里不详述该工具的部署方式和使用方法。在Xhprof的帮助下，我们得到了以下几个结论。</p>
+<p>设计模式，架构这块内容，2016年接触的还是蛮少。</p>
+<h3 id="工作"><a href="#工作" class="headerlink" title="工作"></a>工作</h3><p>5月份从美图离职，来到了喜欢的城市-深圳，也正把户口迁过来。以前，在厦门这座安逸的城市，反而有一些压力。但在深圳，感觉工作按部就班，有种温水煮青蛙之感。</p>
+<p>一直说分享有三个层次。第一层次，写博客。第二层次，分享给他人。第三层次，给大众演讲。2016年在技术上做了第一次分享，效果自己还是挺满意的。</p>
+<p>经历两次实习和半年的工作，由初入职场的菜鸟，逐渐变成了现在的团队核心。这个也蛮欣慰。在工作以前，一直坚信，技术乃技术人的立身之本。真正工作以后，反而觉得技术只是工作的一部分。沟通能力，团队协调能力，责任心，产品理解能力。这些综合素质，在团队里面更重要。在与其他人沟通的过程中，自己很急躁，说话很快。</p>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>一直计划每年去一个地方，今年在厦门待了两个月，去了香港。唯一的遗憾，7天的国庆假期，没有好好利用。另外，国庆期间也发生了一件对我影响很大的事情。</p>
+<p>技术上，虽然看了一些书，但与我期望的还有很大的差距。GitHub后半年基本没更新了。博客也久未更新，简直浪费当年的精力。真正的大牛，应该是理论和实践相结合的。</p>
+<p>感情上，不知道怎么说。可能自己是很随和的人，感情很被动。真正的爱情，每个个体精神上既相互慰藉也是相互独立的。与女朋友的时间分配上，希望有所改变。</p>
+<p>健身，从大学想到了现在。依旧没能真正执行。公司每周三的篮球，也经常缺席。虽然现在工作强度不大，但想想以后，还是要多锻炼。</p>
+<p>厨艺上，很是骄傲的，后面这段时间，有空就是自己做饭吃。野外生存，至少不会饿肚子了。</p>
+<h2 id="Preview-Plan"><a href="#Preview-Plan" class="headerlink" title="Preview Plan"></a>Preview Plan</h2><h3 id="学习-1"><a href="#学习-1" class="headerlink" title="学习"></a>学习</h3><p>今年想看些架构和思维方面的书籍，暂时先列出以下这些。想到再加。</p>
 <ol>
-<li>RPC采用的是HTTP协议，单纯的RPC调用便接近10MS的耗时。首屏RPC调用次数接近30次。</li>
-<li>每个RPC服务层内部，通过函数调用即可，也采用RPC的方式。</li>
-<li>热点数据直接查库，缓存利用率低下</li>
-<li>数据表索引乱用，存在慢查询。</li>
+<li>微服务设计</li>
+<li>设计模式之禅</li>
+<li>软技能-代码之外的生存指南</li>
+<li>python-codebook</li>
+<li>高效程序员的45个习惯</li>
+<li>激荡三十年</li>
+<li>Docker——容器与容器云</li>
 </ol>
-<p>结合上面几点，在实际操作过程中，由简到难，逐步完成。第一能减少RPC，便减少RPC请求。逻辑层数据由以前的多次获取改为一次获取。其次，服务层内部，不垮服务层不走RPC，直接以函数调用的方式请求。第三，热点不变动的数据，直接在逻辑层缓存，拿到后丢给API返回。第四，追踪MYSQL慢查询，优化查询SQL。完成后，实际性能如下</p>
-<p>第二次优化第一屏接口耗时<br><img src="http://img.blog.csdn.net/20170226153342986?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="第一屏接口"></p>
-<p>第二次优化第二屏接口耗时<br><img src="http://img.blog.csdn.net/20170226153405311?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="第二屏接口"></p>
+<h3 id="工作-1"><a href="#工作-1" class="headerlink" title="工作"></a>工作</h3><p>目前在做业务开发，技术上没难点，主要提升下综合能力。沟通时，思考之后再说，慢一点。其次，对产品也要有自己的判断能力，学会反驳。明年，希望能转岗到架构组。</p>
+<h3 id="其他-1"><a href="#其他-1" class="headerlink" title="其他"></a>其他</h3><p>去年的计划完成的挺不错的，虽然计划的内容比较少。今年继续加油！</p>
+<ol>
+<li>2017年计划去趟国外，任何一个国家都可以，或者去趟西藏或者新疆。</li>
+<li>技术上，GitHub不做具体的要求。博客，一个月至少两篇。还是要有点强制的好。</li>
+<li>感情上，做的不好的地方，会改正。精神上还是需要独立一些。</li>
+<li>学会理财，每月整理自己的账单，坚持一年。</li>
+<li>健身，每周三固定打球时间，坚持一年。</li>
+<li>学习外语。空闲时间记单词，坚持用英文查资料。</li>
+</ol>
 
           
         
