@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Redis," />
+  <meta name="keywords" content="性能优化," />
 
 
 
@@ -84,34 +84,24 @@
 
 
 
-<meta name="description" content="##压缩列表1：压缩列表是为了节省内存而设计的，是一种线性的数据结构。主要用在哈希和列表两种数据类型中。
-2：压缩列表包含主要包含五个部分，这五个部分顺序排列组合在一起。结构如下图所示。表节点，有三个域组成。previous_entry_length,用来记录前一个节点的长度。encoding,记录下一个域的数据类型和长度。content,保存节点的值。
-3：压缩列表有一种极端情况，会导致性能下降">
+<meta name="description" content="目前所在项目组开发的是一款母婴产品，集工具和社区属性。截止本文发布，注册用户接近7000万，首屏接口日访问量过百万。在首屏中，会给用户展现不同的数据，比如每日任务，宝宝（婴儿）每日概述，胎教音乐，运动视频，热帖等模块。首屏接口性能的好坏，将直接影响到app的使用体验。
+我们服务端RPC框架采用RESTful，其底层是curl实现的。curl采用http协议的，另外我们服务端的技术栈是PHP。我们都">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Redis数据结构（二）">
-<meta property="og:url" content="http://gglinux.com/2015/12/20/redis2/index.html">
+<meta property="og:title" content="App首屏接口性能优化">
+<meta property="og:url" content="http://gglinux.com/2017/02/26/app_optimize/index.html">
 <meta property="og:site_name" content="gglinux's blog">
-<meta property="og:description" content="##压缩列表1：压缩列表是为了节省内存而设计的，是一种线性的数据结构。主要用在哈希和列表两种数据类型中。
-2：压缩列表包含主要包含五个部分，这五个部分顺序排列组合在一起。结构如下图所示。表节点，有三个域组成。previous_entry_length,用来记录前一个节点的长度。encoding,记录下一个域的数据类型和长度。content,保存节点的值。
-3：压缩列表有一种极端情况，会导致性能下降">
-<meta property="og:image" content="http://img.blog.csdn.net/20160103164255998">
-<meta property="og:image" content="http://img.blog.csdn.net/20160103164913156">
-<meta property="og:image" content="http://img.blog.csdn.net/20160103172033023">
-<meta property="og:image" content="http://img.blog.csdn.net/20160103173412166">
-<meta property="og:image" content="http://img.blog.csdn.net/20160103173455306">
-<meta property="og:image" content="http://img.blog.csdn.net/20160103173649064">
-<meta property="og:image" content="http://img.blog.csdn.net/20160103174101939">
-<meta property="og:image" content="http://img.blog.csdn.net/20160103174151083">
-<meta property="og:image" content="http://img.blog.csdn.net/20160103174706713">
-<meta property="og:image" content="http://img.blog.csdn.net/20160103174721415">
-<meta property="og:image" content="http://img.blog.csdn.net/20160103175034253">
-<meta property="og:updated_time" content="2017-03-01T10:33:39.000Z">
+<meta property="og:description" content="目前所在项目组开发的是一款母婴产品，集工具和社区属性。截止本文发布，注册用户接近7000万，首屏接口日访问量过百万。在首屏中，会给用户展现不同的数据，比如每日任务，宝宝（婴儿）每日概述，胎教音乐，运动视频，热帖等模块。首屏接口性能的好坏，将直接影响到app的使用体验。
+我们服务端RPC框架采用RESTful，其底层是curl实现的。curl采用http协议的，另外我们服务端的技术栈是PHP。我们都">
+<meta property="og:image" content="http://img.blog.csdn.net/20170226153007559?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170226153030013?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170226153342986?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170226153405311?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:updated_time" content="2017-02-28T04:13:48.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Redis数据结构（二）">
-<meta name="twitter:description" content="##压缩列表1：压缩列表是为了节省内存而设计的，是一种线性的数据结构。主要用在哈希和列表两种数据类型中。
-2：压缩列表包含主要包含五个部分，这五个部分顺序排列组合在一起。结构如下图所示。表节点，有三个域组成。previous_entry_length,用来记录前一个节点的长度。encoding,记录下一个域的数据类型和长度。content,保存节点的值。
-3：压缩列表有一种极端情况，会导致性能下降">
-<meta name="twitter:image" content="http://img.blog.csdn.net/20160103164255998">
+<meta name="twitter:title" content="App首屏接口性能优化">
+<meta name="twitter:description" content="目前所在项目组开发的是一款母婴产品，集工具和社区属性。截止本文发布，注册用户接近7000万，首屏接口日访问量过百万。在首屏中，会给用户展现不同的数据，比如每日任务，宝宝（婴儿）每日概述，胎教音乐，运动视频，热帖等模块。首屏接口性能的好坏，将直接影响到app的使用体验。
+我们服务端RPC框架采用RESTful，其底层是curl实现的。curl采用http协议的，另外我们服务端的技术栈是PHP。我们都">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20170226153007559?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 
 
 
@@ -129,7 +119,7 @@
   };
 </script>
 
-  <title> Redis数据结构（二） | gglinux's blog </title>
+  <title> App首屏接口性能优化 | gglinux's blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -279,7 +269,7 @@
             
             
               
-                Redis数据结构（二）
+                App首屏接口性能优化
               
             
           </h1>
@@ -291,8 +281,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-12-20T21:06:24+08:00" content="2015-12-20">
-              2015-12-20
+            <time itemprop="dateCreated" datetime="2017-02-26T21:06:24+08:00" content="2017-02-26">
+              2017-02-26
             </time>
           </span>
 
@@ -305,8 +295,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Redis/" itemprop="url" rel="index">
-                    <span itemprop="name">Redis</span>
+                  <a href="/categories/架构/" itemprop="url" rel="index">
+                    <span itemprop="name">架构</span>
                   </a>
                 </span>
 
@@ -321,8 +311,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/12/20/redis2/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/12/20/redis2/" itemprop="commentsCount"></span>
+                <a href="/2017/02/26/app_optimize/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/26/app_optimize/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -345,16 +335,25 @@
       
 
       
-        <p>##压缩列表<br>1：压缩列表是为了节省内存而设计的，是一种线性的数据结构。主要用在哈希和列表两种数据类型中。</p>
-<p>2：压缩列表包含主要包含五个部分，这五个部分顺序排列组合在一起。<br>结构如下图所示。<br><img src="http://img.blog.csdn.net/20160103164255998" alt="这里写图片描述"><br>表节点，有三个域组成。previous_entry_length,用来记录前一个节点的长度。encoding,记录下一个域的数据类型和长度。content,保存节点的值。<br><img src="http://img.blog.csdn.net/20160103164913156" alt="这里写图片描述"></p>
-<p>3：压缩列表有一种极端情况，会导致性能下降——连锁更新。previous_entry_length,记录的是上一节点的长度，当上一节点小于254字节时，该属性使用1字节存储。当大于254字节时，使用5字节。如果之前previous_entry_length都使用1字节，且长度都接近254字节时，会导致连锁更新的情况。</p>
-<p>##具体使用情况<br>1：不同数据类型对应的编码对象<br><img src="http://img.blog.csdn.net/20160103172033023" alt="这里写图片描述"></p>
-<p>2：字符串对应的编码方式。1：整数值实现的字符串对象。2：embstr实现的字符串（类似SDS，用于保存端的字符串）。3：raw,SDS动态字符串<br><img src="http://img.blog.csdn.net/20160103173412166" alt="这里写图片描述"><br>转换规则：<br><img src="http://img.blog.csdn.net/20160103173455306" alt="这里写图片描述"></p>
-<p>3：列表对象，编码包含两种，ziplist(压缩列表),linkedlist(双向链表)。<br><img src="http://img.blog.csdn.net/20160103173649064" alt="这里写图片描述"><br>转换规则：<br>1：保存的所有字符串长度都小于64字节。<br>2：列表对象保存的元素数量小于512个。<br>当同时满足上面两条规则时，使用列表对象，否则使用链表对象。</p>
-<p>4：哈希对象，使用ziplist和hashtable编码<br>ziplist:<br><img src="http://img.blog.csdn.net/20160103174101939" alt="这里写图片描述"><br>hashtable:<br><img src="http://img.blog.csdn.net/20160103174151083" alt="这里写图片描述"><br>转换规则：<br>1：哈希对象保存的所有键和值的字符串长度都小于64字节。<br>2：保存的键值对数量小于512个。<br>同时满足，使用ziplist，否则使用hashtable.</p>
-<p>5:集合对象，使用intset或者hashtable编码。<br>intset:<br><img src="http://img.blog.csdn.net/20160103174706713" alt="这里写图片描述"><br>hashtable:<br><img src="http://img.blog.csdn.net/20160103174721415" alt="这里写图片描述"><br>转换规则：<br>1：集合对象保存的元素值都是整数。<br>2：集合对象保存的元素数量不超过512个。<br>同时满足上面两个条件，则使用intset，否则hashtable。</p>
-<p>6：有序集合，使用ziplist或者skiplist<br><img src="http://img.blog.csdn.net/20160103175034253" alt="这里写图片描述"><br>转换规则：<br>1：有序集合保存的元素数量小于128个。<br>2：保存的所有成员长度都小于64字节。<br>同时满足上面两个条件，则使用ziplist，否则skiplist。</p>
-<p>基于数据结构的东西就写这么多吧，当然内容都是《redis设计与实现-黄健宏》上的。我只是个搬运工，这本书写的挺不错的，建议购买。更详细的实现细节，可以看redis源码。</p>
+        <p>目前所在项目组开发的是一款母婴产品，集工具和社区属性。截止本文发布，注册用户接近7000万，首屏接口日访问量过百万。在首屏中，会给用户展现不同的数据，比如每日任务，宝宝（婴儿）每日概述，胎教音乐，运动视频，热帖等模块。首屏接口性能的好坏，将直接影响到app的使用体验。</p>
+<p>我们服务端RPC框架采用RESTful，其底层是curl实现的。curl采用http协议的，另外我们服务端的技术栈是PHP。我们都知道http协议相比较TCP而言，不仅多了http的报头，PHP本身性能也是大问题。在不做大重构的情况下，怎么做最小的修改，完成最大的性能提高。还是很有挑战性的。</p>
+<p>针对首屏接口，我们针对其完成了两次性能优化。</p>
+<h2 id="分屏加载"><a href="#分屏加载" class="headerlink" title="分屏加载"></a>分屏加载</h2><p>将本来属于一个接口的内容，单独在两个请求中返回。第一屏API返回关键的数据，减少用户初次进入的等待时间。第二屏，返回剩余的大部分数据。具体API返回内容的划分，是依赖客户端渲染顺序的。也没绝对标准。但我们的原则是，第一屏API力所能及返回最少的数据，避免用户等待。剩余的留给第二屏的API去完成。分屏加载的难点有以下几个。</p>
+<ol>
+<li>确定好数据加载顺序，最基础的数据肯定是需要最先返回的，另外也要客户端的同学配合 </li>
+<li>首屏内容是和用户的怀孕状态紧密联系在一起的，用户切换宝宝(怀孕中切换到宝宝已出生，宝宝A切换到宝宝B)时，API的刷新频率怎么控制。最后为了可操作性，采用了比较粗暴的做法，每次切换均会请求两次接口。</li>
+</ol>
+<p>完成分屏加载以后，用户进入首页的等待时间，已经由1-2S减为1S左右。不必像以前客户端拿到全部内容后，才去渲染界面。现在只需要拿到第一屏的接口，即可完成界面的渲染工作。<br>分屏后第一屏接口耗时<br><img src="http://img.blog.csdn.net/20170226153007559?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>分屏后第二屏接口耗时<br><img src="http://img.blog.csdn.net/20170226153030013?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<h2 id="xhprof性能分析"><a href="#xhprof性能分析" class="headerlink" title="xhprof性能分析"></a>xhprof性能分析</h2><p>通过在alpha坏境和beta坏境部署Xhprof性能分析工具。我们可以看到实际的API在函数级别的性能损耗。这里不详述该工具的部署方式和使用方法。在Xhprof的帮助下，我们得到了以下几个结论。</p>
+<ol>
+<li>RPC采用的是HTTP协议，单纯的RPC调用便接近10MS的耗时。首屏RPC调用次数接近30次。</li>
+<li>每个RPC服务层内部，通过函数调用即可，也采用RPC的方式。</li>
+<li>热点数据直接查库，缓存利用率低下</li>
+<li>数据表索引乱用，存在慢查询。</li>
+</ol>
+<p>结合上面几点，在实际操作过程中，由简到难，逐步完成。第一能减少RPC，便减少RPC请求。逻辑层数据由以前的多次获取改为一次获取。其次，服务层内部，不垮服务层不走RPC，直接以函数调用的方式请求。第三，热点不变动的数据，直接在逻辑层缓存，拿到后丢给API返回。第四，追踪MYSQL慢查询，优化查询SQL。完成后，实际性能如下</p>
+<p>第二次优化第一屏接口耗时<br><img src="http://img.blog.csdn.net/20170226153342986?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="第一屏接口"></p>
+<p>第二次优化第二屏接口耗时<br><img src="http://img.blog.csdn.net/20170226153405311?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="第二屏接口"></p>
 
       
     </div>
@@ -376,7 +375,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Redis/" rel="tag">#Redis</a>
+            <a href="/tags/性能优化/" rel="tag">#性能优化</a>
           
         </div>
       
@@ -385,17 +384,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/12/19/redis1/" rel="next" title="Redis数据结构（一）">
-                <i class="fa fa-chevron-left"></i> Redis数据结构（一）
+              <a href="/2017/02/07/innoDB1/" rel="next" title="InnoDB存储引擎（一）">
+                <i class="fa fa-chevron-left"></i> InnoDB存储引擎（一）
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/04/10/short_video&dev/" rel="prev" title="短视频和技术">
-                短视频和技术 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -421,8 +416,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2015/12/20/redis2/"
-           data-title="Redis数据结构（二）" data-url="http://gglinux.com/2015/12/20/redis2/">
+      <div class="ds-thread" data-thread-key="2017/02/26/app_optimize/"
+           data-title="App首屏接口性能优化" data-url="http://gglinux.com/2017/02/26/app_optimize/">
       </div>
     
   </div>
@@ -551,7 +546,7 @@
               
             
             
-              <p class="post-toc-empty">此文章未包含目录</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#分屏加载"><span class="nav-number">1.</span> <span class="nav-text">分屏加载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#xhprof性能分析"><span class="nav-number">2.</span> <span class="nav-text">xhprof性能分析</span></a></li></ol></div>
             
           </div>
         </section>
