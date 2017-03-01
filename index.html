@@ -911,10 +911,10 @@
       
         
           
-            <p>##压缩列表<br>1：压缩列表是为了节省内存而设计的，是一种线性的数据结构。主要用在哈希和列表两种数据类型中。</p>
+            <h2 id="压缩列表"><a href="#压缩列表" class="headerlink" title="压缩列表"></a>压缩列表</h2><p>1：压缩列表是为了节省内存而设计的，是一种线性的数据结构。主要用在哈希和列表两种数据类型中。</p>
 <p>2：压缩列表包含主要包含五个部分，这五个部分顺序排列组合在一起。<br>结构如下图所示。<br><img src="http://img.blog.csdn.net/20160103164255998" alt="这里写图片描述"><br>表节点，有三个域组成。previous_entry_length,用来记录前一个节点的长度。encoding,记录下一个域的数据类型和长度。content,保存节点的值。<br><img src="http://img.blog.csdn.net/20160103164913156" alt="这里写图片描述"></p>
 <p>3：压缩列表有一种极端情况，会导致性能下降——连锁更新。previous_entry_length,记录的是上一节点的长度，当上一节点小于254字节时，该属性使用1字节存储。当大于254字节时，使用5字节。如果之前previous_entry_length都使用1字节，且长度都接近254字节时，会导致连锁更新的情况。</p>
-<p>##具体使用情况<br>1：不同数据类型对应的编码对象<br><img src="http://img.blog.csdn.net/20160103172033023" alt="这里写图片描述"></p>
+<h2 id="具体使用情况"><a href="#具体使用情况" class="headerlink" title="具体使用情况"></a>具体使用情况</h2><p>1：不同数据类型对应的编码对象<br><img src="http://img.blog.csdn.net/20160103172033023" alt="这里写图片描述"></p>
 <p>2：字符串对应的编码方式。1：整数值实现的字符串对象。2：embstr实现的字符串（类似SDS，用于保存端的字符串）。3：raw,SDS动态字符串<br><img src="http://img.blog.csdn.net/20160103173412166" alt="这里写图片描述"><br>转换规则：<br><img src="http://img.blog.csdn.net/20160103173455306" alt="这里写图片描述"></p>
 <p>3：列表对象，编码包含两种，ziplist(压缩列表),linkedlist(双向链表)。<br><img src="http://img.blog.csdn.net/20160103173649064" alt="这里写图片描述"><br>转换规则：<br>1：保存的所有字符串长度都小于64字节。<br>2：列表对象保存的元素数量小于512个。<br>当同时满足上面两条规则时，使用列表对象，否则使用链表对象。</p>
 <p>4：哈希对象，使用ziplist和hashtable编码<br>ziplist:<br><img src="http://img.blog.csdn.net/20160103174101939" alt="这里写图片描述"><br>hashtable:<br><img src="http://img.blog.csdn.net/20160103174151083" alt="这里写图片描述"><br>转换规则：<br>1：哈希对象保存的所有键和值的字符串长度都小于64字节。<br>2：保存的键值对数量小于512个。<br>同时满足，使用ziplist，否则使用hashtable.</p>
