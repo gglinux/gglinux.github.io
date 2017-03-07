@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Redis," />
+  <meta name="keywords" content="Feed设计," />
 
 
 
@@ -84,27 +84,24 @@
 
 
 
-<meta name="description" content="SDS简单动态字符串结构：1：SDS是在C语言字符串的基础上，构造的一种简单的动态字符串（simple daynamic string）。SDS结构体包含三个变量，len用来记录长度，free用来记录未使用字节的数量，buf存储实际的字符串数组。2：SDS不以‘\0’为结束符，而是以len的长度标识
-优点1：O(1)获取字符串长度。sdshdr结构体中，直接存储了字符串的长度。因此直接以sdshd">
+<meta name="description" content="Feed，在社交和信息推荐的App与网站中，基本都会用到的。例如常用的新浪微博，用户登录进入后，展现给我们的就是feed信息流。新浪微博的信息，来自于你关注人所发布的内容。还有微信的朋友圈，今日头条的信息流，好友发布的美拍等，这些都是Feed。玩过知乎的人应该知道，在知乎Feed中，会显示某某关注了某某话题，某某点赞或者赞同了某个回答。广义来讲，这些也算是一种Feed。
+本文会先介绍几种不同的Fe">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Redis数据结构（一）">
-<meta property="og:url" content="http://gglinux.com/2015/12/19/redis1/index.html">
+<meta property="og:title" content="Feed系统设计">
+<meta property="og:url" content="http://gglinux.com/2017/03/06/feed_design/index.html">
 <meta property="og:site_name" content="gglinux's blog">
-<meta property="og:description" content="SDS简单动态字符串结构：1：SDS是在C语言字符串的基础上，构造的一种简单的动态字符串（simple daynamic string）。SDS结构体包含三个变量，len用来记录长度，free用来记录未使用字节的数量，buf存储实际的字符串数组。2：SDS不以‘\0’为结束符，而是以len的长度标识
-优点1：O(1)获取字符串长度。sdshdr结构体中，直接存储了字符串的长度。因此直接以sdshd">
-<meta property="og:image" content="http://img.blog.csdn.net/20151219142351721">
-<meta property="og:image" content="http://img.blog.csdn.net/20151219153132066">
-<meta property="og:image" content="http://img.blog.csdn.net/20151219153151562">
-<meta property="og:image" content="http://img.blog.csdn.net/20151219155529547">
-<meta property="og:image" content="http://img.blog.csdn.net/20151219155858470">
-<meta property="og:image" content="http://img.blog.csdn.net/20151219160055049">
-<meta property="og:image" content="http://img.blog.csdn.net/20151219160222520">
-<meta property="og:updated_time" content="2017-03-01T10:32:59.000Z">
+<meta property="og:description" content="Feed，在社交和信息推荐的App与网站中，基本都会用到的。例如常用的新浪微博，用户登录进入后，展现给我们的就是feed信息流。新浪微博的信息，来自于你关注人所发布的内容。还有微信的朋友圈，今日头条的信息流，好友发布的美拍等，这些都是Feed。玩过知乎的人应该知道，在知乎Feed中，会显示某某关注了某某话题，某某点赞或者赞同了某个回答。广义来讲，这些也算是一种Feed。
+本文会先介绍几种不同的Fe">
+<meta property="og:image" content="http://img.blog.csdn.net/20170307135925176?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170307140259056?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170307141232300?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170307140332780?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:updated_time" content="2017-03-07T06:17:27.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Redis数据结构（一）">
-<meta name="twitter:description" content="SDS简单动态字符串结构：1：SDS是在C语言字符串的基础上，构造的一种简单的动态字符串（simple daynamic string）。SDS结构体包含三个变量，len用来记录长度，free用来记录未使用字节的数量，buf存储实际的字符串数组。2：SDS不以‘\0’为结束符，而是以len的长度标识
-优点1：O(1)获取字符串长度。sdshdr结构体中，直接存储了字符串的长度。因此直接以sdshd">
-<meta name="twitter:image" content="http://img.blog.csdn.net/20151219142351721">
+<meta name="twitter:title" content="Feed系统设计">
+<meta name="twitter:description" content="Feed，在社交和信息推荐的App与网站中，基本都会用到的。例如常用的新浪微博，用户登录进入后，展现给我们的就是feed信息流。新浪微博的信息，来自于你关注人所发布的内容。还有微信的朋友圈，今日头条的信息流，好友发布的美拍等，这些都是Feed。玩过知乎的人应该知道，在知乎Feed中，会显示某某关注了某某话题，某某点赞或者赞同了某个回答。广义来讲，这些也算是一种Feed。
+本文会先介绍几种不同的Fe">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20170307135925176?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 
 
 
@@ -122,7 +119,7 @@
   };
 </script>
 
-  <title> Redis数据结构（一） | gglinux's blog </title>
+  <title> Feed系统设计 | gglinux's blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -272,7 +269,7 @@
             
             
               
-                Redis数据结构（一）
+                Feed系统设计
               
             
           </h1>
@@ -284,8 +281,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-12-19T21:06:24+08:00" content="2015-12-19">
-              2015-12-19
+            <time itemprop="dateCreated" datetime="2017-03-06T21:06:24+08:00" content="2017-03-06">
+              2017-03-06
             </time>
           </span>
 
@@ -298,8 +295,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Redis/" itemprop="url" rel="index">
-                    <span itemprop="name">Redis</span>
+                  <a href="/categories/架构/" itemprop="url" rel="index">
+                    <span itemprop="name">架构</span>
                   </a>
                 </span>
 
@@ -314,8 +311,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/12/19/redis1/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/12/19/redis1/" itemprop="commentsCount"></span>
+                <a href="/2017/03/06/feed_design/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/06/feed_design/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -338,15 +335,24 @@
       
 
       
-        <h2 id="SDS简单动态字符串"><a href="#SDS简单动态字符串" class="headerlink" title="SDS简单动态字符串"></a>SDS简单动态字符串</h2><h3 id="结构："><a href="#结构：" class="headerlink" title="结构："></a>结构：</h3><p>1：SDS是在C语言字符串的基础上，构造的一种简单的动态字符串（simple daynamic string）。SDS结构体包含三个变量，len用来记录长度，free用来记录未使用字节的数量，buf存储实际的字符串数组。<br>2：SDS不以‘\0’为结束符，而是以len的长度标识<br><img src="http://img.blog.csdn.net/20151219142351721" alt="这里写图片描述"></p>
-<h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><p>1：O(1)获取字符串长度。sdshdr结构体中，直接存储了字符串的长度。因此直接以sdshdr.len读取字符串长度就可以了，相对于C语言的遍历。<br>2：防止缓冲区溢出。因为sds自动记录了字符串的长度，当需要扩充某个字符串时，会先检测长度是否满足。不满足，会先扩充sdshdr.buf的长度。而C语言，strcat会直接拼接两个string，后面的string可能会占用已经占用的内存区域。<br>3：减少字符串改变带来的内存重分配次数。简单一点说，当扩充字符串时，sds会给它多分配一些额外的内存。当缩减字符串时，并没有立即将其归回，而是用sdshdr.free记录。<br>4：二进制安全。直白点，就是不以’\0’为结束符，而是记录其二进制数据，即’\0’对应的00000000。结束是以sdshdr.len来标识的<br>5：可以重用部分C语言的函数。但因为结束机制不一样，也只是部分而已。</p>
-<h3 id="用处"><a href="#用处" class="headerlink" title="用处"></a>用处</h3><p>1：redis中常见的字符串值都是用sds实现的。例如，常用的键。</p>
-<h2 id="双向链表"><a href="#双向链表" class="headerlink" title="双向链表"></a>双向链表</h2><h3 id="结构"><a href="#结构" class="headerlink" title="结构"></a>结构</h3><p>1：节点（struct ListNode），包含前节点和后置节点两个指针域。<br>      链表(struct List)，包含头，尾节点。以及相关的操作函数。<br>      <img src="http://img.blog.csdn.net/20151219153132066" alt="这里写图片描述">    </p>
-<p><img src="http://img.blog.csdn.net/20151219153151562" alt="这里写图片描述"></p>
-<p>###优点<br>1：新增和删除元素非常方便。很大部分来自链表的优点<br>2：其中的value字段，可以用来存储其他的类型，非常方便扩展</p>
-<h3 id="用处-1"><a href="#用处-1" class="headerlink" title="用处"></a>用处</h3><p>1：redis中List数据类型就是用这个实现的</p>
-<h2 id="字典"><a href="#字典" class="headerlink" title="字典"></a>字典</h2><h3 id="结构-1"><a href="#结构-1" class="headerlink" title="结构"></a>结构</h3><p>1：首先说明下，字典也是由其他的数据结构构造的。它包括，哈希节点，哈希表，字典三个部分。哈希表连接哈希节点，字典包含两个哈希表。<br>2：哈希节点，包含三个域。键，值，下个节点的指针。其中下个节点是为解决哈希冲突的。<br><img src="http://img.blog.csdn.net/20151219155529547" alt="这里写图片描述"><br>3：哈希表，包含四个域。dictht.table，是一个数组，对应的值就是哈希表节点。dictht.size，总大小。sizemask，用来计算索引值。used，记录已经使用多少。<br><img src="http://img.blog.csdn.net/20151219155858470" alt="这里写图片描述"><br>4：字典，包含四个域。其中，ht就是指向上面的哈希表的。<br><img src="http://img.blog.csdn.net/20151219160055049" alt="这里写图片描述"><br>5：完整的结构，未进行rehash，存在冲突。<br><img src="http://img.blog.csdn.net/20151219160222520" alt="这里写图片描述"></p>
-<h3 id="优点-1"><a href="#优点-1" class="headerlink" title="优点"></a>优点</h3><p>1：有效解决了哈希冲突，通过dictEntry的next指针，将具有同一索引的值链接起来。<br>2：很方便就行rehash。我们知道到哈希表大小不足时，就很容易造成哈希冲突。此时便需要扩容。dict.ht[2]其中一个就是用来扩容的，当dictht.size == used时，便将dict.ht[1]扩大到used*2，再将dict.ht[0]缓慢哈希到dict.ht[1]。完成后，将dict.ht[0]指向dict.ht[1]，将dict.ht[1]置为空即可。</p>
+        <p>Feed，在社交和信息推荐的App与网站中，基本都会用到的。例如常用的新浪微博，用户登录进入后，展现给我们的就是feed信息流。新浪微博的信息，来自于你关注人所发布的内容。还有微信的朋友圈，今日头条的信息流，好友发布的美拍等，这些都是Feed。玩过知乎的人应该知道，在知乎Feed中，会显示某某关注了某某话题，某某点赞或者赞同了某个回答。广义来讲，这些也算是一种Feed。</p>
+<p>本文会先介绍几种不同的Feed设计，让大家对Feed实现有初步的了解。其次会对我们采用的Feed方案作出详细的解答。</p>
+<h2 id="推方式"><a href="#推方式" class="headerlink" title="推方式"></a>推方式</h2><p>推方式，是发生在用户触发行为（发布新的动态，关注某个人，点赞）的时候。在触发时，用户的自身行为会记录到对应的行为表中，其次用户的行为也会记录到自己的粉丝对应动态表中。<br><img src="http://img.blog.csdn.net/20170307135925176?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<ol>
+<li>用户A发布新的帖子（动态），帖子记录到帖子表（主表）中。</li>
+<li>发帖行为塞到队列（Redis List）中。触发异步操作，消费者会先读取用户的粉丝列表（uid分表），依次写入到用户的动态表（uid分表）中。</li>
+<li>前端读取用户动态Feed，使用过滤条件，读取用户的动态表（关联查询帖子表）。</li>
+</ol>
+<p>使用推方式，对需求变更是易适应的。为什么这么说呢？因为用户每一次的行为，我们都有存储相应的数据（数据模型）。即使变更，只需更改逻辑层代码。另外性能较好，后台数据已经准备好了，无需复杂的SQL查询。当然这样做，也存在很多弊端。1. 如果在用户A发完动态后，其粉丝B取消关注了A。在这个时间差内，内容已经推送给粉丝B了。2. 数据量存储成本较大，假如一个用户的粉丝数是100万，在发帖后会写入100万条数据。</p>
+<h2 id="拉方式"><a href="#拉方式" class="headerlink" title="拉方式"></a>拉方式</h2><p>拉方式，是发生在粉丝拉取Feed时。粉丝拉取自己的动态，首先会检索自己的关注用户（uid分表）。得到关注的uid之后，再根据uid去查询关注用户发布的帖子。<br><img src="http://img.blog.csdn.net/20170307140259056?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>拉的模式相对是比较简单易实现的，另外对用户关系变更（新增，删除用户）是敏感的。其次也不存在数据存储压力。但在查询的时候，对帖子表本身压力是很大的。尤其是用户本身关注的人很多的话，会有很严重的性能问题。</p>
+<h2 id="拉方式优化-伪实时拉取"><a href="#拉方式优化-伪实时拉取" class="headerlink" title="拉方式优化-伪实时拉取"></a>拉方式优化-伪实时拉取</h2><p>用户在登录APP时，会发送用户活跃态到服务端。活跃信号塞到队列中，消费者依次读取活跃态uid，得到用户的关注者列表。得到关注者列表后，会去帖子表，查询关注人的发布的帖子。写到用户自己的Feed中。<br><img src="http://img.blog.csdn.net/20170307141232300?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>这种方式和对拉方式而言，能有效避免接口性能问题，相当于通过定时任务提前把用户的动态Feed跑出来。和推方式比较，推是比较盲目的，这种方式只需针对活跃用户即可，能避免存储浪费。缺点在于实时性不好，用户登录APP后马上进入自己的Feed页，此时如果后台用户动态还没跑完，接口读取的就是历史数据了。当然这种方式不适合知乎，微博这种类型的APP的。</p>
+<h2 id="拉方式优化-分区拉取"><a href="#拉方式优化-分区拉取" class="headerlink" title="拉方式优化-分区拉取"></a>拉方式优化-分区拉取</h2><p>分区拉取，是为了避免频繁查询单一帖子表所采用的一种优化手段。通过对帖子按照时间片分表，每次查询都能均摊到不同的表中，以此减轻主表的压力。</p>
+<h2 id="推方式优化-定时推"><a href="#推方式优化-定时推" class="headerlink" title="推方式优化-定时推"></a>推方式优化-定时推</h2><p>定时推，是以常驻进程的方式读取用户的发帖行为，再批量写入到粉丝的动态表中。这种方式和推方式差不多，只不过可以对多个发帖行为做聚合。</p>
+<h2 id="推方式优化-特定用户推"><a href="#推方式优化-特定用户推" class="headerlink" title="推方式优化-特定用户推"></a>推方式优化-特定用户推</h2><p>特定用户推，是推方式的一种优化方法。用户发送帖子时，只对活跃的粉丝用户写入。当然活跃用户的判定策略，是需要商定的。</p>
+<h2 id="综合"><a href="#综合" class="headerlink" title="综合"></a>综合</h2><p>以上几种方案，都有自己的利弊和适用场景。选择最适合自己的就是最好的。最后，我们采用了伪实时拉取这种方式。因为我们的需求是对点赞用户的聚合展示，类似于下图知乎这种。<br><img src="http://img.blog.csdn.net/20170307140332780?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>本身点赞行为会存储在两种类型的表（以帖子ID的点赞分表，以用户ID的点赞分表）中，如果单纯以拉方式话，会比较难处理的，而且有性能问题。其次，点赞这个行为的重要程度还不足以我们批量去存储的。</p>
 
       
     </div>
@@ -368,7 +374,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Redis/" rel="tag">#Redis</a>
+            <a href="/tags/Feed设计/" rel="tag">#Feed设计</a>
           
         </div>
       
@@ -377,13 +383,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2017/03/03/innodb2/" rel="next" title="">
+                <i class="fa fa-chevron-left"></i> 
+              </a>
+            
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2015/12/20/redis2/" rel="prev" title="Redis数据结构（二）">
-                Redis数据结构（二） <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -409,8 +415,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2015/12/19/redis1/"
-           data-title="Redis数据结构（一）" data-url="http://gglinux.com/2015/12/19/redis1/">
+      <div class="ds-thread" data-thread-key="2017/03/06/feed_design/"
+           data-title="Feed系统设计" data-url="http://gglinux.com/2017/03/06/feed_design/">
       </div>
     
   </div>
@@ -539,7 +545,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#SDS简单动态字符串"><span class="nav-number">1.</span> <span class="nav-text">SDS简单动态字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#结构："><span class="nav-number">1.1.</span> <span class="nav-text">结构：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优点"><span class="nav-number">1.2.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用处"><span class="nav-number">1.3.</span> <span class="nav-text">用处</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#双向链表"><span class="nav-number">2.</span> <span class="nav-text">双向链表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#结构"><span class="nav-number">2.1.</span> <span class="nav-text">结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用处-1"><span class="nav-number">2.2.</span> <span class="nav-text">用处</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字典"><span class="nav-number">3.</span> <span class="nav-text">字典</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#结构-1"><span class="nav-number">3.1.</span> <span class="nav-text">结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优点-1"><span class="nav-number">3.2.</span> <span class="nav-text">优点</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#推方式"><span class="nav-number">1.</span> <span class="nav-text">推方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#拉方式"><span class="nav-number">2.</span> <span class="nav-text">拉方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#拉方式优化-伪实时拉取"><span class="nav-number">3.</span> <span class="nav-text">拉方式优化-伪实时拉取</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#拉方式优化-分区拉取"><span class="nav-number">4.</span> <span class="nav-text">拉方式优化-分区拉取</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#推方式优化-定时推"><span class="nav-number">5.</span> <span class="nav-text">推方式优化-定时推</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#推方式优化-特定用户推"><span class="nav-number">6.</span> <span class="nav-text">推方式优化-特定用户推</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#综合"><span class="nav-number">7.</span> <span class="nav-text">综合</span></a></li></ol></div>
             
           </div>
         </section>
