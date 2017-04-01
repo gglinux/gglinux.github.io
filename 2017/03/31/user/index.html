@@ -1,0 +1,696 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="用户系统设计," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="用户系统，主要分为账号体系和用户信息两大类。账号体系包括，登陆验证、注册、第三方授权、以及权限管理。用户信息包括，用户地理位置、用户属性、用户设备信息、还有用户日志信息。本文会介绍用户系统的具体落地方案。
+登陆验证在一般项目账号体系中，一般会要求支持手机、邮箱、账号、QQ、微信、微博实现登陆。后面三种方式都是基于第三方授权后，完成的身份验证。手机、邮箱、账号则是相对传统的登录方式。
+用户身份与登录">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用户系统设计">
+<meta property="og:url" content="http://gglinux.com/2017/03/31/user/index.html">
+<meta property="og:site_name" content="gglinux's blog">
+<meta property="og:description" content="用户系统，主要分为账号体系和用户信息两大类。账号体系包括，登陆验证、注册、第三方授权、以及权限管理。用户信息包括，用户地理位置、用户属性、用户设备信息、还有用户日志信息。本文会介绍用户系统的具体落地方案。
+登陆验证在一般项目账号体系中，一般会要求支持手机、邮箱、账号、QQ、微信、微博实现登陆。后面三种方式都是基于第三方授权后，完成的身份验证。手机、邮箱、账号则是相对传统的登录方式。
+用户身份与登录">
+<meta property="og:updated_time" content="2017-04-01T06:31:20.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="用户系统设计">
+<meta name="twitter:description" content="用户系统，主要分为账号体系和用户信息两大类。账号体系包括，登陆验证、注册、第三方授权、以及权限管理。用户信息包括，用户地理位置、用户属性、用户设备信息、还有用户日志信息。本文会介绍用户系统的具体落地方案。
+登陆验证在一般项目账号体系中，一般会要求支持手机、邮箱、账号、QQ、微信、微博实现登陆。后面三种方式都是基于第三方授权后，完成的身份验证。手机、邮箱、账号则是相对传统的登录方式。
+用户身份与登录">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 用户系统设计 | gglinux's blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?3fad2c05e319b219ac225446ed4005ba";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">gglinux's blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                用户系统设计
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-03-31T21:06:24+08:00" content="2017-03-31">
+              2017-03-31
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/架构/" itemprop="url" rel="index">
+                    <span itemprop="name">架构</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/03/31/user/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/31/user/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>用户系统，主要分为账号体系和用户信息两大类。账号体系包括，登陆验证、注册、第三方授权、以及权限管理。用户信息包括，用户地理位置、用户属性、用户设备信息、还有用户日志信息。本文会介绍用户系统的具体落地方案。</p>
+<h2 id="登陆验证"><a href="#登陆验证" class="headerlink" title="登陆验证"></a>登陆验证</h2><p>在一般项目账号体系中，一般会要求支持手机、邮箱、账号、QQ、微信、微博实现登陆。后面三种方式都是基于第三方授权后，完成的身份验证。手机、邮箱、账号则是相对传统的登录方式。</p>
+<p>用户身份与登录的授权方式是独立开的，即用户uid和登录方式是一对多的关系。举例来说，用户A在使用微博授权登陆后，服务端鉴别身份信息为uid=123。用户A下次使用微信登陆，服务端鉴别身份同样为uid=123。不存在同一用户A拥有多个账号信息的现象。登陆授权表设计如下。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">//用户授权表</div><div class="line">CREATE TABLE `user_auth` (</div><div class="line">  `id` bigint(20) NOT NULL AUTO_INCREMENT,</div><div class="line">  `uid` bigint(20) unsigned NOT NULL DEFAULT &apos;0&apos; COMMENT &apos;用户id&apos;,</div><div class="line">  `identity_type` tinyint(4) unsigned NOT NULL DEFAULT &apos;1&apos; COMMENT &apos;1手机号 2邮箱 3用户名 4qq 5微信 6腾讯微博 7新浪微博&apos;,</div><div class="line">  `identifier` varchar(50) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;手机号 邮箱 用户名或第三方应用的唯一标识&apos;,</div><div class="line">  `certificate` varchar(20) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;密码凭证(站内的保存密码，站外的不保存或保存token)&apos;,</div><div class="line">  `create_time` int(11) unsigned NOT NULL DEFAULT &apos;0&apos; COMMENT &apos;绑定时间&apos;,</div><div class="line">  `update_time` int(11) unsigned NOT NULL DEFAULT &apos;0&apos; COMMENT &apos;更新绑定时间&apos;,</div><div class="line">  PRIMARY KEY (`id`),</div><div class="line">  UNIQUE KEY `only` (`uid`,`identity_type`),</div><div class="line">  KEY `idx_uid` (`uid`) USING BTREE</div><div class="line">) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT=&apos;用户授权表&apos;</div></pre></td></tr></table></figure>
+<h2 id="用户信息"><a href="#用户信息" class="headerlink" title="用户信息"></a>用户信息</h2><p>用户信息，为便于扩展，分成两类。用户基础信息和用户拓展信息。基本信息用来保存用户的基本属性，年龄、性别、生日、头像、手机号码等。扩展信息，用来保存用户的设备信息或其他可扩展的内容。另外还有位置信息，这个可独立出来，也可合并到扩展信息中，根据自己的使用场景来定。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div></pre></td><td class="code"><pre><div class="line">//用户基础信息</div><div class="line">CREATE TABLE `user_base` (</div><div class="line">  `uid` bigint(20) NOT NULL COMMENT &apos;用户ID&apos;,</div><div class="line">  `user_role` tinyint(2) unsigned NOT NULL DEFAULT &apos;2&apos; COMMENT &apos;2正常用户 3禁言用户 4虚拟用户 5运营&apos;,</div><div class="line">  `register_source` tinyint(4) unsigned NOT NULL DEFAULT &apos;0&apos; COMMENT &apos;注册来源：1手机号 2邮箱 3用户名 4qq 5微信 6腾讯微博 7新浪微博&apos;,</div><div class="line">  `user_name` varchar(32) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;用户账号，必须唯一&apos;,</div><div class="line">  `nick_name` varchar(32) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;用户昵称&apos;,</div><div class="line">  `gender` tinyint(1) unsigned NOT NULL DEFAULT &apos;0&apos; COMMENT &apos;用户性别 0-female 1-male&apos;,</div><div class="line">  `birthday` bigint(20) unsigned NOT NULL DEFAULT &apos;0&apos; COMMENT &apos;用户生日&apos;,</div><div class="line">  `signature` varchar(255) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;用户个人签名&apos;,</div><div class="line">  `mobile` varchar(16) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;手机号码(唯一)&apos;,</div><div class="line">  `mobile_bind_time` int(11) unsigned NOT NULL DEFAULT &apos;0&apos; COMMENT &apos;手机号码绑定时间&apos;,</div><div class="line">  `email` varchar(100) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;邮箱(唯一)&apos;,</div><div class="line">  `email_bind_time` int(11) unsigned NOT NULL DEFAULT &apos;0&apos; COMMENT &apos;邮箱绑定时间&apos;,</div><div class="line">  `face` varchar(255) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;头像&apos;,</div><div class="line">  `face200` varchar(255) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;头像 200x200x80&apos;,</div><div class="line">  `srcface` varchar(255) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;原图头像&apos;,</div><div class="line">  `create_time` int(11) unsigned NOT NULL COMMENT &apos;创建时间&apos;,</div><div class="line">  `update_time` int(11) unsigned NOT NULL COMMENT &apos;修改时间&apos;,</div><div class="line">  `push_token` varchar(50) NOT NULL COMMENT &apos;用户设备push_token&apos;,</div><div class="line">  PRIMARY KEY (`uid`),</div><div class="line">) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT=&apos;用户基础信息表&apos;</div><div class="line"></div><div class="line">//用户扩展信息</div><div class="line">CREATE TABLE `user_extra` (</div><div class="line">  `uid` bigint(20) NOT NULL COMMENT &apos;用户 ID&apos;,</div><div class="line">  `vendor` varchar(64) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;手机厂商：apple|htc|samsung，很少用&apos;,</div><div class="line">  `client_name` varchar(50) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;客户端名称，如hjskang&apos;,</div><div class="line">  `client_version` varchar(50) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;客户端版本号，如7.0.1&apos;,</div><div class="line">  `os_name` varchar(16) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;设备号:android|ios&apos;,</div><div class="line">  `os_version` varchar(16) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;系统版本号:2.2|2.3|4.0|5.1&apos;,</div><div class="line">  `device_name` varchar(32) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;设备型号，如:iphone6s、u880、u8800&apos;,</div><div class="line">  `device_id` varchar(128) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;设备ID&apos;,</div><div class="line">  `idfa` varchar(50) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;苹果设备的IDFA&apos;,</div><div class="line">  `idfv` varchar(50) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;苹果设备的IDFV&apos;,</div><div class="line">  `market` varchar(20) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;来源&apos;,</div><div class="line">  `create_time` int(11) unsigned NOT NULL DEFAULT &apos;0&apos; COMMENT &apos;添加时间&apos;,</div><div class="line">  `update_time` int(11) unsigned NOT NULL DEFAULT &apos;0&apos; COMMENT &apos;更新时间&apos;,</div><div class="line">  `extend1` varchar(100) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;扩展字段1&apos;,</div><div class="line">  `extend2` varchar(100) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;扩展字段2&apos;,</div><div class="line">  `extend3` varchar(100) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;扩展字段3&apos;,</div><div class="line">  PRIMARY KEY (`uid`)</div><div class="line">) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT=&apos;用户额外信息表&apos;</div><div class="line"></div><div class="line">//用户位置信息</div><div class="line">CREATE TABLE `user_location` (</div><div class="line">  `uid` bigint(20) unsigned NOT NULL COMMENT &apos;用户ID&apos;,</div><div class="line">  `curr_nation` varchar(10) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;所在地国&apos;,</div><div class="line">  `curr_province` varchar(10) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;所在地省&apos;,</div><div class="line">  `curr_city` varchar(10) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;所在地市&apos;,</div><div class="line">  `curr_district` varchar(20) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;所在地地区&apos;,</div><div class="line">  `location` varchar(255) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;具体地址&apos;,</div><div class="line">  `longitude` decimal(10,6) DEFAULT NULL COMMENT &apos;经度&apos;,</div><div class="line">  `latitude` decimal(10,6) DEFAULT NULL COMMENT &apos;纬度&apos;,</div><div class="line">  `update_time` int(11) unsigned DEFAULT &apos;0&apos; COMMENT &apos;修改时间&apos;,</div><div class="line">  PRIMARY KEY (`uid`)</div><div class="line">) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT=&apos;用户定位表&apos;</div></pre></td></tr></table></figure>
+<h2 id="用户日志信息"><a href="#用户日志信息" class="headerlink" title="用户日志信息"></a>用户日志信息</h2><p>日志信息，用来保存用户注册或者登陆行为的。另外会有一些修改密码或者修改重要信息的日志记录。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">//用户登陆日志</div><div class="line">CREATE TABLE `user_login_log` (</div><div class="line">  `id` bigint(20) NOT NULL AUTO_INCREMENT,</div><div class="line">  `uid` bigint(20) unsigned NOT NULL DEFAULT &apos;0&apos; COMMENT &apos;用户uid&apos;,</div><div class="line">  `type` tinyint(3) unsigned NOT NULL DEFAULT &apos;1&apos; COMMENT &apos;登录方式 第三方/邮箱/手机等&apos;,</div><div class="line">  `command` tinyint(3) unsigned NOT NULL DEFAULT &apos;1&apos; COMMENT &apos;操作类型 1登陆成功  2登出成功 3登录失败 4登出失败&apos;,</div><div class="line">  `version` varchar(32) NOT NULL DEFAULT &apos;1.0&apos; COMMENT &apos;客户端版本号&apos;,</div><div class="line">  `client` varchar(20) NOT NULL DEFAULT &apos;dabaozha&apos; COMMENT &apos;客户端&apos;,</div><div class="line">  `device_id` varchar(64) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;登录时设备号&apos;,</div><div class="line">  `lastip` varchar(32) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;登录ip&apos;,</div><div class="line">  `os` varchar(16) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;手机系统&apos;,</div><div class="line">  `osver` varchar(32) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;系统版本&apos;,</div><div class="line">  `text` varchar(200) NOT NULL DEFAULT &apos;&apos;,</div><div class="line">  `create_time` int(11) unsigned NOT NULL DEFAULT &apos;0&apos; COMMENT &apos;操作时间&apos;,</div><div class="line">  PRIMARY KEY (`id`),</div><div class="line">  KEY `idx_uid_type_time` (`uid`,`type`,`create_time`) USING BTREE,</div><div class="line">  KEY `idx_create_time` (`create_time`)</div><div class="line">) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT=&apos;登陆日志表&apos;</div><div class="line"></div><div class="line">//用户注册日志</div><div class="line">CREATE TABLE `user_register_log` (</div><div class="line">  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT &apos;自增ID&apos;,</div><div class="line">  `uid` bigint(20) unsigned NOT NULL COMMENT &apos;用户ID&apos;,</div><div class="line">  `register_method` tinyint(2) unsigned NOT NULL COMMENT &apos;注册方式1手机号 2邮箱 3用户名 4qq 5微信 6腾讯微博 7新浪微博&apos;,</div><div class="line">  `register_time` int(11) NOT NULL COMMENT &apos;注册时间&apos;,</div><div class="line">  `register_ip` varchar(16) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;注册IP&apos;,</div><div class="line">  `register_client` varchar(16) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;注册客户端&apos;,</div><div class="line">  PRIMARY KEY (`id`),</div><div class="line">) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COMMENT=&apos;用户注册日志表&apos;</div><div class="line"></div><div class="line">//修改信息日志</div><div class="line">CREATE TABLE `user_info_update` (</div><div class="line">  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT &apos;自增ID&apos;,</div><div class="line">  `uid` bigint(20) unsigned NOT NULL COMMENT &apos;用户ID&apos;,</div><div class="line">  `attribute_name` varchar(30) NOT NULL COMMENT &apos;属性名&apos;,</div><div class="line">  `attribute_old_val` varchar(30) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;属性对应旧的值&apos;,</div><div class="line">  `attribute_new_val` varchar(30) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;属性对应新的值&apos;,</div><div class="line">  `update_time` int(11) NOT NULL COMMENT &apos;修改时间&apos;,</div><div class="line">  PRIMARY KEY (`id`),</div><div class="line">) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COMMENT=&apos;用户注册日志表&apos;</div></pre></td></tr></table></figure>
+<h2 id="全局uid"><a href="#全局uid" class="headerlink" title="全局uid"></a>全局uid</h2><p>建议不要使用表的主键作为用户ID，而是使用ID生成器(发号器)生成用户的唯一标示guid。当用户量急剧上升时，往往会采取分库分表的方法，然后通过将uid取余写到不同的表中。如果单纯的以某个表主键作为ID。会限制插入性能和增加业务复杂度,其次在分布式数据库中也无法保证ID唯一性。</p>
+<p>全局ID生成，是有很多方案的。简单一点，可以采用redis自增属性，因为其具有原子性，在分布式坏境中，能保证ID的唯一性。另外还有其他的一些开源方案，可自行Google。</p>
+<h2 id="Access-Token"><a href="#Access-Token" class="headerlink" title="Access Token"></a>Access Token</h2><p>与传统的Session相比，Access Token比较适合做RESTful Api开发。传统Web应用中，用户登陆后会写用户信息到cookie中，服务端通过Session就能得到用户的身份。</p>
+<p>Access Token的是OAuth2.0中用户经过授权后，返回调用API的凭证。对于自己的应用来讲，用户在登录后，即返回access_token。在token有效期内可凭借此凭证，调用其他接口。对于access_token的刷新有两种方案，第一种每次用户重启app时，重新refresh。第二种，在调用周期内服务端发现access token可能过期时，返回新的token给客户端。</p>
+<p>至于Access Token的生成，这个并没有规定，只要保证其唯一性即可。简单点，对用户uid和当前时间哈希得到新的Access Token，并设置过期时间。另外也可以采用<a href="https://jwt.io/" target="_blank" rel="external">JWT</a>实现。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/用户系统设计/" rel="tag">#用户系统设计</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/06/feed_design/" rel="next" title="Feed系统设计">
+                <i class="fa fa-chevron-left"></i> Feed系统设计
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/03/31/user/"
+           data-title="用户系统设计" data-url="http://gglinux.com/2017/03/31/user/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/dog.png"
+               alt="gglinux" />
+          <p class="site-author-name" itemprop="name">gglinux</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">8</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/gglinux" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/gglinuxgjw" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/gglinux" target="_blank" title="ZhiHu">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  ZhiHu
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/gglinux" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#登陆验证"><span class="nav-number">1.</span> <span class="nav-text">登陆验证</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用户信息"><span class="nav-number">2.</span> <span class="nav-text">用户信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用户日志信息"><span class="nav-number">3.</span> <span class="nav-text">用户日志信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#全局uid"><span class="nav-number">4.</span> <span class="nav-text">全局uid</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Access-Token"><span class="nav-number">5.</span> <span class="nav-text">Access Token</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">gglinux</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"gglinux"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
