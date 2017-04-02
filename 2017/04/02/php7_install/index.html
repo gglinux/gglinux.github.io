@@ -89,7 +89,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="InnoDB," />
+  <meta name="keywords" content="blog 架构设计 软件开发" />
 
 
 
@@ -105,48 +105,23 @@
 
 
 
-<meta name="description" content="InnoDB存储引擎（一）整体结构
-内存池
-维护线程／进程内部数据结构
-缓存磁盘文件（cache）
-对数据的更新或者新增操作，避免直接刷新磁盘
-重做日志缓冲（redo log）
-
-后台线程
-Master Hhread，将更新的数据（包括新增和被修改的数据）异步刷新到磁盘，维护内存池和磁盘中的数据的一致性。
-IO Thread分为Insert buffer Thread,log thread,rea">
+<meta name="description" content="周末闲来无事，玩玩swoole。笔者开发坏境：CentOS 7，PHP 7.0.16
+安装PECL1234567//php版本 &amp;gt; 7$ wget http://pear.php.net/go-pear.phar$ php go-pear.phar//php版本 &amp;lt; 7$ yum install php-pear//否则会报错PHP Parse error:  syntax error">
 <meta property="og:type" content="article">
-<meta property="og:title" content="InnoDB存储引擎（一）">
-<meta property="og:url" content="http://gglinux.com/2017/02/07/innoDB1/index.html">
+<meta property="og:title" content="gglinux's blog">
+<meta property="og:url" content="http://gglinux.com/2017/04/02/php7_install/index.html">
 <meta property="og:site_name" content="gglinux's blog">
-<meta property="og:description" content="InnoDB存储引擎（一）整体结构
-内存池
-维护线程／进程内部数据结构
-缓存磁盘文件（cache）
-对数据的更新或者新增操作，避免直接刷新磁盘
-重做日志缓冲（redo log）
-
-后台线程
-Master Hhread，将更新的数据（包括新增和被修改的数据）异步刷新到磁盘，维护内存池和磁盘中的数据的一致性。
-IO Thread分为Insert buffer Thread,log thread,rea">
-<meta property="og:image" content="http://img.blog.csdn.net/20170207195627096?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:image" content="http://img.blog.csdn.net/20170207195648874?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:image" content="http://img.blog.csdn.net/20170207201334791?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:image" content="http://img.blog.csdn.net/20170207195837984?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:updated_time" content="2017-02-28T04:14:10.000Z">
+<meta property="og:description" content="周末闲来无事，玩玩swoole。笔者开发坏境：CentOS 7，PHP 7.0.16
+安装PECL1234567//php版本 &amp;gt; 7$ wget http://pear.php.net/go-pear.phar$ php go-pear.phar//php版本 &amp;lt; 7$ yum install php-pear//否则会报错PHP Parse error:  syntax error">
+<meta property="og:image" content="http://img.blog.csdn.net/20170402134831426?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170402134854724?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170402134913234?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:updated_time" content="2017-04-02T05:57:12.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="InnoDB存储引擎（一）">
-<meta name="twitter:description" content="InnoDB存储引擎（一）整体结构
-内存池
-维护线程／进程内部数据结构
-缓存磁盘文件（cache）
-对数据的更新或者新增操作，避免直接刷新磁盘
-重做日志缓冲（redo log）
-
-后台线程
-Master Hhread，将更新的数据（包括新增和被修改的数据）异步刷新到磁盘，维护内存池和磁盘中的数据的一致性。
-IO Thread分为Insert buffer Thread,log thread,rea">
-<meta name="twitter:image" content="http://img.blog.csdn.net/20170207195627096?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta name="twitter:title" content="gglinux's blog">
+<meta name="twitter:description" content="周末闲来无事，玩玩swoole。笔者开发坏境：CentOS 7，PHP 7.0.16
+安装PECL1234567//php版本 &amp;gt; 7$ wget http://pear.php.net/go-pear.phar$ php go-pear.phar//php版本 &amp;lt; 7$ yum install php-pear//否则会报错PHP Parse error:  syntax error">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20170402134831426?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 
 
 
@@ -178,7 +153,7 @@ IO Thread分为Insert buffer Thread,log thread,rea">
 
 
 
-  <title> InnoDB存储引擎（一） | gglinux's blog </title>
+  <title>  | gglinux's blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -327,7 +302,7 @@ IO Thread分为Insert buffer Thread,log thread,rea">
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://gglinux.com/2017/02/07/innoDB1/">
+    <link itemprop="mainEntityOfPage" href="http://gglinux.com/2017/04/02/php7_install/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="gglinux">
@@ -348,7 +323,7 @@ IO Thread分为Insert buffer Thread,log thread,rea">
             
             
               
-                InnoDB存储引擎（一）
+                
               
             
           </h1>
@@ -372,7 +347,7 @@ IO Thread分为Insert buffer Thread,log thread,rea">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a class="cloud-tie-join-count" href="/2017/02/07/innoDB1/#comments" itemprop="discussionUrl">
+                <a class="cloud-tie-join-count" href="/2017/04/02/php7_install/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count join-count" itemprop="commentCount"></span>
                 </a>
               </span>
@@ -399,45 +374,44 @@ IO Thread分为Insert buffer Thread,log thread,rea">
       
 
       
-        <h2 id="InnoDB存储引擎（一）"><a href="#InnoDB存储引擎（一）" class="headerlink" title="InnoDB存储引擎（一）"></a>InnoDB存储引擎（一）</h2><h3 id="整体结构"><a href="#整体结构" class="headerlink" title="整体结构"></a>整体结构</h3><p><img src="http://img.blog.csdn.net/20170207195627096?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
-<h3 id="内存池"><a href="#内存池" class="headerlink" title="内存池"></a>内存池</h3><ol>
-<li>维护线程／进程内部数据结构</li>
-<li>缓存磁盘文件（cache）</li>
-<li>对数据的更新或者新增操作，避免直接刷新磁盘</li>
-<li>重做日志缓冲（redo log）<br><img src="http://img.blog.csdn.net/20170207195648874?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></li>
-</ol>
-<h3 id="后台线程"><a href="#后台线程" class="headerlink" title="后台线程"></a>后台线程</h3><ol>
-<li>Master Hhread，将更新的数据（包括新增和被修改的数据）异步刷新到磁盘，维护内存池和磁盘中的数据的一致性。</li>
-<li>IO Thread分为Insert buffer Thread,log thread,read thread,write thread。</li>
-<li>purge thread，回收undo log</li>
-<li>Page cleaner thread，刷新脏页到磁盘（由master thread 独立出来的）<br><img src="http://img.blog.csdn.net/20170207201334791?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></li>
-</ol>
-<p>Write Ahead log:是指当事务提交上，先做重做日志，再修改页。满足事务中持久性要求。</p>
-<p>Check Point：检查点技术，数据库系统为了缩短数据库发生宕机恢复所需的时间所采取的一种刷新脏页的方法。    检查点技术分为两种，sharp checkpoint和fuzzy checkpoint。sharp checkpoint用在数据库关机时，将所有的脏数据全部刷新到磁盘。fuzzy checkpoint是按照一定的策略定时部分的刷新脏页数据，较为复杂，此处不做介绍。</p>
-<h3 id="InnoDB关键特性"><a href="#InnoDB关键特性" class="headerlink" title="InnoDB关键特性"></a>InnoDB关键特性</h3><ol>
-<li>插入缓冲（性能提升）<ul>
-<li>Insert Buffer 当新增数据并且存在非聚焦索引时，会有对非聚焦索引页的离散读。当出现这种情况时，mysql会先判断当前的非聚焦索引页是否存在于缓冲池中，如果存在则直接修改或者新增。如果不存在缓冲池中，则会先放到缓冲池中（类似于脏页），再以一定的频率merge之后，插入到实际的非聚焦索引页。</li>
-<li>Change Buffer 插入缓冲的升级，用在删除或者更新的情况下。在删除时，并不会对非聚焦索引全部删除。在更新是，也不马上更新非聚焦索引。</li>
-<li>以上两种优化手段，适用于 1. 存在非聚焦索引 2. 非聚焦索引不唯一。</li>
-</ul>
-</li>
-<li>两次写（可靠性）<ul>
-<li>对某页写回磁盘的过程中，如果出现宕机，并且导致页破坏（无法使用重做日志）。会出现数据丢失的情况。针对此问题，mysql首先会将所有需要写入的页（2MB）全部刷回到共享表空间中（没有离散写），再将更新的数据写入到各自的表空间中。<br><img src="http://img.blog.csdn.net/20170207195837984?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></li>
-</ul>
-</li>
-<li>自适应哈希索引（性能提升）<ul>
-<li>InnoDB查找耗时主要在于B+树的查找，通过使用哈希这种数据结构，将查询参数（Key）和值（位置）对应来减少查找的耗时。</li>
-</ul>
-</li>
-<li>异步IO（性能提升）<ul>
-<li>异步IO在对磁盘进行写入时，是非阻塞式的，能对多个查询或者插入操作进行merge，以减少实际的IO次数。</li>
-</ul>
-</li>
-<li>刷新邻接页（性能提升）<ul>
-<li>在刷新脏页时，会检查该页所在所在区的所有页，连同刷新。</li>
-</ul>
-</li>
-</ol>
+        <p>周末闲来无事，玩玩swoole。笔者开发坏境：CentOS 7，PHP 7.0.16</p>
+<h3 id="安装PECL"><a href="#安装PECL" class="headerlink" title="安装PECL"></a>安装PECL</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">//php版本 &gt; 7</div><div class="line">$ wget http://pear.php.net/go-pear.phar</div><div class="line">$ php go-pear.phar</div><div class="line"></div><div class="line">//php版本 &lt; 7</div><div class="line">$ yum install php-pear</div><div class="line">//否则会报错PHP Parse error:  syntax error, unexpected //&apos;new&apos; (T_NEW) in /usr/share/pear/PEAR/Frontend.php on //line 91</div></pre></td></tr></table></figure>
+<h3 id="安装swoole"><a href="#安装swoole" class="headerlink" title="安装swoole"></a>安装swoole</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">$ sudo pecl  install swoole</div><div class="line"></div><div class="line">//报错如下</div><div class="line">//Warning: Invalid argument supplied for foreach() in //Command.php on line 249</div><div class="line"></div><div class="line">vi `which pecl`</div><div class="line"></div><div class="line">//找到最后一行</div><div class="line">exec $PHP -C -n -q $INCARG -d date.timezone=UTC -d output_buffering=1 -d variables_order=EGPCS -d safe_mode=0 -d register_argc_argv=&quot;On&quot; $INCDIR/peclcmd.php &quot;$@&quot;</div><div class="line"></div><div class="line">去掉 -n 标示</div><div class="line"></div><div class="line">//报错如下</div><div class="line">//running: phpize</div><div class="line">//Can&apos;t find PHP headers in /usr/include/php</div><div class="line">//安装 php-devel</div><div class="line">sudo yum install php70w-devel</div><div class="line"></div><div class="line">成功！</div><div class="line">//Build process completed successfully</div><div class="line">//Installing &apos;/usr/lib64/php/modules/swoole.so&apos;</div><div class="line">//install ok: channel://pecl.php.net/swoole-1.9.8</div></pre></td></tr></table></figure>
+<h3 id="配置-php-ini"><a href="#配置-php-ini" class="headerlink" title="配置 php.ini"></a>配置 php.ini</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ php -i | grep php.ini</div><div class="line">//修改或者添加</div><div class="line"> extension=swoole.so</div></pre></td></tr></table></figure>
+<h3 id="安装-yar"><a href="#安装-yar" class="headerlink" title="安装 yar"></a>安装 yar</h3><pre><code>$ sudo ./pecl install msgpack
+
+//pecl/yar requires PHP (version &gt;= 5.2.0, version &lt;= 5.6.99), installed version is 7.0.16
+//注意PHP7,要使用yar-2.0.2
+$ sudo ./pecl install yar-2.0.2 //注意yar-2.0.2版本
+
+//添加，json.so 要放到前面。否则会报
+//PHP Warning:  PHP Startup: Unable to load dynamic library &apos;/usr/lib64/php/modules/yar.so&apos; - /usr/lib64/php/modules/yar.so: undefined symbol: php_json_decode_ex in Unknown on line 0
+
+extension=json.so //放前面
+extension=swoole.so
+extension=msgpack.so
+extension=yar.so
+
+//重启php服务
+sudo systemctl restart  php-fpm.service
+
+//其他报错
+//perl: warning: Setting locale failed.
+//perl: warning: Please check that your locale //settings:
+//   LANGUAGE = (unset),
+//    LC_ALL = (unset),
+ //   LANG = &quot;en_US.UTF-8&quot;
+
+$ localedef -v -c -i en_US -f UTF-8 en_US.UTF-8
+
+//其他报错
+//checking for cURL in default path... not found
+//configure: error: Please reinstall the libcurl distribution - easy.h should be in &lt;curl-dir&gt;/include/curl/
+
+$ sudo yum -y install curl-devel
+</code></pre><h3 id="Enjoy-it！"><a href="#Enjoy-it！" class="headerlink" title="Enjoy it！"></a>Enjoy it！</h3><p><img src="http://img.blog.csdn.net/20170402134831426?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="yar"></p>
+<p><img src="http://img.blog.csdn.net/20170402134854724?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="swoole"></p>
+<p><img src="http://img.blog.csdn.net/20170402134913234?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="msgpack"></p>
 
       
     </div>
@@ -486,12 +460,6 @@ IO Thread分为Insert buffer Thread,log thread,rea">
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/InnoDB/" rel="tag"># InnoDB</a>
-          
-        </div>
-      
 
       
         
@@ -501,8 +469,8 @@ IO Thread分为Insert buffer Thread,log thread,rea">
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/01/08/about2016/" rel="next" title="About 2016">
-                <i class="fa fa-chevron-left"></i> About 2016
+              <a href="/2017/03/31/user/" rel="next" title="用户系统设计">
+                <i class="fa fa-chevron-left"></i> 用户系统设计
               </a>
             
           </div>
@@ -510,10 +478,6 @@ IO Thread分为Insert buffer Thread,log thread,rea">
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/02/26/app_optimize/" rel="prev" title="App首屏接口性能优化">
-                App首屏接口性能优化 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -604,7 +568,7 @@ IO Thread分为Insert buffer Thread,log thread,rea">
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -615,7 +579,7 @@ IO Thread分为Insert buffer Thread,log thread,rea">
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-count">7</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -688,7 +652,7 @@ IO Thread分为Insert buffer Thread,log thread,rea">
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#InnoDB存储引擎（一）"><span class="nav-number">1.</span> <span class="nav-text">InnoDB存储引擎（一）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#整体结构"><span class="nav-number">1.1.</span> <span class="nav-text">整体结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内存池"><span class="nav-number">1.2.</span> <span class="nav-text">内存池</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#后台线程"><span class="nav-number">1.3.</span> <span class="nav-text">后台线程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#InnoDB关键特性"><span class="nav-number">1.4.</span> <span class="nav-text">InnoDB关键特性</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装PECL"><span class="nav-number">1.</span> <span class="nav-text">安装PECL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装swoole"><span class="nav-number">2.</span> <span class="nav-text">安装swoole</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置-php-ini"><span class="nav-number">3.</span> <span class="nav-text">配置 php.ini</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装-yar"><span class="nav-number">4.</span> <span class="nav-text">安装 yar</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Enjoy-it！"><span class="nav-number">5.</span> <span class="nav-text">Enjoy it！</span></a></li></ol></div>
             
 
           </div>
