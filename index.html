@@ -362,47 +362,14 @@
 
       
         
-          
-            <p>周末闲来无事，玩玩swoole。笔者开发坏境：CentOS 7，PHP 7.0.16</p>
-<h3 id="安装PECL"><a href="#安装PECL" class="headerlink" title="安装PECL"></a>安装PECL</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">//php版本 &gt; 7</div><div class="line">$ wget http://pear.php.net/go-pear.phar</div><div class="line">$ php go-pear.phar</div><div class="line"></div><div class="line">//php版本 &lt; 7</div><div class="line">$ yum install php-pear</div><div class="line">//否则会报错PHP Parse error:  syntax error, unexpected //&apos;new&apos; (T_NEW) in /usr/share/pear/PEAR/Frontend.php on //line 91</div></pre></td></tr></table></figure>
-<h3 id="安装swoole"><a href="#安装swoole" class="headerlink" title="安装swoole"></a>安装swoole</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">$ sudo pecl  install swoole</div><div class="line"></div><div class="line">//报错如下</div><div class="line">//Warning: Invalid argument supplied for foreach() in //Command.php on line 249</div><div class="line"></div><div class="line">vi `which pecl`</div><div class="line"></div><div class="line">//找到最后一行</div><div class="line">exec $PHP -C -n -q $INCARG -d date.timezone=UTC -d output_buffering=1 -d variables_order=EGPCS -d safe_mode=0 -d register_argc_argv=&quot;On&quot; $INCDIR/peclcmd.php &quot;$@&quot;</div><div class="line"></div><div class="line">去掉 -n 标示</div><div class="line"></div><div class="line">//报错如下</div><div class="line">//running: phpize</div><div class="line">//Can&apos;t find PHP headers in /usr/include/php</div><div class="line">//安装 php-devel</div><div class="line">sudo yum install php70w-devel</div><div class="line"></div><div class="line">成功！</div><div class="line">//Build process completed successfully</div><div class="line">//Installing &apos;/usr/lib64/php/modules/swoole.so&apos;</div><div class="line">//install ok: channel://pecl.php.net/swoole-1.9.8</div></pre></td></tr></table></figure>
-<h3 id="配置-php-ini"><a href="#配置-php-ini" class="headerlink" title="配置 php.ini"></a>配置 php.ini</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ php -i | grep php.ini</div><div class="line">//修改或者添加</div><div class="line"> extension=swoole.so</div></pre></td></tr></table></figure>
-<h3 id="安装-yar"><a href="#安装-yar" class="headerlink" title="安装 yar"></a>安装 yar</h3><pre><code>$ sudo ./pecl install msgpack
-
-//pecl/yar requires PHP (version &gt;= 5.2.0, version &lt;= 5.6.99), installed version is 7.0.16
-//注意PHP7,要使用yar-2.0.2
-$ sudo ./pecl install yar-2.0.2 //注意yar-2.0.2版本
-
-//添加，json.so 要放到前面。否则会报
-//PHP Warning:  PHP Startup: Unable to load dynamic library &apos;/usr/lib64/php/modules/yar.so&apos; - /usr/lib64/php/modules/yar.so: undefined symbol: php_json_decode_ex in Unknown on line 0
-
-extension=json.so //放前面
-extension=swoole.so
-extension=msgpack.so
-extension=yar.so
-
-//重启php服务
-sudo systemctl restart  php-fpm.service
-
-//其他报错
-//perl: warning: Setting locale failed.
-//perl: warning: Please check that your locale //settings:
-//   LANGUAGE = (unset),
-//    LC_ALL = (unset),
- //   LANG = &quot;en_US.UTF-8&quot;
-
-$ localedef -v -c -i en_US -f UTF-8 en_US.UTF-8
-
-//其他报错
-//checking for cURL in default path... not found
-//configure: error: Please reinstall the libcurl distribution - easy.h should be in &lt;curl-dir&gt;/include/curl/
-
-$ sudo yum -y install curl-devel
-</code></pre><h3 id="Enjoy-it！"><a href="#Enjoy-it！" class="headerlink" title="Enjoy it！"></a>Enjoy it！</h3><p><img src="http://img.blog.csdn.net/20170402134831426?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="yar"></p>
-<p><img src="http://img.blog.csdn.net/20170402134854724?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="swoole"></p>
-<p><img src="http://img.blog.csdn.net/20170402134913234?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="msgpack"></p>
-
-          
+          <p>周末闲来无事，玩玩swoole。笔者开发坏境：CentOS 7，PHP 7.0.16</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/04/01/php7_install/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -467,7 +434,7 @@ $ sudo yum -y install curl-devel
               
                 
                 <a class="post-title-link" href="/2017/03/31/user/" itemprop="url">
-                  用户系统设计
+                  用户系统设计与实现
                 </a>
               
             
@@ -510,22 +477,14 @@ $ sudo yum -y install curl-devel
 
       
         
-          
-            <p>用户系统，主要分为账号体系和用户信息两大类。账号体系包括，登陆验证、注册、第三方授权、以及权限管理。用户信息包括，用户地理位置、用户属性、用户设备信息、还有用户日志信息。本文会介绍用户系统的具体落地方案。</p>
-<h2 id="登陆验证"><a href="#登陆验证" class="headerlink" title="登陆验证"></a>登陆验证</h2><p>在一般项目账号体系中，一般会要求支持手机、邮箱、账号、QQ、微信、微博实现登陆。后面三种方式都是基于第三方授权后，完成的身份验证。手机、邮箱、账号则是相对传统的登录方式。</p>
-<p>用户身份与登录的授权方式是独立开的，即用户uid和登录方式是一对多的关系。举例来说，用户A在使用微博授权登陆后，服务端鉴别身份信息为uid=123。用户A下次使用微信登陆，服务端鉴别身份同样为uid=123。不存在同一用户A拥有多个账号信息的现象。登陆授权表设计如下。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">//用户授权表</div><div class="line">CREATE TABLE `user_auth` (</div><div class="line">  `id` bigint(20) NOT NULL AUTO_INCREMENT,</div><div class="line">  `uid` bigint(20) unsigned NOT NULL DEFAULT &apos;0&apos; COMMENT &apos;用户id&apos;,</div><div class="line">  `identity_type` tinyint(4) unsigned NOT NULL DEFAULT &apos;1&apos; COMMENT &apos;1手机号 2邮箱 3用户名 4qq 5微信 6腾讯微博 7新浪微博&apos;,</div><div class="line">  `identifier` varchar(50) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;手机号 邮箱 用户名或第三方应用的唯一标识&apos;,</div><div class="line">  `certificate` varchar(20) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;密码凭证(站内的保存密码，站外的不保存或保存token)&apos;,</div><div class="line">  `create_time` int(11) unsigned NOT NULL DEFAULT &apos;0&apos; COMMENT &apos;绑定时间&apos;,</div><div class="line">  `update_time` int(11) unsigned NOT NULL DEFAULT &apos;0&apos; COMMENT &apos;更新绑定时间&apos;,</div><div class="line">  PRIMARY KEY (`id`),</div><div class="line">  UNIQUE KEY `only` (`uid`,`identity_type`),</div><div class="line">  KEY `idx_uid` (`uid`) USING BTREE</div><div class="line">) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT=&apos;用户授权表&apos;</div></pre></td></tr></table></figure>
-<h2 id="用户信息"><a href="#用户信息" class="headerlink" title="用户信息"></a>用户信息</h2><p>用户信息，为便于扩展，分成两类。用户基础信息和用户拓展信息。基本信息用来保存用户的基本属性，年龄、性别、生日、头像、手机号码等。扩展信息，用来保存用户的设备信息或其他可扩展的内容。另外还有位置信息，这个可独立出来，也可合并到扩展信息中，根据自己的使用场景来定。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div></pre></td><td class="code"><pre><div class="line">//用户基础信息</div><div class="line">CREATE TABLE `user_base` (</div><div class="line">  `uid` bigint(20) NOT NULL COMMENT &apos;用户ID&apos;,</div><div class="line">  `user_role` tinyint(2) unsigned NOT NULL DEFAULT &apos;2&apos; COMMENT &apos;2正常用户 3禁言用户 4虚拟用户 5运营&apos;,</div><div class="line">  `register_source` tinyint(4) unsigned NOT NULL DEFAULT &apos;0&apos; COMMENT &apos;注册来源：1手机号 2邮箱 3用户名 4qq 5微信 6腾讯微博 7新浪微博&apos;,</div><div class="line">  `user_name` varchar(32) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;用户账号，必须唯一&apos;,</div><div class="line">  `nick_name` varchar(32) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;用户昵称&apos;,</div><div class="line">  `gender` tinyint(1) unsigned NOT NULL DEFAULT &apos;0&apos; COMMENT &apos;用户性别 0-female 1-male&apos;,</div><div class="line">  `birthday` bigint(20) unsigned NOT NULL DEFAULT &apos;0&apos; COMMENT &apos;用户生日&apos;,</div><div class="line">  `signature` varchar(255) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;用户个人签名&apos;,</div><div class="line">  `mobile` varchar(16) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;手机号码(唯一)&apos;,</div><div class="line">  `mobile_bind_time` int(11) unsigned NOT NULL DEFAULT &apos;0&apos; COMMENT &apos;手机号码绑定时间&apos;,</div><div class="line">  `email` varchar(100) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;邮箱(唯一)&apos;,</div><div class="line">  `email_bind_time` int(11) unsigned NOT NULL DEFAULT &apos;0&apos; COMMENT &apos;邮箱绑定时间&apos;,</div><div class="line">  `face` varchar(255) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;头像&apos;,</div><div class="line">  `face200` varchar(255) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;头像 200x200x80&apos;,</div><div class="line">  `srcface` varchar(255) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;原图头像&apos;,</div><div class="line">  `create_time` int(11) unsigned NOT NULL COMMENT &apos;创建时间&apos;,</div><div class="line">  `update_time` int(11) unsigned NOT NULL COMMENT &apos;修改时间&apos;,</div><div class="line">  `push_token` varchar(50) NOT NULL COMMENT &apos;用户设备push_token&apos;,</div><div class="line">  PRIMARY KEY (`uid`),</div><div class="line">) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT=&apos;用户基础信息表&apos;</div><div class="line"></div><div class="line">//用户扩展信息</div><div class="line">CREATE TABLE `user_extra` (</div><div class="line">  `uid` bigint(20) NOT NULL COMMENT &apos;用户 ID&apos;,</div><div class="line">  `vendor` varchar(64) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;手机厂商：apple|htc|samsung，很少用&apos;,</div><div class="line">  `client_name` varchar(50) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;客户端名称，如hjskang&apos;,</div><div class="line">  `client_version` varchar(50) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;客户端版本号，如7.0.1&apos;,</div><div class="line">  `os_name` varchar(16) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;设备号:android|ios&apos;,</div><div class="line">  `os_version` varchar(16) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;系统版本号:2.2|2.3|4.0|5.1&apos;,</div><div class="line">  `device_name` varchar(32) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;设备型号，如:iphone6s、u880、u8800&apos;,</div><div class="line">  `device_id` varchar(128) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;设备ID&apos;,</div><div class="line">  `idfa` varchar(50) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;苹果设备的IDFA&apos;,</div><div class="line">  `idfv` varchar(50) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;苹果设备的IDFV&apos;,</div><div class="line">  `market` varchar(20) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;来源&apos;,</div><div class="line">  `create_time` int(11) unsigned NOT NULL DEFAULT &apos;0&apos; COMMENT &apos;添加时间&apos;,</div><div class="line">  `update_time` int(11) unsigned NOT NULL DEFAULT &apos;0&apos; COMMENT &apos;更新时间&apos;,</div><div class="line">  `extend1` varchar(100) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;扩展字段1&apos;,</div><div class="line">  `extend2` varchar(100) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;扩展字段2&apos;,</div><div class="line">  `extend3` varchar(100) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;扩展字段3&apos;,</div><div class="line">  PRIMARY KEY (`uid`)</div><div class="line">) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT=&apos;用户额外信息表&apos;</div><div class="line"></div><div class="line">//用户位置信息</div><div class="line">CREATE TABLE `user_location` (</div><div class="line">  `uid` bigint(20) unsigned NOT NULL COMMENT &apos;用户ID&apos;,</div><div class="line">  `curr_nation` varchar(10) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;所在地国&apos;,</div><div class="line">  `curr_province` varchar(10) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;所在地省&apos;,</div><div class="line">  `curr_city` varchar(10) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;所在地市&apos;,</div><div class="line">  `curr_district` varchar(20) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;所在地地区&apos;,</div><div class="line">  `location` varchar(255) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;具体地址&apos;,</div><div class="line">  `longitude` decimal(10,6) DEFAULT NULL COMMENT &apos;经度&apos;,</div><div class="line">  `latitude` decimal(10,6) DEFAULT NULL COMMENT &apos;纬度&apos;,</div><div class="line">  `update_time` int(11) unsigned DEFAULT &apos;0&apos; COMMENT &apos;修改时间&apos;,</div><div class="line">  PRIMARY KEY (`uid`)</div><div class="line">) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT=&apos;用户定位表&apos;</div></pre></td></tr></table></figure>
-<h2 id="用户日志信息"><a href="#用户日志信息" class="headerlink" title="用户日志信息"></a>用户日志信息</h2><p>日志信息，用来保存用户注册或者登陆行为的。另外会有一些修改密码或者修改重要信息的日志记录。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">//用户登陆日志</div><div class="line">CREATE TABLE `user_login_log` (</div><div class="line">  `id` bigint(20) NOT NULL AUTO_INCREMENT,</div><div class="line">  `uid` bigint(20) unsigned NOT NULL DEFAULT &apos;0&apos; COMMENT &apos;用户uid&apos;,</div><div class="line">  `type` tinyint(3) unsigned NOT NULL DEFAULT &apos;1&apos; COMMENT &apos;登录方式 第三方/邮箱/手机等&apos;,</div><div class="line">  `command` tinyint(3) unsigned NOT NULL DEFAULT &apos;1&apos; COMMENT &apos;操作类型 1登陆成功  2登出成功 3登录失败 4登出失败&apos;,</div><div class="line">  `version` varchar(32) NOT NULL DEFAULT &apos;1.0&apos; COMMENT &apos;客户端版本号&apos;,</div><div class="line">  `client` varchar(20) NOT NULL DEFAULT &apos;dabaozha&apos; COMMENT &apos;客户端&apos;,</div><div class="line">  `device_id` varchar(64) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;登录时设备号&apos;,</div><div class="line">  `lastip` varchar(32) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;登录ip&apos;,</div><div class="line">  `os` varchar(16) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;手机系统&apos;,</div><div class="line">  `osver` varchar(32) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;系统版本&apos;,</div><div class="line">  `text` varchar(200) NOT NULL DEFAULT &apos;&apos;,</div><div class="line">  `create_time` int(11) unsigned NOT NULL DEFAULT &apos;0&apos; COMMENT &apos;操作时间&apos;,</div><div class="line">  PRIMARY KEY (`id`),</div><div class="line">  KEY `idx_uid_type_time` (`uid`,`type`,`create_time`) USING BTREE,</div><div class="line">  KEY `idx_create_time` (`create_time`)</div><div class="line">) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT=&apos;登陆日志表&apos;</div><div class="line"></div><div class="line">//用户注册日志</div><div class="line">CREATE TABLE `user_register_log` (</div><div class="line">  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT &apos;自增ID&apos;,</div><div class="line">  `uid` bigint(20) unsigned NOT NULL COMMENT &apos;用户ID&apos;,</div><div class="line">  `register_method` tinyint(2) unsigned NOT NULL COMMENT &apos;注册方式1手机号 2邮箱 3用户名 4qq 5微信 6腾讯微博 7新浪微博&apos;,</div><div class="line">  `register_time` int(11) NOT NULL COMMENT &apos;注册时间&apos;,</div><div class="line">  `register_ip` varchar(16) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;注册IP&apos;,</div><div class="line">  `register_client` varchar(16) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;注册客户端&apos;,</div><div class="line">  PRIMARY KEY (`id`),</div><div class="line">) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COMMENT=&apos;用户注册日志表&apos;</div><div class="line"></div><div class="line">//修改信息日志</div><div class="line">CREATE TABLE `user_info_update` (</div><div class="line">  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT &apos;自增ID&apos;,</div><div class="line">  `uid` bigint(20) unsigned NOT NULL COMMENT &apos;用户ID&apos;,</div><div class="line">  `attribute_name` varchar(30) NOT NULL COMMENT &apos;属性名&apos;,</div><div class="line">  `attribute_old_val` varchar(30) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;属性对应旧的值&apos;,</div><div class="line">  `attribute_new_val` varchar(30) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;属性对应新的值&apos;,</div><div class="line">  `update_time` int(11) NOT NULL COMMENT &apos;修改时间&apos;,</div><div class="line">  PRIMARY KEY (`id`),</div><div class="line">) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COMMENT=&apos;用户注册日志表&apos;</div></pre></td></tr></table></figure>
-<h2 id="全局uid"><a href="#全局uid" class="headerlink" title="全局uid"></a>全局uid</h2><p>建议不要使用表的主键作为用户ID，而是使用ID生成器(发号器)生成用户的唯一标示guid。当用户量急剧上升时，往往会采取分库分表的方法，然后通过将uid取余写到不同的表中。如果单纯的以某个表主键作为ID。会限制插入性能和增加业务复杂度,其次在分布式数据库中也无法保证ID唯一性。</p>
-<p>全局ID生成，是有很多方案的。简单一点，可以采用redis自增属性，因为其具有原子性，在分布式坏境中，能保证ID的唯一性。另外还有其他的一些开源方案，可自行Google。</p>
-<h2 id="Access-Token"><a href="#Access-Token" class="headerlink" title="Access Token"></a>Access Token</h2><p>与传统的Session相比，Access Token比较适合做RESTful Api开发。传统Web应用中，用户登陆后会写用户信息到cookie中，服务端通过Session就能得到用户的身份。</p>
-<p>Access Token的是OAuth2.0中用户经过授权后，返回调用API的凭证。对于自己的应用来讲，用户在登录后，即返回access_token。在token有效期内可凭借此凭证，调用其他接口。对于access_token的刷新有两种方案，第一种每次用户重启app时，重新refresh。第二种，在调用周期内服务端发现access token可能过期时，返回新的token给客户端。</p>
-<p>至于Access Token的生成，这个并没有规定，只要保证其唯一性即可。简单点，对用户uid和当前时间哈希得到新的Access Token，并设置过期时间。另外也可以采用<a href="https://jwt.io/" target="_blank" rel="external">JWT</a>实现。</p>
-
-          
+          <p>用户系统，主要分为账号体系和用户信息两大类。账号体系包括，登陆验证、注册、第三方授权、以及权限管理。用户信息包括，用户地理位置、用户属性、用户设备信息、还有用户日志信息。本文会介绍用户模块的具体落地方案。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/03/31/user/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -590,7 +549,7 @@ $ sudo yum -y install curl-devel
               
                 
                 <a class="post-title-link" href="/2017/03/06/feed_design/" itemprop="url">
-                  Feed系统设计
+                  Feed设计与实现
                 </a>
               
             
@@ -633,27 +592,15 @@ $ sudo yum -y install curl-devel
 
       
         
-          
-            <p>Feed，在社交和信息推荐的App与网站中，基本都会用到的。例如常用的新浪微博，用户登录进入后，展现给我们的就是feed信息流。新浪微博的信息，来自于你关注人所发布的内容。还有微信的朋友圈，今日头条的信息流，好友发布的美拍等，这些都是Feed。玩过知乎的人应该知道，在知乎Feed中，会显示某某关注了某某话题，某某点赞或者赞同了某个回答。广义来讲，这些也算是一种Feed。</p>
+          <p>Feed，在社交和信息推荐的App与网站中，基本都会用到的。例如常用的新浪微博，用户登录进入后，展现给我们的就是feed信息流。新浪微博的信息，来自于你关注人所发布的内容。还有微信的朋友圈，今日头条的信息流，好友发布的美拍等，这些都是Feed。玩过知乎的人应该知道，在知乎Feed中，会显示某某关注了某某话题，某某点赞或者赞同了某个回答。广义来讲，这些也算是一种Feed。</p>
 <p>本文会先介绍几种不同的Feed设计，让大家对Feed实现有初步的了解。其次会对我们采用的Feed方案作出详细的解答。</p>
-<h2 id="推方式"><a href="#推方式" class="headerlink" title="推方式"></a>推方式</h2><p>推方式，是发生在用户触发行为（发布新的动态，关注某个人，点赞）的时候。在触发时，用户的自身行为会记录到对应的行为表中，其次用户的行为也会记录到自己的粉丝对应动态表中。<br><img src="http://img.blog.csdn.net/20170307135925176?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
-<ol>
-<li>用户A发布新的帖子（动态），帖子记录到帖子表（主表）中。</li>
-<li>发帖行为塞到队列（Redis List）中。触发异步操作，消费者会先读取用户的粉丝列表（uid分表），依次写入到用户的动态表（uid分表）中。</li>
-<li>前端读取用户动态Feed，使用过滤条件，读取用户的动态表（关联查询帖子表）。</li>
-</ol>
-<p>使用推方式，对需求变更是易适应的。为什么这么说呢？因为用户每一次的行为，我们都有存储相应的数据（数据模型）。即使变更，只需更改逻辑层代码。另外性能较好，后台数据已经准备好了，无需复杂的SQL查询。当然这样做，也存在很多弊端。1. 如果在用户A发完动态后，其粉丝B取消关注了A。在这个时间差内，内容已经推送给粉丝B了。2. 数据量存储成本较大，假如一个用户的粉丝数是100万，在发帖后会写入100万条数据。</p>
-<h2 id="拉方式"><a href="#拉方式" class="headerlink" title="拉方式"></a>拉方式</h2><p>拉方式，是发生在粉丝拉取Feed时。粉丝拉取自己的动态，首先会检索自己的关注用户（uid分表）。得到关注的uid之后，再根据uid去查询关注用户发布的帖子。<br><img src="http://img.blog.csdn.net/20170307140259056?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
-<p>拉的模式相对是比较简单易实现的，另外对用户关系变更（新增，删除用户）是敏感的。其次也不存在数据存储压力。但在查询的时候，对帖子表本身压力是很大的。尤其是用户本身关注的人很多的话，会有很严重的性能问题。</p>
-<h2 id="拉方式优化-伪实时拉取"><a href="#拉方式优化-伪实时拉取" class="headerlink" title="拉方式优化-伪实时拉取"></a>拉方式优化-伪实时拉取</h2><p>用户在登录APP时，会发送用户活跃态到服务端。活跃信号塞到队列中，消费者依次读取活跃态uid，得到用户的关注者列表。得到关注者列表后，会去帖子表，查询关注人的发布的帖子。写到用户自己的Feed中。<br><img src="http://img.blog.csdn.net/20170307141232300?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
-<p>这种方式和对拉方式而言，能有效避免接口性能问题，相当于通过定时任务提前把用户的动态Feed跑出来。和推方式比较，推是比较盲目的，这种方式只需针对活跃用户即可，能避免存储浪费。缺点在于实时性不好，用户登录APP后马上进入自己的Feed页，此时如果后台用户动态还没跑完，接口读取的就是历史数据了。当然这种方式不适合知乎，微博这种类型的APP的。</p>
-<h2 id="拉方式优化-分区拉取"><a href="#拉方式优化-分区拉取" class="headerlink" title="拉方式优化-分区拉取"></a>拉方式优化-分区拉取</h2><p>分区拉取，是为了避免频繁查询单一帖子表所采用的一种优化手段。通过对帖子按照时间片分表，每次查询都能均摊到不同的表中，以此减轻主表的压力。</p>
-<h2 id="推方式优化-定时推"><a href="#推方式优化-定时推" class="headerlink" title="推方式优化-定时推"></a>推方式优化-定时推</h2><p>定时推，是以常驻进程的方式读取用户的发帖行为，再批量写入到粉丝的动态表中。这种方式和推方式差不多，只不过可以对多个发帖行为做聚合。</p>
-<h2 id="推方式优化-特定用户推"><a href="#推方式优化-特定用户推" class="headerlink" title="推方式优化-特定用户推"></a>推方式优化-特定用户推</h2><p>特定用户推，是推方式的一种优化方法。用户发送帖子时，只对活跃的粉丝用户写入。当然活跃用户的判定策略，是需要商定的。</p>
-<h2 id="综合"><a href="#综合" class="headerlink" title="综合"></a>综合</h2><p>以上几种方案，都有自己的利弊和适用场景。选择最适合自己的就是最好的。最后，我们采用了伪实时拉取这种方式。因为我们的需求是对点赞用户的聚合展示，类似于下图知乎这种。<br><img src="http://img.blog.csdn.net/20170307140332780?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
-<p>本身点赞行为会存储在两种类型的表（以帖子ID的点赞分表，以用户ID的点赞分表）中，如果单纯以拉方式话，会比较难处理的，而且有性能问题。其次，点赞这个行为的重要程度还不足以我们批量去存储的。</p>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/03/06/feed_design/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1756,6 +1703,21 @@ $ sudo yum -y install curl-devel
   
 
   
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
 
   
 

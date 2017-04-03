@@ -105,22 +105,19 @@
 
 
 
-<meta name="description" content="周末闲来无事，玩玩swoole。笔者开发坏境：CentOS 7，PHP 7.0.16
-安装PECL1234567//php版本 &amp;gt; 7$ wget http://pear.php.net/go-pear.phar$ php go-pear.phar//php版本 &amp;lt; 7$ yum install php-pear//否则会报错PHP Parse error:  syntax error">
+<meta name="description" content="周末闲来无事，玩玩swoole。笔者开发坏境：CentOS 7，PHP 7.0.16">
 <meta property="og:type" content="article">
 <meta property="og:title" content="PHP 7下安装Swoole和Yar">
 <meta property="og:url" content="http://gglinux.com/2017/04/01/php7_install/index.html">
 <meta property="og:site_name" content="gglinux's blog">
-<meta property="og:description" content="周末闲来无事，玩玩swoole。笔者开发坏境：CentOS 7，PHP 7.0.16
-安装PECL1234567//php版本 &amp;gt; 7$ wget http://pear.php.net/go-pear.phar$ php go-pear.phar//php版本 &amp;lt; 7$ yum install php-pear//否则会报错PHP Parse error:  syntax error">
+<meta property="og:description" content="周末闲来无事，玩玩swoole。笔者开发坏境：CentOS 7，PHP 7.0.16">
 <meta property="og:image" content="http://img.blog.csdn.net/20170402134831426?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 <meta property="og:image" content="http://img.blog.csdn.net/20170402134854724?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 <meta property="og:image" content="http://img.blog.csdn.net/20170402134913234?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:updated_time" content="2017-04-02T05:59:38.000Z">
+<meta property="og:updated_time" content="2017-04-03T03:13:58.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PHP 7下安装Swoole和Yar">
-<meta name="twitter:description" content="周末闲来无事，玩玩swoole。笔者开发坏境：CentOS 7，PHP 7.0.16
-安装PECL1234567//php版本 &amp;gt; 7$ wget http://pear.php.net/go-pear.phar$ php go-pear.phar//php版本 &amp;lt; 7$ yum install php-pear//否则会报错PHP Parse error:  syntax error">
+<meta name="twitter:description" content="周末闲来无事，玩玩swoole。笔者开发坏境：CentOS 7，PHP 7.0.16">
 <meta name="twitter:image" content="http://img.blog.csdn.net/20170402134831426?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 
 
@@ -375,6 +372,7 @@
 
       
         <p>周末闲来无事，玩玩swoole。笔者开发坏境：CentOS 7，PHP 7.0.16</p>
+<a id="more"></a>
 <h3 id="安装PECL"><a href="#安装PECL" class="headerlink" title="安装PECL"></a>安装PECL</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">//php版本 &gt; 7</div><div class="line">$ wget http://pear.php.net/go-pear.phar</div><div class="line">$ php go-pear.phar</div><div class="line"></div><div class="line">//php版本 &lt; 7</div><div class="line">$ yum install php-pear</div><div class="line">//否则会报错PHP Parse error:  syntax error, unexpected //&apos;new&apos; (T_NEW) in /usr/share/pear/PEAR/Frontend.php on //line 91</div></pre></td></tr></table></figure>
 <h3 id="安装swoole"><a href="#安装swoole" class="headerlink" title="安装swoole"></a>安装swoole</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">$ sudo pecl  install swoole</div><div class="line"></div><div class="line">//报错如下</div><div class="line">//Warning: Invalid argument supplied for foreach() in //Command.php on line 249</div><div class="line"></div><div class="line">vi `which pecl`</div><div class="line"></div><div class="line">//找到最后一行</div><div class="line">exec $PHP -C -n -q $INCARG -d date.timezone=UTC -d output_buffering=1 -d variables_order=EGPCS -d safe_mode=0 -d register_argc_argv=&quot;On&quot; $INCDIR/peclcmd.php &quot;$@&quot;</div><div class="line"></div><div class="line">去掉 -n 标示</div><div class="line"></div><div class="line">//报错如下</div><div class="line">//running: phpize</div><div class="line">//Can&apos;t find PHP headers in /usr/include/php</div><div class="line">//安装 php-devel</div><div class="line">sudo yum install php70w-devel</div><div class="line"></div><div class="line">成功！</div><div class="line">//Build process completed successfully</div><div class="line">//Installing &apos;/usr/lib64/php/modules/swoole.so&apos;</div><div class="line">//install ok: channel://pecl.php.net/swoole-1.9.8</div></pre></td></tr></table></figure>
 <h3 id="配置-php-ini"><a href="#配置-php-ini" class="headerlink" title="配置 php.ini"></a>配置 php.ini</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ php -i | grep php.ini</div><div class="line">//修改或者添加</div><div class="line"> extension=swoole.so</div></pre></td></tr></table></figure>
@@ -475,8 +473,8 @@ $ sudo yum -y install curl-devel
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/03/31/user/" rel="next" title="用户系统设计">
-                <i class="fa fa-chevron-left"></i> 用户系统设计
+              <a href="/2017/03/31/user/" rel="next" title="用户系统设计与实现">
+                <i class="fa fa-chevron-left"></i> 用户系统设计与实现
               </a>
             
           </div>
@@ -824,6 +822,21 @@ $ sudo yum -y install curl-devel
   
 
   
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
 
   
 

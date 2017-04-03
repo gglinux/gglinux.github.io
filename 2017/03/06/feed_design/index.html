@@ -108,7 +108,7 @@
 <meta name="description" content="Feed，在社交和信息推荐的App与网站中，基本都会用到的。例如常用的新浪微博，用户登录进入后，展现给我们的就是feed信息流。新浪微博的信息，来自于你关注人所发布的内容。还有微信的朋友圈，今日头条的信息流，好友发布的美拍等，这些都是Feed。玩过知乎的人应该知道，在知乎Feed中，会显示某某关注了某某话题，某某点赞或者赞同了某个回答。广义来讲，这些也算是一种Feed。
 本文会先介绍几种不同的Fe">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Feed系统设计">
+<meta property="og:title" content="Feed设计与实现">
 <meta property="og:url" content="http://gglinux.com/2017/03/06/feed_design/index.html">
 <meta property="og:site_name" content="gglinux's blog">
 <meta property="og:description" content="Feed，在社交和信息推荐的App与网站中，基本都会用到的。例如常用的新浪微博，用户登录进入后，展现给我们的就是feed信息流。新浪微博的信息，来自于你关注人所发布的内容。还有微信的朋友圈，今日头条的信息流，好友发布的美拍等，这些都是Feed。玩过知乎的人应该知道，在知乎Feed中，会显示某某关注了某某话题，某某点赞或者赞同了某个回答。广义来讲，这些也算是一种Feed。
@@ -117,9 +117,9 @@
 <meta property="og:image" content="http://img.blog.csdn.net/20170307140259056?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 <meta property="og:image" content="http://img.blog.csdn.net/20170307141232300?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 <meta property="og:image" content="http://img.blog.csdn.net/20170307140332780?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:updated_time" content="2017-03-31T15:11:22.000Z">
+<meta property="og:updated_time" content="2017-04-03T03:14:51.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Feed系统设计">
+<meta name="twitter:title" content="Feed设计与实现">
 <meta name="twitter:description" content="Feed，在社交和信息推荐的App与网站中，基本都会用到的。例如常用的新浪微博，用户登录进入后，展现给我们的就是feed信息流。新浪微博的信息，来自于你关注人所发布的内容。还有微信的朋友圈，今日头条的信息流，好友发布的美拍等，这些都是Feed。玩过知乎的人应该知道，在知乎Feed中，会显示某某关注了某某话题，某某点赞或者赞同了某个回答。广义来讲，这些也算是一种Feed。
 本文会先介绍几种不同的Fe">
 <meta name="twitter:image" content="http://img.blog.csdn.net/20170307135925176?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
@@ -154,7 +154,7 @@
 
 
 
-  <title> Feed系统设计 | gglinux's blog </title>
+  <title> Feed设计与实现 | gglinux's blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -324,7 +324,7 @@
             
             
               
-                Feed系统设计
+                Feed设计与实现
               
             
           </h1>
@@ -377,6 +377,7 @@
       
         <p>Feed，在社交和信息推荐的App与网站中，基本都会用到的。例如常用的新浪微博，用户登录进入后，展现给我们的就是feed信息流。新浪微博的信息，来自于你关注人所发布的内容。还有微信的朋友圈，今日头条的信息流，好友发布的美拍等，这些都是Feed。玩过知乎的人应该知道，在知乎Feed中，会显示某某关注了某某话题，某某点赞或者赞同了某个回答。广义来讲，这些也算是一种Feed。</p>
 <p>本文会先介绍几种不同的Feed设计，让大家对Feed实现有初步的了解。其次会对我们采用的Feed方案作出详细的解答。</p>
+<a id="more"></a>
 <h2 id="推方式"><a href="#推方式" class="headerlink" title="推方式"></a>推方式</h2><p>推方式，是发生在用户触发行为（发布新的动态，关注某个人，点赞）的时候。在触发时，用户的自身行为会记录到对应的行为表中，其次用户的行为也会记录到自己的粉丝对应动态表中。<br><img src="http://img.blog.csdn.net/20170307135925176?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
 <ol>
 <li>用户A发布新的帖子（动态），帖子记录到帖子表（主表）中。</li>
@@ -466,8 +467,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/03/31/user/" rel="prev" title="用户系统设计">
-                用户系统设计 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/03/31/user/" rel="prev" title="用户系统设计与实现">
+                用户系统设计与实现 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -809,6 +810,21 @@
   
 
   
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
 
   
 

@@ -105,22 +105,16 @@
 
 
 
-<meta name="description" content="用户系统，主要分为账号体系和用户信息两大类。账号体系包括，登陆验证、注册、第三方授权、以及权限管理。用户信息包括，用户地理位置、用户属性、用户设备信息、还有用户日志信息。本文会介绍用户系统的具体落地方案。
-登陆验证在一般项目账号体系中，一般会要求支持手机、邮箱、账号、QQ、微信、微博实现登陆。后面三种方式都是基于第三方授权后，完成的身份验证。手机、邮箱、账号则是相对传统的登录方式。
-用户身份与登录">
+<meta name="description" content="用户系统，主要分为账号体系和用户信息两大类。账号体系包括，登陆验证、注册、第三方授权、以及权限管理。用户信息包括，用户地理位置、用户属性、用户设备信息、还有用户日志信息。本文会介绍用户模块的具体落地方案。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="用户系统设计">
+<meta property="og:title" content="用户系统设计与实现">
 <meta property="og:url" content="http://gglinux.com/2017/03/31/user/index.html">
 <meta property="og:site_name" content="gglinux's blog">
-<meta property="og:description" content="用户系统，主要分为账号体系和用户信息两大类。账号体系包括，登陆验证、注册、第三方授权、以及权限管理。用户信息包括，用户地理位置、用户属性、用户设备信息、还有用户日志信息。本文会介绍用户系统的具体落地方案。
-登陆验证在一般项目账号体系中，一般会要求支持手机、邮箱、账号、QQ、微信、微博实现登陆。后面三种方式都是基于第三方授权后，完成的身份验证。手机、邮箱、账号则是相对传统的登录方式。
-用户身份与登录">
-<meta property="og:updated_time" content="2017-04-01T06:31:20.000Z">
+<meta property="og:description" content="用户系统，主要分为账号体系和用户信息两大类。账号体系包括，登陆验证、注册、第三方授权、以及权限管理。用户信息包括，用户地理位置、用户属性、用户设备信息、还有用户日志信息。本文会介绍用户模块的具体落地方案。">
+<meta property="og:updated_time" content="2017-04-03T03:14:44.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="用户系统设计">
-<meta name="twitter:description" content="用户系统，主要分为账号体系和用户信息两大类。账号体系包括，登陆验证、注册、第三方授权、以及权限管理。用户信息包括，用户地理位置、用户属性、用户设备信息、还有用户日志信息。本文会介绍用户系统的具体落地方案。
-登陆验证在一般项目账号体系中，一般会要求支持手机、邮箱、账号、QQ、微信、微博实现登陆。后面三种方式都是基于第三方授权后，完成的身份验证。手机、邮箱、账号则是相对传统的登录方式。
-用户身份与登录">
+<meta name="twitter:title" content="用户系统设计与实现">
+<meta name="twitter:description" content="用户系统，主要分为账号体系和用户信息两大类。账号体系包括，登陆验证、注册、第三方授权、以及权限管理。用户信息包括，用户地理位置、用户属性、用户设备信息、还有用户日志信息。本文会介绍用户模块的具体落地方案。">
 
 
 
@@ -152,7 +146,7 @@
 
 
 
-  <title> 用户系统设计 | gglinux's blog </title>
+  <title> 用户系统设计与实现 | gglinux's blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -322,7 +316,7 @@
             
             
               
-                用户系统设计
+                用户系统设计与实现
               
             
           </h1>
@@ -373,7 +367,8 @@
       
 
       
-        <p>用户系统，主要分为账号体系和用户信息两大类。账号体系包括，登陆验证、注册、第三方授权、以及权限管理。用户信息包括，用户地理位置、用户属性、用户设备信息、还有用户日志信息。本文会介绍用户系统的具体落地方案。</p>
+        <p>用户系统，主要分为账号体系和用户信息两大类。账号体系包括，登陆验证、注册、第三方授权、以及权限管理。用户信息包括，用户地理位置、用户属性、用户设备信息、还有用户日志信息。本文会介绍用户模块的具体落地方案。</p>
+<a id="more"></a>
 <h2 id="登陆验证"><a href="#登陆验证" class="headerlink" title="登陆验证"></a>登陆验证</h2><p>在一般项目账号体系中，一般会要求支持手机、邮箱、账号、QQ、微信、微博实现登陆。后面三种方式都是基于第三方授权后，完成的身份验证。手机、邮箱、账号则是相对传统的登录方式。</p>
 <p>用户身份与登录的授权方式是独立开的，即用户uid和登录方式是一对多的关系。举例来说，用户A在使用微博授权登陆后，服务端鉴别身份信息为uid=123。用户A下次使用微信登陆，服务端鉴别身份同样为uid=123。不存在同一用户A拥有多个账号信息的现象。登陆授权表设计如下。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">//用户授权表</div><div class="line">CREATE TABLE `user_auth` (</div><div class="line">  `id` bigint(20) NOT NULL AUTO_INCREMENT,</div><div class="line">  `uid` bigint(20) unsigned NOT NULL DEFAULT &apos;0&apos; COMMENT &apos;用户id&apos;,</div><div class="line">  `identity_type` tinyint(4) unsigned NOT NULL DEFAULT &apos;1&apos; COMMENT &apos;1手机号 2邮箱 3用户名 4qq 5微信 6腾讯微博 7新浪微博&apos;,</div><div class="line">  `identifier` varchar(50) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;手机号 邮箱 用户名或第三方应用的唯一标识&apos;,</div><div class="line">  `certificate` varchar(20) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;密码凭证(站内的保存密码，站外的不保存或保存token)&apos;,</div><div class="line">  `create_time` int(11) unsigned NOT NULL DEFAULT &apos;0&apos; COMMENT &apos;绑定时间&apos;,</div><div class="line">  `update_time` int(11) unsigned NOT NULL DEFAULT &apos;0&apos; COMMENT &apos;更新绑定时间&apos;,</div><div class="line">  PRIMARY KEY (`id`),</div><div class="line">  UNIQUE KEY `only` (`uid`,`identity_type`),</div><div class="line">  KEY `idx_uid` (`uid`) USING BTREE</div><div class="line">) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT=&apos;用户授权表&apos;</div></pre></td></tr></table></figure>
@@ -449,8 +444,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/03/06/feed_design/" rel="next" title="Feed系统设计">
-                <i class="fa fa-chevron-left"></i> Feed系统设计
+              <a href="/2017/03/06/feed_design/" rel="next" title="Feed设计与实现">
+                <i class="fa fa-chevron-left"></i> Feed设计与实现
               </a>
             
           </div>
@@ -802,6 +797,21 @@
   
 
   
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
 
   
 
