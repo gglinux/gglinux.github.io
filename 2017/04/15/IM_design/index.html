@@ -89,7 +89,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="规划," />
+  <meta name="keywords" content="设计," />
 
 
 
@@ -105,55 +105,22 @@
 
 
 
-<meta name="description" content="很久没安静下来写点什么了，太懶了。
-Review Plan学习去年计划看一些底层的书籍，基本都完成了。书单是
-
-redis设计与实现 100%
-mysql技术内幕 100%
-深入理解nginx 11%
-nginx实战开发 100%
-大型网站技术架构 100%
-Hadoop实战 70%
-微服务设计 21%
-激荡三十年 14%
-利用python进行数据分析 8%
-
-设计模式，架构这块内容，2016年接">
+<meta name="description" content="即时通讯（Instant Messaging，简称IM）是一个实时通信系统，允许两人或多人使用网络实时的传递文字消息、文件、语音与视频交流。实现方式有两种。第一种基于Server转发的，Client双方通信会经过Server转发来完成消息传递。例如QQ、微信。
+第二种是基于P2P(点对点)的。P2P的实现依赖于客户端之间的互联，但由于NAT与防火墙的存在，客户端无法直接互联，需要coturn服务器">
 <meta property="og:type" content="article">
-<meta property="og:title" content="About 2016">
-<meta property="og:url" content="http://gglinux.com/2017/01/08/about2016/index.html">
+<meta property="og:title" content="IM系统设计">
+<meta property="og:url" content="http://gglinux.com/2017/04/15/IM_design/index.html">
 <meta property="og:site_name" content="gglinux's blog">
-<meta property="og:description" content="很久没安静下来写点什么了，太懶了。
-Review Plan学习去年计划看一些底层的书籍，基本都完成了。书单是
-
-redis设计与实现 100%
-mysql技术内幕 100%
-深入理解nginx 11%
-nginx实战开发 100%
-大型网站技术架构 100%
-Hadoop实战 70%
-微服务设计 21%
-激荡三十年 14%
-利用python进行数据分析 8%
-
-设计模式，架构这块内容，2016年接">
-<meta property="og:updated_time" content="2017-02-28T04:13:27.000Z">
+<meta property="og:description" content="即时通讯（Instant Messaging，简称IM）是一个实时通信系统，允许两人或多人使用网络实时的传递文字消息、文件、语音与视频交流。实现方式有两种。第一种基于Server转发的，Client双方通信会经过Server转发来完成消息传递。例如QQ、微信。
+第二种是基于P2P(点对点)的。P2P的实现依赖于客户端之间的互联，但由于NAT与防火墙的存在，客户端无法直接互联，需要coturn服务器">
+<meta property="og:image" content="http://img.blog.csdn.net/20170415181224996?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170415181524357?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:updated_time" content="2017-04-15T10:39:32.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="About 2016">
-<meta name="twitter:description" content="很久没安静下来写点什么了，太懶了。
-Review Plan学习去年计划看一些底层的书籍，基本都完成了。书单是
-
-redis设计与实现 100%
-mysql技术内幕 100%
-深入理解nginx 11%
-nginx实战开发 100%
-大型网站技术架构 100%
-Hadoop实战 70%
-微服务设计 21%
-激荡三十年 14%
-利用python进行数据分析 8%
-
-设计模式，架构这块内容，2016年接">
+<meta name="twitter:title" content="IM系统设计">
+<meta name="twitter:description" content="即时通讯（Instant Messaging，简称IM）是一个实时通信系统，允许两人或多人使用网络实时的传递文字消息、文件、语音与视频交流。实现方式有两种。第一种基于Server转发的，Client双方通信会经过Server转发来完成消息传递。例如QQ、微信。
+第二种是基于P2P(点对点)的。P2P的实现依赖于客户端之间的互联，但由于NAT与防火墙的存在，客户端无法直接互联，需要coturn服务器">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20170415181224996?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 
 
 
@@ -185,7 +152,7 @@ Hadoop实战 70%
 
 
 
-  <title> About 2016 | gglinux's blog </title>
+  <title> IM系统设计 | gglinux's blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -334,7 +301,7 @@ Hadoop实战 70%
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://gglinux.com/2017/01/08/about2016/">
+    <link itemprop="mainEntityOfPage" href="http://gglinux.com/2017/04/15/IM_design/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="gglinux">
@@ -355,7 +322,7 @@ Hadoop实战 70%
             
             
               
-                About 2016
+                IM系统设计
               
             
           </h1>
@@ -379,7 +346,7 @@ Hadoop实战 70%
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a class="cloud-tie-join-count" href="/2017/01/08/about2016/#comments" itemprop="discussionUrl">
+                <a class="cloud-tie-join-count" href="/2017/04/15/IM_design/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count join-count" itemprop="commentCount"></span>
                 </a>
               </span>
@@ -406,47 +373,50 @@ Hadoop实战 70%
       
 
       
-        <p>很久没安静下来写点什么了，太懶了。</p>
-<h2 id="Review-Plan"><a href="#Review-Plan" class="headerlink" title="Review Plan"></a>Review Plan</h2><h3 id="学习"><a href="#学习" class="headerlink" title="学习"></a>学习</h3><p>去年计划看一些底层的书籍，基本都完成了。书单是</p>
-<ol>
-<li>redis设计与实现 100%</li>
-<li>mysql技术内幕 100%</li>
-<li>深入理解nginx 11%</li>
-<li>nginx实战开发 100%</li>
-<li>大型网站技术架构 100%</li>
-<li>Hadoop实战 70%</li>
-<li>微服务设计 21%</li>
-<li>激荡三十年 14%</li>
-<li>利用python进行数据分析 8%</li>
+        <p><a href="http://baike.baidu.com/link?url=_W4LMyBxK7gcYGkisHQJB5bDpg9iqbBJd9ydWWGDEzmfKHwWBV6dORgTMZl5Ujqjlo8a0-KSxFAkcWb0uoXFsa7gw4gN8Uw2FSZl6bKQi1-lcd3b1c-MTDM2YMF6ZsDp" target="_blank" rel="external">即时通讯</a>（Instant Messaging，简称IM）是一个实时通信系统，允许两人或多人使用网络实时的传递文字消息、文件、语音与视频交流。实现方式有两种。<br>第一种基于Server转发的，Client双方通信会经过Server转发来完成消息传递。例如QQ、微信。</p>
+<p>第二种是基于P2P(点对点)的。P2P的实现依赖于客户端之间的互联，但由于NAT与防火墙的存在，客户端无法直接互联，需要<a href="https://github.com/coturn/coturn" target="_blank" rel="external">coturn服务器</a>用来穿越NAT网络。</p>
+<p>本文主要讲述基于Server转发实现的即时通讯，包括私聊和群聊两类。私聊和群聊，原理基本类似，私聊是单次转发,群聊属于遍历转发。主要不同点为，群聊以群ID划分，私聊以会话ID划分，其次消息存储上也有较大差异。</p>
+<a id="more"></a>
+<h2 id="总体设计"><a href="#总体设计" class="headerlink" title="总体设计"></a>总体设计</h2><h3 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a>实现方式</h3><ol>
+<li>协议：WebSocket</li>
+<li>框架：Socket IO/Swoole</li>
+<li>关键点：可扩展，支持分布式部署。短链接负责业务逻辑，长链接负责Websocket。</li>
 </ol>
-<p>设计模式，架构这块内容，2016年接触的还是蛮少。</p>
-<h3 id="工作"><a href="#工作" class="headerlink" title="工作"></a>工作</h3><p>5月份从美图离职，来到了喜欢的城市-深圳，也正把户口迁过来。以前，在厦门这座安逸的城市，反而有一些压力。但在深圳，感觉工作按部就班，有种温水煮青蛙之感。</p>
-<p>一直说分享有三个层次。第一层次，写博客。第二层次，分享给他人。第三层次，给大众演讲。2016年在技术上做了第一次分享，效果自己还是挺满意的。</p>
-<p>经历两次实习和半年的工作，由初入职场的菜鸟，逐渐变成了现在的团队核心。这个也蛮欣慰。在工作以前，一直坚信，技术乃技术人的立身之本。真正工作以后，反而觉得技术只是工作的一部分。沟通能力，团队协调能力，责任心，产品理解能力。这些综合素质，在团队里面更重要。在与其他人沟通的过程中，自己很急躁，说话很快。</p>
-<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>一直计划每年去一个地方，今年在厦门待了两个月，去了香港。唯一的遗憾，7天的国庆假期，没有好好利用。另外，国庆期间也发生了一件对我影响很大的事情。</p>
-<p>技术上，虽然看了一些书，但与我期望的还有很大的差距。GitHub后半年基本没更新了。博客也久未更新，简直浪费当年的精力。真正的大牛，应该是理论和实践相结合的。</p>
-<p>感情上，不知道怎么说。可能自己是很随和的人，感情很被动。真正的爱情，每个个体精神上既相互慰藉也是相互独立的。与女朋友的时间分配上，希望有所改变。</p>
-<p>健身，从大学想到了现在。依旧没能真正执行。公司每周三的篮球，也经常缺席。虽然现在工作强度不大，但想想以后，还是要多锻炼。</p>
-<p>厨艺上，很是骄傲的，后面这段时间，有空就是自己做饭吃。野外生存，至少不会饿肚子了。</p>
-<h2 id="Preview-Plan"><a href="#Preview-Plan" class="headerlink" title="Preview Plan"></a>Preview Plan</h2><h3 id="学习-1"><a href="#学习-1" class="headerlink" title="学习"></a>学习</h3><p>今年想看些架构和思维方面的书籍，暂时先列出以下这些。想到再加。</p>
+<h3 id="总体架构图"><a href="#总体架构图" class="headerlink" title="总体架构图"></a>总体架构图</h3><p><img src="http://img.blog.csdn.net/20170415181224996?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="总体架构图"></p>
+<h3 id="时序图"><a href="#时序图" class="headerlink" title="时序图"></a>时序图</h3><p><img src="http://img.blog.csdn.net/20170415181524357?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<h2 id="详细实现"><a href="#详细实现" class="headerlink" title="详细实现"></a>详细实现</h2><h3 id="接入层实现"><a href="#接入层实现" class="headerlink" title="接入层实现"></a>接入层实现</h3><p>接入层的目的：1保证IM服务的可靠性，避免用户同时集中在同一聊天服务器中。2当聊天服务器压力过大时，能实现扩容。接入层可采用ngx_lua实现，保证性能。</p>
 <ol>
-<li>微服务设计</li>
-<li>设计模式之禅</li>
-<li>软技能-代码之外的生存指南</li>
-<li>python-codebook</li>
-<li>高效程序员的45个习惯</li>
-<li>激荡三十年</li>
-<li>Docker——容器与容器云</li>
+<li>客户端请求接入IM，调用接入API。参数为:接入类型(群聊，私聊)，接入uid，群聊ID</li>
+<li>群聊：保证隶属同群ID的用户落在同一Socket实例上。如果用户ABC，都属于群ID=123中，那么一定要保证ABC都分配在同一实例上。具体分配策略自定，一般按照群ID取余分配在不同机器实例上。</li>
+<li>私聊：A和B私聊，也要保证A和B落在同一实例上。一般分配策略为，（A+B）对机器取余。</li>
+<li>根据群聊类型，得到接入实例的IP和端口，返回给客户端。</li>
 </ol>
-<h3 id="工作-1"><a href="#工作-1" class="headerlink" title="工作"></a>工作</h3><p>目前在做业务开发，技术上没难点，主要提升下综合能力。沟通时，思考之后再说，慢一点。其次，对产品也要有自己的判断能力，学会反驳。明年，希望能转岗到架构组。</p>
-<h3 id="其他-1"><a href="#其他-1" class="headerlink" title="其他"></a>其他</h3><p>去年的计划完成的挺不错的，虽然计划的内容比较少。今年继续加油！</p>
+<h3 id="连接逻辑"><a href="#连接逻辑" class="headerlink" title="连接逻辑"></a>连接逻辑</h3><p>连接逻辑比较简单,Socket connect的过程。</p>
 <ol>
-<li>2017年计划去趟国外，任何一个国家都可以，或者去趟西藏或者新疆。</li>
-<li>技术上，GitHub不做具体的要求。博客，一个月至少两篇。还是要有点强制的好。</li>
-<li>感情上，做的不好的地方，会改正。精神上还是需要独立一些。</li>
-<li>学会理财，每月整理自己的账单，坚持一年。</li>
-<li>健身，每周三固定打球时间，坚持一年。</li>
-<li>学习外语。空闲时间记单词，坚持用英文查资料。</li>
+<li>客户端得到接入层提供的Socket Ip和端口，发起Websocket请求。</li>
+<li>Socket服务,根据请求参数，判断客户端合法性（签名验证）和登录验证。</li>
+<li>记录请求日志，保存Socket连接句柄（当前实例数组中）。</li>
+</ol>
+<h3 id="订阅消息逻辑"><a href="#订阅消息逻辑" class="headerlink" title="订阅消息逻辑"></a>订阅消息逻辑</h3><p>上一步连接成功后，用户触发进群（聊天窗口）操作，订阅该群消息。订阅消息用来保证，用户通过socket实时接收到该群其他用户发送的消息。否则，服务端会采用推送完成消息转发。</p>
+<ol>
+<li>订阅事件。emit(‘sub’)，群聊：发送当前群ID和用户的uid。私聊：发送对方uid和用户自身uid（会话ID）。</li>
+<li>服务端判断该uid是否已经在线，如果已经在线，则主动关闭旧的Socket，保证只有当前窗口在线。并将当前socket句柄push到数组中保存。</li>
+<li>业务逻辑判断。群聊：判断用户是否属于该群，判断群合法性。私聊：判断是否为好友。</li>
+<li>客户端在线，接收Socket消息，对消息解码，区分类型并展示。编码协议自定。</li>
+<li>客户端不在线，收到Push推送。客户端根据接收到的推送，拉取历史消息。更新未读数。</li>
+</ol>
+<h3 id="发布消息逻辑"><a href="#发布消息逻辑" class="headerlink" title="发布消息逻辑"></a>发布消息逻辑</h3><p>用户完成订阅群ID（群聊）或者订阅会话ID（私聊）后，可主动发送消息到该订阅ID（群ID和会话ID）中。</p>
+<ol>
+<li>发布事件。emit(‘pub’),图片（缩略图）、视频、语音，完成上传（静态文件服务）后，编码消息内容并提交。编码协议自定。</li>
+<li>服务端收到消息后，解码，识别过滤色情、政治内容。写入队列，完成其他操作（判断图片色情内容，消息统计，落地入库，更新未读数）。</li>
+<li>群聊：遍历当前群存在的socket句柄，如果在线则转发内容，不在线推送通知。</li>
+<li>私聊：判断对方是否在线，如果在线转发，不在线push推送。</li>
+</ol>
+<h3 id="用户下线"><a href="#用户下线" class="headerlink" title="用户下线"></a>用户下线</h3><p>用户退出聊天窗口，触发disconnect事件。服务端关闭socket句柄，标示用户下线。</p>
+<h3 id="广播逻辑"><a href="#广播逻辑" class="headerlink" title="广播逻辑"></a>广播逻辑</h3><p>广播逻辑，主要用在运营管理上。是对所有在线用户或者特定群ID（会话ID），发送消息(系统消息)。实现方法为：遍历所有在线socket句柄，发送内容。</p>
+<h3 id="监控服务"><a href="#监控服务" class="headerlink" title="监控服务"></a>监控服务</h3><p>在运营管理或者监控上，需要对聊天服务性能加以判定。</p>
+<ol>
+<li>统计在线人数，得到每个实例的Socket句柄长度相加</li>
 </ol>
 
       
@@ -498,7 +468,7 @@ Hadoop实战 70%
       
         <div class="post-tags">
           
-            <a href="/tags/规划/" rel="tag"># 规划</a>
+            <a href="/tags/设计/" rel="tag"># 设计</a>
           
         </div>
       
@@ -511,8 +481,8 @@ Hadoop实战 70%
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/04/10/short_video&dev/" rel="next" title="短视频和技术">
-                <i class="fa fa-chevron-left"></i> 短视频和技术
+              <a href="/2017/04/08/learn_new/" rel="next" title="如何高效率的学习新技术">
+                <i class="fa fa-chevron-left"></i> 如何高效率的学习新技术
               </a>
             
           </div>
@@ -520,10 +490,6 @@ Hadoop实战 70%
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/02/07/innoDB1/" rel="prev" title="InnoDB存储引擎（一）">
-                InnoDB存储引擎（一） <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -698,7 +664,7 @@ Hadoop实战 70%
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Review-Plan"><span class="nav-number">1.</span> <span class="nav-text">Review Plan</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#学习"><span class="nav-number">1.1.</span> <span class="nav-text">学习</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#工作"><span class="nav-number">1.2.</span> <span class="nav-text">工作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他"><span class="nav-number">1.3.</span> <span class="nav-text">其他</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Preview-Plan"><span class="nav-number">2.</span> <span class="nav-text">Preview Plan</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#学习-1"><span class="nav-number">2.1.</span> <span class="nav-text">学习</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#工作-1"><span class="nav-number">2.2.</span> <span class="nav-text">工作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他-1"><span class="nav-number">2.3.</span> <span class="nav-text">其他</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#总体设计"><span class="nav-number">1.</span> <span class="nav-text">总体设计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#实现方式"><span class="nav-number">1.1.</span> <span class="nav-text">实现方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总体架构图"><span class="nav-number">1.2.</span> <span class="nav-text">总体架构图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#时序图"><span class="nav-number">1.3.</span> <span class="nav-text">时序图</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#详细实现"><span class="nav-number">2.</span> <span class="nav-text">详细实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#接入层实现"><span class="nav-number">2.1.</span> <span class="nav-text">接入层实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#连接逻辑"><span class="nav-number">2.2.</span> <span class="nav-text">连接逻辑</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#订阅消息逻辑"><span class="nav-number">2.3.</span> <span class="nav-text">订阅消息逻辑</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#发布消息逻辑"><span class="nav-number">2.4.</span> <span class="nav-text">发布消息逻辑</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用户下线"><span class="nav-number">2.5.</span> <span class="nav-text">用户下线</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#广播逻辑"><span class="nav-number">2.6.</span> <span class="nav-text">广播逻辑</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#监控服务"><span class="nav-number">2.7.</span> <span class="nav-text">监控服务</span></a></li></ol></li></ol></div>
             
 
           </div>

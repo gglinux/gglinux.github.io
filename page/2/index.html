@@ -108,7 +108,7 @@
 <meta name="description" content="好好学习，天天向上">
 <meta property="og:type" content="website">
 <meta property="og:title" content="gglinux's blog">
-<meta property="og:url" content="http://gglinux.com/tags/学习/index.html">
+<meta property="og:url" content="http://gglinux.com/page/2/index.html">
 <meta property="og:site_name" content="gglinux's blog">
 <meta property="og:description" content="好好学习，天天向上">
 <meta name="twitter:card" content="summary">
@@ -145,7 +145,7 @@
 
 
 
-  <title> 标签: 学习 | gglinux's blog </title>
+  <title> gglinux's blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -180,7 +180,9 @@
     
   
 
-  <div class="container sidebar-position-left  ">
+  <div class="container sidebar-position-left 
+   page-home 
+ ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -283,47 +285,134 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-
-  <div id="posts" class="posts-collapse">
-    <div class="collection-title">
-      <h2 >
-        学习
-        <small>标签</small>
-      </h2>
-    </div>
-
+  <section id="posts" class="posts-expand">
     
       
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
 
-      <h1 class="post-title">
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://gglinux.com/2015/12/19/redis1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="gglinux">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/dog.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="gglinux's blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2017/04/08/learn_new/" itemprop="url">
-              
-                <span itemprop="name">如何高效率的学习新技术</span>
-              
-            </a>
         
-      </h1>
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/12/19/redis1/" itemprop="url">
+                  Redis数据结构（一）
+                </a>
+              
+            
+          </h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-04-08T10:06:24+08:00"
-              content="2017-04-08" >
-          04-08
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
 
-    </header>
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="SDS简单动态字符串"><a href="#SDS简单动态字符串" class="headerlink" title="SDS简单动态字符串"></a>SDS简单动态字符串</h2><h3 id="结构："><a href="#结构：" class="headerlink" title="结构："></a>结构：</h3><p>1：SDS是在C语言字符串的基础上，构造的一种简单的动态字符串（simple daynamic string）。SDS结构体包含三个变量，len用来记录长度，free用来记录未使用字节的数量，buf存储实际的字符串数组。<br>2：SDS不以‘\0’为结束符，而是以len的长度标识<br><img src="http://img.blog.csdn.net/20151219142351721" alt="这里写图片描述"></p>
+<h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><p>1：O(1)获取字符串长度。sdshdr结构体中，直接存储了字符串的长度。因此直接以sdshdr.len读取字符串长度就可以了，相对于C语言的遍历。<br>2：防止缓冲区溢出。因为sds自动记录了字符串的长度，当需要扩充某个字符串时，会先检测长度是否满足。不满足，会先扩充sdshdr.buf的长度。而C语言，strcat会直接拼接两个string，后面的string可能会占用已经占用的内存区域。<br>3：减少字符串改变带来的内存重分配次数。简单一点说，当扩充字符串时，sds会给它多分配一些额外的内存。当缩减字符串时，并没有立即将其归回，而是用sdshdr.free记录。<br>4：二进制安全。直白点，就是不以’\0’为结束符，而是记录其二进制数据，即’\0’对应的00000000。结束是以sdshdr.len来标识的<br>5：可以重用部分C语言的函数。但因为结束机制不一样，也只是部分而已。</p>
+<h3 id="用处"><a href="#用处" class="headerlink" title="用处"></a>用处</h3><p>1：redis中常见的字符串值都是用sds实现的。例如，常用的键。</p>
+<h2 id="双向链表"><a href="#双向链表" class="headerlink" title="双向链表"></a>双向链表</h2><h3 id="结构"><a href="#结构" class="headerlink" title="结构"></a>结构</h3><p>1：节点（struct ListNode），包含前节点和后置节点两个指针域。<br>      链表(struct List)，包含头，尾节点。以及相关的操作函数。<br>      <img src="http://img.blog.csdn.net/20151219153132066" alt="这里写图片描述">    </p>
+<p><img src="http://img.blog.csdn.net/20151219153151562" alt="这里写图片描述"></p>
+<p>###优点<br>1：新增和删除元素非常方便。很大部分来自链表的优点<br>2：其中的value字段，可以用来存储其他的类型，非常方便扩展</p>
+<h3 id="用处-1"><a href="#用处-1" class="headerlink" title="用处"></a>用处</h3><p>1：redis中List数据类型就是用这个实现的</p>
+<h2 id="字典"><a href="#字典" class="headerlink" title="字典"></a>字典</h2><h3 id="结构-1"><a href="#结构-1" class="headerlink" title="结构"></a>结构</h3><p>1：首先说明下，字典也是由其他的数据结构构造的。它包括，哈希节点，哈希表，字典三个部分。哈希表连接哈希节点，字典包含两个哈希表。<br>2：哈希节点，包含三个域。键，值，下个节点的指针。其中下个节点是为解决哈希冲突的。<br><img src="http://img.blog.csdn.net/20151219155529547" alt="这里写图片描述"><br>3：哈希表，包含四个域。dictht.table，是一个数组，对应的值就是哈希表节点。dictht.size，总大小。sizemask，用来计算索引值。used，记录已经使用多少。<br><img src="http://img.blog.csdn.net/20151219155858470" alt="这里写图片描述"><br>4：字典，包含四个域。其中，ht就是指向上面的哈希表的。<br><img src="http://img.blog.csdn.net/20151219160055049" alt="这里写图片描述"><br>5：完整的结构，未进行rehash，存在冲突。<br><img src="http://img.blog.csdn.net/20151219160222520" alt="这里写图片描述"></p>
+<h3 id="优点-1"><a href="#优点-1" class="headerlink" title="优点"></a>优点</h3><p>1：有效解决了哈希冲突，通过dictEntry的next指针，将具有同一索引的值链接起来。<br>2：很方便就行rehash。我们知道到哈希表大小不足时，就很容易造成哈希冲突。此时便需要扩容。dict.ht[2]其中一个就是用来扩容的，当dictht.size == used时，便将dict.ht[1]扩大到used*2，再将dict.ht[0]缓慢哈希到dict.ht[1]。完成后，将dict.ht[0]指向dict.ht[1]，将dict.ht[1]置为空即可。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
   </article>
 
 
     
-  </div>
+  </section>
 
   
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+  </nav>
+
 
 
           </div>
