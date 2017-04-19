@@ -758,6 +758,121 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://gglinux.com/2017/03/06/books/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="gglinux">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/dog.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="gglinux's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/03/06/books/" itemprop="url">
+                  书籍推荐
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>在技术上，看了一些书。罗列出来，希望给需要的人一些借鉴。正好在找工作，也是对自己所看的一点总结。当然笔者是计科毕业的，专业书除外。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/03/06/books/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://gglinux.com/2017/03/06/feed_design/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1410,126 +1525,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://gglinux.com/2015/12/20/redis2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="gglinux">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/dog.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="gglinux's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/12/20/redis2/" itemprop="url">
-                  Redis数据结构（二）
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="压缩列表"><a href="#压缩列表" class="headerlink" title="压缩列表"></a>压缩列表</h2><p>1：压缩列表是为了节省内存而设计的，是一种线性的数据结构。主要用在哈希和列表两种数据类型中。</p>
-<p>2：压缩列表包含主要包含五个部分，这五个部分顺序排列组合在一起。<br>结构如下图所示。<br><img src="http://img.blog.csdn.net/20160103164255998" alt="这里写图片描述"><br>表节点，有三个域组成。previous_entry_length,用来记录前一个节点的长度。encoding,记录下一个域的数据类型和长度。content,保存节点的值。<br><img src="http://img.blog.csdn.net/20160103164913156" alt="这里写图片描述"></p>
-<p>3：压缩列表有一种极端情况，会导致性能下降——连锁更新。previous_entry_length,记录的是上一节点的长度，当上一节点小于254字节时，该属性使用1字节存储。当大于254字节时，使用5字节。如果之前previous_entry_length都使用1字节，且长度都接近254字节时，会导致连锁更新的情况。</p>
-<h2 id="具体使用情况"><a href="#具体使用情况" class="headerlink" title="具体使用情况"></a>具体使用情况</h2><p>1：不同数据类型对应的编码对象<br><img src="http://img.blog.csdn.net/20160103172033023" alt="这里写图片描述"></p>
-<p>2：字符串对应的编码方式。1：整数值实现的字符串对象。2：embstr实现的字符串（类似SDS，用于保存端的字符串）。3：raw,SDS动态字符串<br><img src="http://img.blog.csdn.net/20160103173412166" alt="这里写图片描述"><br>转换规则：<br><img src="http://img.blog.csdn.net/20160103173455306" alt="这里写图片描述"></p>
-<p>3：列表对象，编码包含两种，ziplist(压缩列表),linkedlist(双向链表)。<br><img src="http://img.blog.csdn.net/20160103173649064" alt="这里写图片描述"><br>转换规则：<br>1：保存的所有字符串长度都小于64字节。<br>2：列表对象保存的元素数量小于512个。<br>当同时满足上面两条规则时，使用列表对象，否则使用链表对象。</p>
-<p>4：哈希对象，使用ziplist和hashtable编码<br>ziplist:<br><img src="http://img.blog.csdn.net/20160103174101939" alt="这里写图片描述"><br>hashtable:<br><img src="http://img.blog.csdn.net/20160103174151083" alt="这里写图片描述"><br>转换规则：<br>1：哈希对象保存的所有键和值的字符串长度都小于64字节。<br>2：保存的键值对数量小于512个。<br>同时满足，使用ziplist，否则使用hashtable.</p>
-<p>5:集合对象，使用intset或者hashtable编码。<br>intset:<br><img src="http://img.blog.csdn.net/20160103174706713" alt="这里写图片描述"><br>hashtable:<br><img src="http://img.blog.csdn.net/20160103174721415" alt="这里写图片描述"><br>转换规则：<br>1：集合对象保存的元素值都是整数。<br>2：集合对象保存的元素数量不超过512个。<br>同时满足上面两个条件，则使用intset，否则hashtable。</p>
-<p>6：有序集合，使用ziplist或者skiplist<br><img src="http://img.blog.csdn.net/20160103175034253" alt="这里写图片描述"><br>转换规则：<br>1：有序集合保存的元素数量小于128个。<br>2：保存的所有成员长度都小于64字节。<br>同时满足上面两个条件，则使用ziplist，否则skiplist。</p>
-<p>基于数据结构的东西就写这么多吧，当然内容都是《redis设计与实现-黄健宏》上的。我只是个搬运工，这本书写的挺不错的，建议购买。更详细的实现细节，可以看redis源码。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1579,7 +1574,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-count">12</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1601,7 +1596,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-count">11</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

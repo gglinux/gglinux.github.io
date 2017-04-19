@@ -89,7 +89,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Redis," />
+  <meta name="keywords" content="书," />
 
 
 
@@ -105,34 +105,16 @@
 
 
 
-<meta name="description" content="压缩列表1：压缩列表是为了节省内存而设计的，是一种线性的数据结构。主要用在哈希和列表两种数据类型中。
-2：压缩列表包含主要包含五个部分，这五个部分顺序排列组合在一起。结构如下图所示。表节点，有三个域组成。previous_entry_length,用来记录前一个节点的长度。encoding,记录下一个域的数据类型和长度。content,保存节点的值。
-3：压缩列表有一种极端情况，会导致性能下降——">
+<meta name="description" content="在技术上，看了一些书。罗列出来，希望给需要的人一些借鉴。正好在找工作，也是对自己所看的一点总结。当然笔者是计科毕业的，专业书除外。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Redis数据结构（二）">
-<meta property="og:url" content="http://gglinux.com/2015/12/20/redis2/index.html">
+<meta property="og:title" content="书籍推荐">
+<meta property="og:url" content="http://gglinux.com/2017/03/06/books/index.html">
 <meta property="og:site_name" content="gglinux's blog">
-<meta property="og:description" content="压缩列表1：压缩列表是为了节省内存而设计的，是一种线性的数据结构。主要用在哈希和列表两种数据类型中。
-2：压缩列表包含主要包含五个部分，这五个部分顺序排列组合在一起。结构如下图所示。表节点，有三个域组成。previous_entry_length,用来记录前一个节点的长度。encoding,记录下一个域的数据类型和长度。content,保存节点的值。
-3：压缩列表有一种极端情况，会导致性能下降——">
-<meta property="og:image" content="http://img.blog.csdn.net/20160103164255998">
-<meta property="og:image" content="http://img.blog.csdn.net/20160103164913156">
-<meta property="og:image" content="http://img.blog.csdn.net/20160103172033023">
-<meta property="og:image" content="http://img.blog.csdn.net/20160103173412166">
-<meta property="og:image" content="http://img.blog.csdn.net/20160103173455306">
-<meta property="og:image" content="http://img.blog.csdn.net/20160103173649064">
-<meta property="og:image" content="http://img.blog.csdn.net/20160103174101939">
-<meta property="og:image" content="http://img.blog.csdn.net/20160103174151083">
-<meta property="og:image" content="http://img.blog.csdn.net/20160103174706713">
-<meta property="og:image" content="http://img.blog.csdn.net/20160103174721415">
-<meta property="og:image" content="http://img.blog.csdn.net/20160103175034253">
-<meta property="og:updated_time" content="2017-03-01T10:41:41.000Z">
+<meta property="og:description" content="在技术上，看了一些书。罗列出来，希望给需要的人一些借鉴。正好在找工作，也是对自己所看的一点总结。当然笔者是计科毕业的，专业书除外。">
+<meta property="og:updated_time" content="2017-04-19T10:32:25.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Redis数据结构（二）">
-<meta name="twitter:description" content="压缩列表1：压缩列表是为了节省内存而设计的，是一种线性的数据结构。主要用在哈希和列表两种数据类型中。
-2：压缩列表包含主要包含五个部分，这五个部分顺序排列组合在一起。结构如下图所示。表节点，有三个域组成。previous_entry_length,用来记录前一个节点的长度。encoding,记录下一个域的数据类型和长度。content,保存节点的值。
-3：压缩列表有一种极端情况，会导致性能下降——">
-<meta name="twitter:image" content="http://img.blog.csdn.net/20160103164255998">
+<meta name="twitter:title" content="书籍推荐">
+<meta name="twitter:description" content="在技术上，看了一些书。罗列出来，希望给需要的人一些借鉴。正好在找工作，也是对自己所看的一点总结。当然笔者是计科毕业的，专业书除外。">
 
 
 
@@ -164,7 +146,7 @@
 
 
 
-  <title> Redis数据结构（二） | gglinux's blog </title>
+  <title> 书籍推荐 | gglinux's blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -313,7 +295,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://gglinux.com/2015/12/20/redis2/">
+    <link itemprop="mainEntityOfPage" href="http://gglinux.com/2017/03/06/books/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="gglinux">
@@ -334,7 +316,7 @@
             
             
               
-                Redis数据结构（二）
+                书籍推荐
               
             
           </h1>
@@ -358,7 +340,7 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a class="cloud-tie-join-count" href="/2015/12/20/redis2/#comments" itemprop="discussionUrl">
+                <a class="cloud-tie-join-count" href="/2017/03/06/books/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count join-count" itemprop="commentCount"></span>
                 </a>
               </span>
@@ -385,16 +367,24 @@
       
 
       
-        <h2 id="压缩列表"><a href="#压缩列表" class="headerlink" title="压缩列表"></a>压缩列表</h2><p>1：压缩列表是为了节省内存而设计的，是一种线性的数据结构。主要用在哈希和列表两种数据类型中。</p>
-<p>2：压缩列表包含主要包含五个部分，这五个部分顺序排列组合在一起。<br>结构如下图所示。<br><img src="http://img.blog.csdn.net/20160103164255998" alt="这里写图片描述"><br>表节点，有三个域组成。previous_entry_length,用来记录前一个节点的长度。encoding,记录下一个域的数据类型和长度。content,保存节点的值。<br><img src="http://img.blog.csdn.net/20160103164913156" alt="这里写图片描述"></p>
-<p>3：压缩列表有一种极端情况，会导致性能下降——连锁更新。previous_entry_length,记录的是上一节点的长度，当上一节点小于254字节时，该属性使用1字节存储。当大于254字节时，使用5字节。如果之前previous_entry_length都使用1字节，且长度都接近254字节时，会导致连锁更新的情况。</p>
-<h2 id="具体使用情况"><a href="#具体使用情况" class="headerlink" title="具体使用情况"></a>具体使用情况</h2><p>1：不同数据类型对应的编码对象<br><img src="http://img.blog.csdn.net/20160103172033023" alt="这里写图片描述"></p>
-<p>2：字符串对应的编码方式。1：整数值实现的字符串对象。2：embstr实现的字符串（类似SDS，用于保存端的字符串）。3：raw,SDS动态字符串<br><img src="http://img.blog.csdn.net/20160103173412166" alt="这里写图片描述"><br>转换规则：<br><img src="http://img.blog.csdn.net/20160103173455306" alt="这里写图片描述"></p>
-<p>3：列表对象，编码包含两种，ziplist(压缩列表),linkedlist(双向链表)。<br><img src="http://img.blog.csdn.net/20160103173649064" alt="这里写图片描述"><br>转换规则：<br>1：保存的所有字符串长度都小于64字节。<br>2：列表对象保存的元素数量小于512个。<br>当同时满足上面两条规则时，使用列表对象，否则使用链表对象。</p>
-<p>4：哈希对象，使用ziplist和hashtable编码<br>ziplist:<br><img src="http://img.blog.csdn.net/20160103174101939" alt="这里写图片描述"><br>hashtable:<br><img src="http://img.blog.csdn.net/20160103174151083" alt="这里写图片描述"><br>转换规则：<br>1：哈希对象保存的所有键和值的字符串长度都小于64字节。<br>2：保存的键值对数量小于512个。<br>同时满足，使用ziplist，否则使用hashtable.</p>
-<p>5:集合对象，使用intset或者hashtable编码。<br>intset:<br><img src="http://img.blog.csdn.net/20160103174706713" alt="这里写图片描述"><br>hashtable:<br><img src="http://img.blog.csdn.net/20160103174721415" alt="这里写图片描述"><br>转换规则：<br>1：集合对象保存的元素值都是整数。<br>2：集合对象保存的元素数量不超过512个。<br>同时满足上面两个条件，则使用intset，否则hashtable。</p>
-<p>6：有序集合，使用ziplist或者skiplist<br><img src="http://img.blog.csdn.net/20160103175034253" alt="这里写图片描述"><br>转换规则：<br>1：有序集合保存的元素数量小于128个。<br>2：保存的所有成员长度都小于64字节。<br>同时满足上面两个条件，则使用ziplist，否则skiplist。</p>
-<p>基于数据结构的东西就写这么多吧，当然内容都是《redis设计与实现-黄健宏》上的。我只是个搬运工，这本书写的挺不错的，建议购买。更详细的实现细节，可以看redis源码。</p>
+        <p>在技术上，看了一些书。罗列出来，希望给需要的人一些借鉴。正好在找工作，也是对自己所看的一点总结。当然笔者是计科毕业的，专业书除外。</p>
+<a id="more"></a>
+<h3 id="MySQL技术内幕-Innodb存储引擎"><a href="#MySQL技术内幕-Innodb存储引擎" class="headerlink" title="MySQL技术内幕-Innodb存储引擎"></a>MySQL技术内幕-Innodb存储引擎</h3><p><a href="https://book.douban.com/subject/24708143/" target="_blank" rel="external">豆瓣</a>，主要讲述Innodb存储引擎的实现，写的也比较深入（索引实现，事务等）。但没讲具体的索引优化和注意的点。推荐阅读第五章和第七章。也可以结合看下<a href="http://blog.codinglabs.org/articles/theory-of-mysql-index.html" target="_blank" rel="external">mysql索引原理</a>。</p>
+<h3 id="Redis设计与实现"><a href="#Redis设计与实现" class="headerlink" title="Redis设计与实现"></a>Redis设计与实现</h3><p><a href="https://book.douban.com/subject/25900156/" target="_blank" rel="external">豆瓣</a>，主要讲述Redis的实现原理,代码级别。如果要掌握Redis，看这本基本就够了。推荐！可以结合这本介绍<a href="http://docs.linuxtone.org/ebooks/NOSQL/memcached/memcached%E5%85%A8%E9%9D%A2%E5%89%96%E6%9E%90.pdf" target="_blank" rel="external">memecache</a>的</p>
+<h3 id="软技能-代码之外的生存指南"><a href="#软技能-代码之外的生存指南" class="headerlink" title="软技能-代码之外的生存指南"></a>软技能-代码之外的生存指南</h3><p><a href="https://book.douban.com/subject/26835090/" target="_blank" rel="external">豆瓣</a>，这本书是与技术无关的，但是建议每位技术人员都看下，干货很多。</p>
+<h3 id="大型网站技术架构"><a href="#大型网站技术架构" class="headerlink" title="大型网站技术架构"></a>大型网站技术架构</h3><p><a href="https://book.douban.com/subject/25723064/" target="_blank" rel="external">豆瓣</a>，比较适合入门架构领域，浅尝辄止。可以结合<a href="https://juejin.im/post/58f45b058d6d8100648a69f0" target="_blank" rel="external">这篇文章</a></p>
+<h3 id="Hadoop实战"><a href="#Hadoop实战" class="headerlink" title="Hadoop实战"></a>Hadoop实战</h3><p><a href="https://book.douban.com/subject/20275953/" target="_blank" rel="external">豆瓣</a>，实战大数据开发，不会有太多概念的东西。如果不需要理解原理，为了快速上手，推荐这本。</p>
+<h3 id="Nginx实战开发"><a href="#Nginx实战开发" class="headerlink" title="Nginx实战开发"></a>Nginx实战开发</h3><p><a href="https://book.douban.com/subject/4251875/" target="_blank" rel="external">豆瓣</a>，内容比较简单，讲述了很多Nginx在各种场景下的配置。推荐<a href="https://book.douban.com/subject/26745255/" target="_blank" rel="external">深入理解Nginx</a>，这本书笔者也在看。</p>
+<h3 id="HTML5和CSS3权威指南"><a href="#HTML5和CSS3权威指南" class="headerlink" title="HTML5和CSS3权威指南"></a>HTML5和CSS3权威指南</h3><p><a href="https://book.douban.com/subject/26644632/" target="_blank" rel="external">豆瓣</a>，偏实战，实例很多。可以作为工具书查阅。</p>
+<h3 id="JavaScript高级程序设计"><a href="#JavaScript高级程序设计" class="headerlink" title="JavaScript高级程序设计"></a>JavaScript高级程序设计</h3><p><a href="https://book.douban.com/subject/10546125/" target="_blank" rel="external">豆瓣</a>，内容和概念比较多，也比较深入。前端必备。</p>
+<h3 id="Node-js开发实战详解"><a href="#Node-js开发实战详解" class="headerlink" title="Node.js开发实战详解"></a>Node.js开发实战详解</h3><p><a href="https://book.douban.com/subject/25879763/" target="_blank" rel="external">豆瓣</a>，当时入门使用，实例挺好的，但有些错误。建议结合<a href="https://book.douban.com/subject/25768396/" target="_blank" rel="external">深入浅出nodejs</a>。</p>
+<h3 id="Web性能权威指南"><a href="#Web性能权威指南" class="headerlink" title="Web性能权威指南"></a>Web性能权威指南</h3><p><a href="https://book.douban.com/subject/25856314/" target="_blank" rel="external">豆瓣</a>,推荐阅读第一部分和第三部分。第二部分涉及较多网络链路上的，不推荐。</p>
+<h3 id="白帽子讲Web安全"><a href="#白帽子讲Web安全" class="headerlink" title="白帽子讲Web安全"></a>白帽子讲Web安全</h3><p><a href="https://book.douban.com/subject/10546925/" target="_blank" rel="external">豆瓣</a>，对每种攻击手段的原理和预防手段都讲述了十分清楚，Web开发必备。</p>
+<h3 id="Java开发实战"><a href="#Java开发实战" class="headerlink" title="Java开发实战"></a>Java开发实战</h3><p><a href="https://book.douban.com/subject/25727532/" target="_blank" rel="external">豆瓣</a>，非常详细，实例也比较多。入门打基础（JavaSE）可以好好看下。</p>
+<h3 id="高性能MySQL"><a href="#高性能MySQL" class="headerlink" title="高性能MySQL"></a>高性能MySQL</h3><p><a href="https://book.douban.com/subject/4241826/" target="_blank" rel="external">豆瓣</a>，很厚的一本书，内容比较广泛（未单独讲某一个存储引擎），笔者看了第五和第六章（索引优化）。如果对MySQL感兴趣的话，这本书可以好好读下。</p>
+<h3 id="HTTP权威指南"><a href="#HTTP权威指南" class="headerlink" title="HTTP权威指南"></a>HTTP权威指南</h3><p><a href="https://book.douban.com/subject/10746113/" target="_blank" rel="external">豆瓣</a>，关于HTTP协议的方方面面。暂时还没有看完。</p>
+<h3 id="PHP和MySQL-Web开发"><a href="#PHP和MySQL-Web开发" class="headerlink" title="PHP和MySQL Web开发"></a>PHP和MySQL Web开发</h3><p><a href="https://book.douban.com/subject/3549421/" target="_blank" rel="external">豆瓣</a>，入门PHP时看的，有很多实例，很详细。可以作为入门书籍。</p>
+<h3 id="PHP核心技术与最佳实践"><a href="#PHP核心技术与最佳实践" class="headerlink" title="PHP核心技术与最佳实践"></a>PHP核心技术与最佳实践</h3><p><a href="https://book.douban.com/subject/20370984/" target="_blank" rel="external">豆瓣</a>，如果想深入PHP开发，建议这本，讲述了很多PHP实战经验。</p>
 
       
     </div>
@@ -445,7 +435,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Redis/" rel="tag"># Redis</a>
+            <a href="/tags/书/" rel="tag"># 书</a>
           
         </div>
       
@@ -458,8 +448,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/12/19/redis1/" rel="next" title="Redis数据结构（一）">
-                <i class="fa fa-chevron-left"></i> Redis数据结构（一）
+              <a href="/2017/03/06/feed_design/" rel="next" title="Feed设计与实现">
+                <i class="fa fa-chevron-left"></i> Feed设计与实现
               </a>
             
           </div>
@@ -468,8 +458,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/04/10/short_video&dev/" rel="prev" title="短视频和技术">
-                短视频和技术 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/03/31/user/" rel="prev" title="用户系统设计与实现">
+                用户系统设计与实现 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -645,7 +635,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#压缩列表"><span class="nav-number">1.</span> <span class="nav-text">压缩列表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#具体使用情况"><span class="nav-number">2.</span> <span class="nav-text">具体使用情况</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#MySQL技术内幕-Innodb存储引擎"><span class="nav-number">1.</span> <span class="nav-text">MySQL技术内幕-Innodb存储引擎</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Redis设计与实现"><span class="nav-number">2.</span> <span class="nav-text">Redis设计与实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#软技能-代码之外的生存指南"><span class="nav-number">3.</span> <span class="nav-text">软技能-代码之外的生存指南</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#大型网站技术架构"><span class="nav-number">4.</span> <span class="nav-text">大型网站技术架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hadoop实战"><span class="nav-number">5.</span> <span class="nav-text">Hadoop实战</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Nginx实战开发"><span class="nav-number">6.</span> <span class="nav-text">Nginx实战开发</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTML5和CSS3权威指南"><span class="nav-number">7.</span> <span class="nav-text">HTML5和CSS3权威指南</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JavaScript高级程序设计"><span class="nav-number">8.</span> <span class="nav-text">JavaScript高级程序设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Node-js开发实战详解"><span class="nav-number">9.</span> <span class="nav-text">Node.js开发实战详解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Web性能权威指南"><span class="nav-number">10.</span> <span class="nav-text">Web性能权威指南</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#白帽子讲Web安全"><span class="nav-number">11.</span> <span class="nav-text">白帽子讲Web安全</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java开发实战"><span class="nav-number">12.</span> <span class="nav-text">Java开发实战</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#高性能MySQL"><span class="nav-number">13.</span> <span class="nav-text">高性能MySQL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP权威指南"><span class="nav-number">14.</span> <span class="nav-text">HTTP权威指南</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PHP和MySQL-Web开发"><span class="nav-number">15.</span> <span class="nav-text">PHP和MySQL Web开发</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PHP核心技术与最佳实践"><span class="nav-number">16.</span> <span class="nav-text">PHP核心技术与最佳实践</span></a></li></ol></div>
             
 
           </div>
