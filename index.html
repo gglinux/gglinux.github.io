@@ -296,6 +296,123 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://gglinux.com/2017/06/23/tencent/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="gglinux">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/dog.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="gglinux's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/06/23/tencent/" itemprop="url">
+                  公司那些事
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>毕业一年了，上上下下经历了不少公司。自己创过业，也在B轮公司待过，也在D轮做过事，另外也在上市公司做过螺丝钉。林林总总算下来，也有五家公司了。也是挺折腾的。经常有人会觉得，这小伙沉不下来。其实对应聘者而言，反反复复更换工作，当然有其不好之处。</p>
+<p>但从另一方面考虑有些人为什么会频繁更换工作呢？人往往喜欢待在舒适区，待久了一个地方就懒的去更换巢穴。频繁的跳出舒适区，也是对自己发展现状不满意的宣泄。这也是对笔者频繁更换工作的一种解释吧。我是觉得适当时机跳出舒适区，是对个人职业发展的追求。</p>
+<p>入职腾讯也有两周了，这期间经常有人问我腾讯的面试情况。在不违反公司制度的前提下，我会简单介绍有关问题。其次会比较下我目前待过几家公司的特点。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/06/23/tencent/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://gglinux.com/2017/05/31/yii2-plus/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1339,155 +1456,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://gglinux.com/2017/02/07/innoDB1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="gglinux">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/dog.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="gglinux's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/02/07/innoDB1/" itemprop="url">
-                  InnoDB存储引擎（一）
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="InnoDB存储引擎（一）"><a href="#InnoDB存储引擎（一）" class="headerlink" title="InnoDB存储引擎（一）"></a>InnoDB存储引擎（一）</h2><h3 id="整体结构"><a href="#整体结构" class="headerlink" title="整体结构"></a>整体结构</h3><p><img src="http://img.blog.csdn.net/20170207195627096?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
-<h3 id="内存池"><a href="#内存池" class="headerlink" title="内存池"></a>内存池</h3><ol>
-<li>维护线程／进程内部数据结构</li>
-<li>缓存磁盘文件（cache）</li>
-<li>对数据的更新或者新增操作，避免直接刷新磁盘</li>
-<li>重做日志缓冲（redo log）<br><img src="http://img.blog.csdn.net/20170207195648874?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></li>
-</ol>
-<h3 id="后台线程"><a href="#后台线程" class="headerlink" title="后台线程"></a>后台线程</h3><ol>
-<li>Master Hhread，将更新的数据（包括新增和被修改的数据）异步刷新到磁盘，维护内存池和磁盘中的数据的一致性。</li>
-<li>IO Thread分为Insert buffer Thread,log thread,read thread,write thread。</li>
-<li>purge thread，回收undo log</li>
-<li>Page cleaner thread，刷新脏页到磁盘（由master thread 独立出来的）<br><img src="http://img.blog.csdn.net/20170207201334791?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></li>
-</ol>
-<p>Write Ahead log:是指当事务提交上，先做重做日志，再修改页。满足事务中持久性要求。</p>
-<p>Check Point：检查点技术，数据库系统为了缩短数据库发生宕机恢复所需的时间所采取的一种刷新脏页的方法。    检查点技术分为两种，sharp checkpoint和fuzzy checkpoint。sharp checkpoint用在数据库关机时，将所有的脏数据全部刷新到磁盘。fuzzy checkpoint是按照一定的策略定时部分的刷新脏页数据，较为复杂，此处不做介绍。</p>
-<h3 id="InnoDB关键特性"><a href="#InnoDB关键特性" class="headerlink" title="InnoDB关键特性"></a>InnoDB关键特性</h3><ol>
-<li>插入缓冲（性能提升）<ul>
-<li>Insert Buffer 当新增数据并且存在非聚焦索引时，会有对非聚焦索引页的离散读。当出现这种情况时，mysql会先判断当前的非聚焦索引页是否存在于缓冲池中，如果存在则直接修改或者新增。如果不存在缓冲池中，则会先放到缓冲池中（类似于脏页），再以一定的频率merge之后，插入到实际的非聚焦索引页。</li>
-<li>Change Buffer 插入缓冲的升级，用在删除或者更新的情况下。在删除时，并不会对非聚焦索引全部删除。在更新是，也不马上更新非聚焦索引。</li>
-<li>以上两种优化手段，适用于 1. 存在非聚焦索引 2. 非聚焦索引不唯一。</li>
-</ul>
-</li>
-<li>两次写（可靠性）<ul>
-<li>对某页写回磁盘的过程中，如果出现宕机，并且导致页破坏（无法使用重做日志）。会出现数据丢失的情况。针对此问题，mysql首先会将所有需要写入的页（2MB）全部刷回到共享表空间中（没有离散写），再将更新的数据写入到各自的表空间中。<br><img src="http://img.blog.csdn.net/20170207195837984?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></li>
-</ul>
-</li>
-<li>自适应哈希索引（性能提升）<ul>
-<li>InnoDB查找耗时主要在于B+树的查找，通过使用哈希这种数据结构，将查询参数（Key）和值（位置）对应来减少查找的耗时。</li>
-</ul>
-</li>
-<li>异步IO（性能提升）<ul>
-<li>异步IO在对磁盘进行写入时，是非阻塞式的，能对多个查询或者插入操作进行merge，以减少实际的IO次数。</li>
-</ul>
-</li>
-<li>刷新邻接页（性能提升）<ul>
-<li>在刷新脏页时，会检查该页所在所在区的所有页，连同刷新。</li>
-</ul>
-</li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1537,7 +1505,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-count">15</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1559,7 +1527,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-count">14</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
