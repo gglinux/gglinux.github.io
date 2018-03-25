@@ -89,7 +89,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="PHP 7," />
+  <meta name="keywords" content="研发管理," />
 
 
 
@@ -105,21 +105,24 @@
 
 
 
-<meta name="description" content="周末闲来无事，玩玩swoole。笔者开发坏境：CentOS 7，PHP 7.0.16">
+<meta name="description" content="这篇文章，原计划是去年9月份写的，一直拖到了现在。主要原因在于一直抽不出时间，其次对整个敏捷研发，包括现如今的DevOps也只是浅尝辄止，害怕误人子弟和广告嫌疑。笔者一方面作为敏捷研发的实践者，另一方面作为敏捷研发的受益者。站在这两层身份上，浅谈下TAPD和敏捷研发。
+TAPD介绍TAPD，是腾讯敏捷产品研发平台，强调敏捷迭代、小步快跑，使用范围包含腾讯和腾讯的合作伙伴。目前TAPD已开放SASS">
 <meta property="og:type" content="article">
-<meta property="og:title" content="PHP 7下安装Swoole和Yar,Yaf">
-<meta property="og:url" content="http://gglinux.com/2017/04/01/php7_install/index.html">
+<meta property="og:title" content="TAPD和敏捷研发">
+<meta property="og:url" content="http://gglinux.com/2018/03/25/tapd/index.html">
 <meta property="og:site_name" content="gglinux's blog">
-<meta property="og:description" content="周末闲来无事，玩玩swoole。笔者开发坏境：CentOS 7，PHP 7.0.16">
-<meta property="og:image" content="http://img.blog.csdn.net/20170402134831426?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:image" content="http://img.blog.csdn.net/20170402134854724?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:image" content="http://img.blog.csdn.net/20170402134913234?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:image" content="http://img.blog.csdn.net/20170418133335355?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:updated_time" content="2017-04-18T05:57:31.000Z">
+<meta property="og:description" content="这篇文章，原计划是去年9月份写的，一直拖到了现在。主要原因在于一直抽不出时间，其次对整个敏捷研发，包括现如今的DevOps也只是浅尝辄止，害怕误人子弟和广告嫌疑。笔者一方面作为敏捷研发的实践者，另一方面作为敏捷研发的受益者。站在这两层身份上，浅谈下TAPD和敏捷研发。
+TAPD介绍TAPD，是腾讯敏捷产品研发平台，强调敏捷迭代、小步快跑，使用范围包含腾讯和腾讯的合作伙伴。目前TAPD已开放SASS">
+<meta property="og:image" content="https://img-blog.csdn.net/20180325170325798?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2dnbGludXg=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:image" content="https://img-blog.csdn.net/20180325170423278?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2dnbGludXg=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:image" content="https://img-blog.csdn.net/20180325170725484?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2dnbGludXg=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:image" content="https://img-blog.csdn.net/20180325170904758?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2dnbGludXg=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:updated_time" content="2018-03-25T09:27:48.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="PHP 7下安装Swoole和Yar,Yaf">
-<meta name="twitter:description" content="周末闲来无事，玩玩swoole。笔者开发坏境：CentOS 7，PHP 7.0.16">
-<meta name="twitter:image" content="http://img.blog.csdn.net/20170402134831426?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta name="twitter:title" content="TAPD和敏捷研发">
+<meta name="twitter:description" content="这篇文章，原计划是去年9月份写的，一直拖到了现在。主要原因在于一直抽不出时间，其次对整个敏捷研发，包括现如今的DevOps也只是浅尝辄止，害怕误人子弟和广告嫌疑。笔者一方面作为敏捷研发的实践者，另一方面作为敏捷研发的受益者。站在这两层身份上，浅谈下TAPD和敏捷研发。
+TAPD介绍TAPD，是腾讯敏捷产品研发平台，强调敏捷迭代、小步快跑，使用范围包含腾讯和腾讯的合作伙伴。目前TAPD已开放SASS">
+<meta name="twitter:image" content="https://img-blog.csdn.net/20180325170325798?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2dnbGludXg=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
 
 
 
@@ -151,7 +154,7 @@
 
 
 
-  <title> PHP 7下安装Swoole和Yar,Yaf | gglinux's blog </title>
+  <title> TAPD和敏捷研发 | gglinux's blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -300,7 +303,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://gglinux.com/2017/04/01/php7_install/">
+    <link itemprop="mainEntityOfPage" href="http://gglinux.com/2018/03/25/tapd/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="gglinux">
@@ -321,7 +324,7 @@
             
             
               
-                PHP 7下安装Swoole和Yar,Yaf
+                TAPD和敏捷研发
               
             
           </h1>
@@ -345,7 +348,7 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a class="cloud-tie-join-count" href="/2017/04/01/php7_install/#comments" itemprop="discussionUrl">
+                <a class="cloud-tie-join-count" href="/2018/03/25/tapd/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count join-count" itemprop="commentCount"></span>
                 </a>
               </span>
@@ -372,17 +375,23 @@
       
 
       
-        <p>周末闲来无事，玩玩swoole。笔者开发坏境：CentOS 7，PHP 7.0.16</p>
+        <p>这篇文章，原计划是去年9月份写的，一直拖到了现在。主要原因在于一直抽不出时间，其次对整个敏捷研发，包括现如今的DevOps也只是浅尝辄止，害怕误人子弟和广告嫌疑。笔者一方面作为敏捷研发的实践者，另一方面作为敏捷研发的受益者。站在这两层身份上，浅谈下TAPD和敏捷研发。</p>
+<h2 id="TAPD介绍"><a href="#TAPD介绍" class="headerlink" title="TAPD介绍"></a>TAPD介绍</h2><p>TAPD，是腾讯敏捷产品研发平台，强调敏捷迭代、小步快跑，使用范围包含腾讯和腾讯的合作伙伴。目前TAPD已开放SASS服务，助力业界提升团队研发效率。<a href="http://www.tapd.cn/" target="_blank" rel="external">http://www.tapd.cn/</a></p>
+<h2 id="敏捷研发"><a href="#敏捷研发" class="headerlink" title="敏捷研发"></a>敏捷研发</h2><p>最早接触软件研发方法论是在大学软件工程的课程上。老师给我们讲的是瀑布模型，毕业设计也是按照瀑布模型的方式完成的。可行性研究，需求分析，基本设计，详细设计，编码，测试，维护。这种开发模式对传统大型软件研发是很适用的。完善的开发流程，精细的设计，详尽的文档，角色各司其职，对软件质量和维护有很强的适应性。</p>
+<p>毕业后，从事互联网工作，开始了敏捷研发的”熏陶”。起初对这种方式有些排斥，经常开会（晨会，需求评审，测试用例）。需求经常变更。没有时间顾及代码质量。进入新项目时，需要看旧代码才能理解设计意图，看别人的代码更是一种痛苦。对开发人员来说，没有注释和文档的代码，真是一种煎熬。在紧凑的迭代周期中，代码设计也没法顾虑过多，反复的变更导致代码可读性差。</p>
+<p>公司存在的目的是盈利，蛋糕只有这么大，快速占领市场才是王炸。敏捷研发对互联网公司来说，尤其是移动互联网软件开发而言是更适应的。敏捷研发的核心在于快速迭代，拥抱变化。目标是让客户满意(以用户价值为依归)，保证软件灵活度以适应极速变化的市场。通俗一点说，更快的适应市场，更好的赚钱。</p>
 <a id="more"></a>
-<h3 id="安装PECL"><a href="#安装PECL" class="headerlink" title="安装PECL"></a>安装PECL</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">//php版本 &gt; 7</div><div class="line">$ wget http://pear.php.net/go-pear.phar</div><div class="line">$ php go-pear.phar</div><div class="line"></div><div class="line">//php版本 &lt; 7</div><div class="line">$ yum install php-pear</div><div class="line">//否则会报错PHP Parse error:  syntax error, unexpected //&apos;new&apos; (T_NEW) in /usr/share/pear/PEAR/Frontend.php on //line 91</div></pre></td></tr></table></figure>
-<h3 id="安装swoole"><a href="#安装swoole" class="headerlink" title="安装swoole"></a>安装swoole</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">$ sudo pecl  install swoole</div><div class="line"></div><div class="line">//报错如下</div><div class="line">//Warning: Invalid argument supplied for foreach() in //Command.php on line 249</div><div class="line"></div><div class="line">vi `which pecl`</div><div class="line"></div><div class="line">//找到最后一行</div><div class="line">exec $PHP -C -n -q $INCARG -d date.timezone=UTC -d output_buffering=1 -d variables_order=EGPCS -d safe_mode=0 -d register_argc_argv=&quot;On&quot; $INCDIR/peclcmd.php &quot;$@&quot;</div><div class="line"></div><div class="line">去掉 -n 标示</div><div class="line"></div><div class="line">//报错如下</div><div class="line">//running: phpize</div><div class="line">//Can&apos;t find PHP headers in /usr/include/php</div><div class="line">//安装 php-devel</div><div class="line">sudo yum install php70w-devel</div><div class="line"></div><div class="line">成功！</div><div class="line">//Build process completed successfully</div><div class="line">//Installing &apos;/usr/lib64/php/modules/swoole.so&apos;</div><div class="line">//install ok: channel://pecl.php.net/swoole-1.9.8</div></pre></td></tr></table></figure>
-<h3 id="配置-php-ini"><a href="#配置-php-ini" class="headerlink" title="配置 php.ini"></a>配置 php.ini</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ php -i | grep php.ini</div><div class="line">//修改或者添加</div><div class="line"> extension=swoole.so</div></pre></td></tr></table></figure>
-<h3 id="安装-Yar和Yaf"><a href="#安装-Yar和Yaf" class="headerlink" title="安装 Yar和Yaf"></a>安装 Yar和Yaf</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">$ sudo ./pecl install msgpack</div><div class="line"></div><div class="line">//pecl/yar requires PHP (version &gt;= 5.2.0, version &lt;= 5.6.99), installed version is 7.0.16</div><div class="line">//注意PHP7,要使用yar-2.0.2</div><div class="line">$ sudo ./pecl install yar-2.0.2 //注意yar-2.0.2版本</div><div class="line"></div><div class="line">//添加，json.so 要放到前面。否则会报</div><div class="line">//PHP Warning:  PHP Startup: Unable to load dynamic library &apos;/usr/lib64/php/modules/yar.so&apos; - /usr/lib64/php/modules/yar.so: undefined symbol: php_json_decode_ex in Unknown on line 0</div><div class="line"></div><div class="line">extension=json.so //放前面</div><div class="line">extension=msgpack.so</div><div class="line">extension=yar.so</div><div class="line"></div><div class="line">//重启php服务</div><div class="line">sudo systemctl restart  php-fpm.service</div><div class="line"></div><div class="line">//其他报错</div><div class="line">//perl: warning: Setting locale failed.</div><div class="line">//perl: warning: Please check that your locale //settings:</div><div class="line">//   LANGUAGE = (unset),</div><div class="line">//    LC_ALL = (unset),</div><div class="line"> //   LANG = &quot;en_US.UTF-8&quot;</div><div class="line"> </div><div class="line">$ localedef -v -c -i en_US -f UTF-8 en_US.UTF-8</div><div class="line"></div><div class="line">//其他报错</div><div class="line">//checking for cURL in default path... not found</div><div class="line">//configure: error: Please reinstall the libcurl distribution - easy.h should be in &lt;curl-dir&gt;/include/curl/</div><div class="line">$ sudo yum -y install curl-devel</div><div class="line"></div><div class="line"></div><div class="line">//安装Yaf</div><div class="line">$ sudo ./pecl install yaf</div><div class="line"></div><div class="line">//更新php.ini</div><div class="line">extension=yaf.so</div><div class="line"></div><div class="line">//重启服务</div><div class="line">$ sudo systemctl restart  php-fpm.service</div><div class="line"></div><div class="line">//安装脚手架</div><div class="line">$ git clone http://pecl.php.net/package/yaf</div><div class="line"></div><div class="line">$ cd php-yaf/tools/cg</div><div class="line"></div><div class="line">$ php yaf-cg app</div><div class="line">//配置 项目目录指向 app/index.php</div><div class="line">//访问配置host</div></pre></td></tr></table></figure>
-<h3 id="nginx-配置"><a href="#nginx-配置" class="headerlink" title="nginx 配置"></a>nginx 配置</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">server &#123;</div><div class="line">  listen ****;</div><div class="line">  server_name  domain.com;</div><div class="line">  root   document_root;</div><div class="line">  index  index.php index.html index.htm;</div><div class="line"> </div><div class="line">  if (!-e $request_filename) &#123;</div><div class="line">    rewrite ^/(.*)  /index.php/$1 last;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="Enjoy-it！"><a href="#Enjoy-it！" class="headerlink" title="Enjoy it！"></a>Enjoy it！</h3><p><img src="http://img.blog.csdn.net/20170402134831426?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="yar"></p>
-<p><img src="http://img.blog.csdn.net/20170402134854724?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="swoole"></p>
-<p><img src="http://img.blog.csdn.net/20170402134913234?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="msgpack"></p>
-<p><img src="http://img.blog.csdn.net/20170418133335355?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<h2 id="产品比较"><a href="#产品比较" class="headerlink" title="产品比较"></a>产品比较</h2><p>市场上，适合敏捷研发的产品大都使用过。国内的TAPD、Teambition、Tower、Worktile，国际的Jira、Redmine。下文的比较无”撕逼”之意，单纯为笔者使用感受。</p>
+<p>Tower、Worktile在大学期间用过，强调团队协作。从功能层面讲，比较适合小团队使用。UI特点，轻量级、单页应用、显示区域小。没有迭代的概念，需求是以任务的形式展现的。专业版具有视频通话功能，对小团队尤其适用。<br><img src="https://img-blog.csdn.net/20180325170325798?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2dnbGludXg=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="Tower特色"></p>
+<p>Jira没实际使用过，不做评论，开发者为Atlassian。Git客户端工具SourceTree也是Atlassian开发的，很出名的SASS服务商。</p>
+<p>Redmine，实习时使用过，强调问题缺陷（BUG）管理。UI特点：页面老旧、偏传统，多页应用。功能特点简单、直接、上手快。<br><img src="https://img-blog.csdn.net/20180325170423278?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2dnbGludXg=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="Redmine特色"></p>
+<p>Teambition，玩过一段时间。个人感觉功能介于Tower、TAPD之间。存在不同的版本，简单版本不包含需求、缺陷、迭代。简单版本以任务的形式展开，界面简洁，单页内即可完成全部操作。专业版本（收费）才具有需求、缺陷、迭代等敏捷研发的概念。<br><img src="https://img-blog.csdn.net/20180325170725484?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2dnbGludXg=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="Teambition特色"></p>
+<p>TAPD开放产品，包含两个解决方案-轻量协作和敏捷研发。轻量协作：对标Tower，功能特点为看板+云文档+企业微信集成，为满足小团队的协作需要。敏捷研发功能特点包含需求、迭代、缺陷、测试计划／用例、发布评审、看板等。总体来看敏捷研发特性（能力）更强。整体UI特点：偏传统，多页应用。<br><img src="https://img-blog.csdn.net/20180325170904758?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2dnbGludXg=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="TAPD特色"></p>
+<h2 id="TAPD特色"><a href="#TAPD特色" class="headerlink" title="TAPD特色"></a>TAPD特色</h2><h3 id="文档"><a href="#文档" class="headerlink" title="文档"></a>文档</h3><p>支持个人文档，项目文档。文档支持在线思维导图、富文本、Office全家桶。思维导图支持实时协作，支持转为需求。文档支持实时协作，支持markdown。曾经的公司使用Excel维护文档，无版本管理，无多人协作。在IM上互相转发，版本人工控制，效率低下。</p>
+<h3 id="工作流"><a href="#工作流" class="headerlink" title="工作流"></a>工作流</h3><p>工作流管理员可自由配置，支持自定义字段。很多人可能会问工作流是啥。举个例子，APP开发的过程通常为需求规划，开发，测试，发布。如果中间想增加UI设计、接口开发，这些都是完美支持的。工作流流转过程都可配置化，流转字段全部支持自定义。给团队极大的灵活性。</p>
+<h3 id="WiKi"><a href="#WiKi" class="headerlink" title="WiKi"></a>WiKi</h3><p>接口文档，曾被MediaWIKI支配过，其独特语法不忍直视。TAPD的WiKi支持markdown，用了很爽。WiKi支持附件，与TAPD本身都互相打通。</p>
+<h3 id="连接器"><a href="#连接器" class="headerlink" title="连接器"></a>连接器</h3><p>TAPD支持第三方应用与TAPD的打通。企业微信（邮箱），GitLab，Genkins，SVN等。</p>
+<h3 id="长期维护"><a href="#长期维护" class="headerlink" title="长期维护"></a>长期维护</h3><p>不用担心维护问题，不用担心文档问题。</p>
 
       
     </div>
@@ -433,7 +442,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/PHP-7/" rel="tag"># PHP 7</a>
+            <a href="/tags/研发管理/" rel="tag"># 研发管理</a>
           
         </div>
       
@@ -446,8 +455,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/03/31/user/" rel="next" title="用户系统设计与实现">
-                <i class="fa fa-chevron-left"></i> 用户系统设计与实现
+              <a href="/2017/06/23/tencent/" rel="next" title="公司那些事">
+                <i class="fa fa-chevron-left"></i> 公司那些事
               </a>
             
           </div>
@@ -455,10 +464,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/04/08/learn_new/" rel="prev" title="如何高效率的学习新技术">
-                如何高效率的学习新技术 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -633,7 +638,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装PECL"><span class="nav-number">1.</span> <span class="nav-text">安装PECL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装swoole"><span class="nav-number">2.</span> <span class="nav-text">安装swoole</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置-php-ini"><span class="nav-number">3.</span> <span class="nav-text">配置 php.ini</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装-Yar和Yaf"><span class="nav-number">4.</span> <span class="nav-text">安装 Yar和Yaf</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nginx-配置"><span class="nav-number">5.</span> <span class="nav-text">nginx 配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Enjoy-it！"><span class="nav-number">6.</span> <span class="nav-text">Enjoy it！</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#TAPD介绍"><span class="nav-number">1.</span> <span class="nav-text">TAPD介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#敏捷研发"><span class="nav-number">2.</span> <span class="nav-text">敏捷研发</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#产品比较"><span class="nav-number">3.</span> <span class="nav-text">产品比较</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TAPD特色"><span class="nav-number">4.</span> <span class="nav-text">TAPD特色</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#文档"><span class="nav-number">4.1.</span> <span class="nav-text">文档</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#工作流"><span class="nav-number">4.2.</span> <span class="nav-text">工作流</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#WiKi"><span class="nav-number">4.3.</span> <span class="nav-text">WiKi</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#连接器"><span class="nav-number">4.4.</span> <span class="nav-text">连接器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#长期维护"><span class="nav-number">4.5.</span> <span class="nav-text">长期维护</span></a></li></ol></li></ol></div>
             
 
           </div>

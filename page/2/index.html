@@ -296,6 +296,135 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://gglinux.com/2017/02/26/app_optimize/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="gglinux">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/dog.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="gglinux's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/02/26/app_optimize/" itemprop="url">
+                  App首屏接口性能优化
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>目前所在项目组开发的是一款母婴产品，集工具和社区属性。截止本文发布，注册用户接近7000万，首屏接口日访问量过百万。在首屏中，会给用户展现不同的数据，比如每日任务，宝宝（婴儿）每日概述，胎教音乐，运动视频，热帖等模块。首屏接口性能的好坏，将直接影响到app的使用体验。</p>
+<p>我们服务端RPC框架采用RESTful，其底层是curl实现的。curl采用http协议的，另外我们服务端的技术栈是PHP。我们都知道http协议相比较TCP而言，不仅多了http的报头，PHP本身性能也是大问题。在不做大重构的情况下，怎么做最小的修改，完成最大的性能提高。还是很有挑战性的。</p>
+<p>针对首屏接口，我们针对其完成了两次性能优化。</p>
+<h2 id="分屏加载"><a href="#分屏加载" class="headerlink" title="分屏加载"></a>分屏加载</h2><p>将本来属于一个接口的内容，单独在两个请求中返回。第一屏API返回关键的数据，减少用户初次进入的等待时间。第二屏，返回剩余的大部分数据。具体API返回内容的划分，是依赖客户端渲染顺序的。也没绝对标准。但我们的原则是，第一屏API力所能及返回最少的数据，避免用户等待。剩余的留给第二屏的API去完成。分屏加载的难点有以下几个。</p>
+<ol>
+<li>确定好数据加载顺序，最基础的数据肯定是需要最先返回的，另外也要客户端的同学配合。 </li>
+<li>首屏内容是和用户的怀孕状态紧密联系在一起的，用户切换宝宝(怀孕中切换到宝宝已出生，宝宝A切换到宝宝B)时，API的刷新频率怎么控制。最后为了可操作性，采用了比较粗暴的做法，每次切换均会请求两次接口。</li>
+</ol>
+<p>完成分屏加载以后，用户进入首页的等待时间，已经由2-3S减为1S左右。不必像以前客户端拿到全部内容后，才去渲染界面。现在只需要拿到第一屏的接口，即可完成界面的渲染工作。<br>分屏后第一屏接口耗时<br><img src="http://img.blog.csdn.net/20170226153007559?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>分屏后第二屏接口耗时<br><img src="http://img.blog.csdn.net/20170226153030013?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<h2 id="xhprof性能分析"><a href="#xhprof性能分析" class="headerlink" title="xhprof性能分析"></a>xhprof性能分析</h2><p>通过在alpha坏境和beta坏境部署Xhprof性能分析工具。我们可以看到实际的API在函数级别的性能损耗。这里不详述该工具的部署方式和使用方法。在Xhprof的帮助下，我们得到了以下几个结论。</p>
+<ol>
+<li>RPC采用的是HTTP协议，单纯的RPC调用便接近10MS的耗时。首屏RPC调用次数接近30次。</li>
+<li>每个RPC服务层内部，通过函数调用即可，也采用RPC的方式。</li>
+<li>热点数据直接查库，缓存利用率低下。</li>
+<li>数据表索引乱用，存在慢查询。</li>
+</ol>
+<p>结合上面几点，在实际操作过程中，由简到难，逐步完成。第一能减少RPC，便减少RPC请求。逻辑层数据由以前的多次获取改为一次获取。其次，服务层内部，不垮服务层不走RPC，直接以函数调用的方式请求。第三，热点不变动的数据，直接在逻辑层缓存，拿到后丢给API返回。第四，追踪MYSQL慢查询，优化查询SQL。完成后，第一屏性能提升30%～50%。第二屏提升40%～60%。实际结果可看下图</p>
+<p>第二次优化第一屏接口耗时<br><img src="http://img.blog.csdn.net/20170226153342986?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="第一屏接口"></p>
+<p>第二次优化第二屏接口耗时<br><img src="http://img.blog.csdn.net/20170226153405311?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="第二屏接口"></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://gglinux.com/2017/02/07/innoDB1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -991,7 +1120,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-count">16</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1002,7 +1131,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">6</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1013,7 +1142,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-count">15</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -1093,7 +1222,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-"></i>
   </span>
