@@ -105,16 +105,14 @@
 
 
 
-<meta name="description" content="压缩列表1：压缩列表是为了节省内存而设计的，是一种线性的数据结构。主要用在哈希和列表两种数据类型中。
-2：压缩列表包含主要包含五个部分，这五个部分顺序排列组合在一起。结构如下图所示。表节点，有三个域组成。previous_entry_length,用来记录前一个节点的长度。encoding,记录下一个域的数据类型和长度。content,保存节点的值。
-3：压缩列表有一种极端情况，会导致性能下降——">
+<meta name="description" content="压缩列表1：压缩列表是为了节省内存而设计的，是一种线性的数据结构。主要用在哈希和列表两种数据类型中。 2：压缩列表包含主要包含五个部分，这五个部分顺序排列组合在一起。结构如下图所示。表节点，有三个域组成。previous_entry_length,用来记录前一个节点的长度。encoding,记录下一个域的数据类型和长度。content,保存节点的值。 3：压缩列表有一种极端情况，会导致性能下降——">
+<meta name="keywords" content="Redis">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Redis数据结构（二）">
 <meta property="og:url" content="http://gglinux.com/2015/12/20/redis2/index.html">
-<meta property="og:site_name" content="gglinux's blog">
-<meta property="og:description" content="压缩列表1：压缩列表是为了节省内存而设计的，是一种线性的数据结构。主要用在哈希和列表两种数据类型中。
-2：压缩列表包含主要包含五个部分，这五个部分顺序排列组合在一起。结构如下图所示。表节点，有三个域组成。previous_entry_length,用来记录前一个节点的长度。encoding,记录下一个域的数据类型和长度。content,保存节点的值。
-3：压缩列表有一种极端情况，会导致性能下降——">
+<meta property="og:site_name" content="gglinux&#39;s blog">
+<meta property="og:description" content="压缩列表1：压缩列表是为了节省内存而设计的，是一种线性的数据结构。主要用在哈希和列表两种数据类型中。 2：压缩列表包含主要包含五个部分，这五个部分顺序排列组合在一起。结构如下图所示。表节点，有三个域组成。previous_entry_length,用来记录前一个节点的长度。encoding,记录下一个域的数据类型和长度。content,保存节点的值。 3：压缩列表有一种极端情况，会导致性能下降——">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://img.blog.csdn.net/20160103164255998">
 <meta property="og:image" content="http://img.blog.csdn.net/20160103164913156">
 <meta property="og:image" content="http://img.blog.csdn.net/20160103172033023">
@@ -129,9 +127,7 @@
 <meta property="og:updated_time" content="2017-03-01T10:41:41.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Redis数据结构（二）">
-<meta name="twitter:description" content="压缩列表1：压缩列表是为了节省内存而设计的，是一种线性的数据结构。主要用在哈希和列表两种数据类型中。
-2：压缩列表包含主要包含五个部分，这五个部分顺序排列组合在一起。结构如下图所示。表节点，有三个域组成。previous_entry_length,用来记录前一个节点的长度。encoding,记录下一个域的数据类型和长度。content,保存节点的值。
-3：压缩列表有一种极端情况，会导致性能下降——">
+<meta name="twitter:description" content="压缩列表1：压缩列表是为了节省内存而设计的，是一种线性的数据结构。主要用在哈希和列表两种数据类型中。 2：压缩列表包含主要包含五个部分，这五个部分顺序排列组合在一起。结构如下图所示。表节点，有三个域组成。previous_entry_length,用来记录前一个节点的长度。encoding,记录下一个域的数据类型和长度。content,保存节点的值。 3：压缩列表有一种极端情况，会导致性能下降——">
 <meta name="twitter:image" content="http://img.blog.csdn.net/20160103164255998">
 
 

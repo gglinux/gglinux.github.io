@@ -106,11 +106,13 @@
 
 
 <meta name="description" content="用户系统，主要分为账号体系和用户信息两大类。账号体系包括，登陆验证、注册、第三方授权、以及权限管理。用户信息包括，用户地理位置、用户属性、用户设备信息、还有用户日志信息。本文会介绍用户模块的具体落地方案。">
+<meta name="keywords" content="用户系统设计">
 <meta property="og:type" content="article">
 <meta property="og:title" content="用户系统设计与实现">
 <meta property="og:url" content="http://gglinux.com/2017/03/31/user/index.html">
-<meta property="og:site_name" content="gglinux's blog">
+<meta property="og:site_name" content="gglinux&#39;s blog">
 <meta property="og:description" content="用户系统，主要分为账号体系和用户信息两大类。账号体系包括，登陆验证、注册、第三方授权、以及权限管理。用户信息包括，用户地理位置、用户属性、用户设备信息、还有用户日志信息。本文会介绍用户模块的具体落地方案。">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2017-04-03T03:14:44.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="用户系统设计与实现">
@@ -380,7 +382,7 @@
 <p>全局ID生成，是有很多方案的。简单一点，可以采用redis自增属性，因为其具有原子性，在分布式坏境中，能保证ID的唯一性。另外还有其他的一些开源方案，可自行Google。</p>
 <h2 id="Access-Token"><a href="#Access-Token" class="headerlink" title="Access Token"></a>Access Token</h2><p>与传统的Session相比，Access Token比较适合做RESTful Api开发。传统Web应用中，用户登陆后会写用户信息到cookie中，服务端通过Session就能得到用户的身份。</p>
 <p>Access Token的是OAuth2.0中用户经过授权后，返回调用API的凭证。对于自己的应用来讲，用户在登录后，即返回access_token。在token有效期内可凭借此凭证，调用其他接口。对于access_token的刷新有两种方案，第一种每次用户重启app时，重新refresh。第二种，在调用周期内服务端发现access token可能过期时，返回新的token给客户端。</p>
-<p>至于Access Token的生成，这个并没有规定，只要保证其唯一性即可。简单点，对用户uid和当前时间哈希得到新的Access Token，并设置过期时间。另外也可以采用<a href="https://jwt.io/" target="_blank" rel="external">JWT</a>实现。</p>
+<p>至于Access Token的生成，这个并没有规定，只要保证其唯一性即可。简单点，对用户uid和当前时间哈希得到新的Access Token，并设置过期时间。另外也可以采用<a href="https://jwt.io/" target="_blank" rel="noopener">JWT</a>实现。</p>
 
       
     </div>

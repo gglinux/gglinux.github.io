@@ -105,14 +105,14 @@
 
 
 
-<meta name="description" content="SDS简单动态字符串结构：1：SDS是在C语言字符串的基础上，构造的一种简单的动态字符串（simple daynamic string）。SDS结构体包含三个变量，len用来记录长度，free用来记录未使用字节的数量，buf存储实际的字符串数组。2：SDS不以‘\0’为结束符，而是以len的长度标识
-优点1：O(1)获取字符串长度。sdshdr结构体中，直接存储了字符串的长度。因此直接以sdshd">
+<meta name="description" content="SDS简单动态字符串结构：1：SDS是在C语言字符串的基础上，构造的一种简单的动态字符串（simple daynamic string）。SDS结构体包含三个变量，len用来记录长度，free用来记录未使用字节的数量，buf存储实际的字符串数组。2：SDS不以‘\0’为结束符，而是以len的长度标识 优点1：O(1)获取字符串长度。sdshdr结构体中，直接存储了字符串的长度。因此直接以sdshd">
+<meta name="keywords" content="Redis">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Redis数据结构（一）">
 <meta property="og:url" content="http://gglinux.com/2015/12/19/redis1/index.html">
-<meta property="og:site_name" content="gglinux's blog">
-<meta property="og:description" content="SDS简单动态字符串结构：1：SDS是在C语言字符串的基础上，构造的一种简单的动态字符串（simple daynamic string）。SDS结构体包含三个变量，len用来记录长度，free用来记录未使用字节的数量，buf存储实际的字符串数组。2：SDS不以‘\0’为结束符，而是以len的长度标识
-优点1：O(1)获取字符串长度。sdshdr结构体中，直接存储了字符串的长度。因此直接以sdshd">
+<meta property="og:site_name" content="gglinux&#39;s blog">
+<meta property="og:description" content="SDS简单动态字符串结构：1：SDS是在C语言字符串的基础上，构造的一种简单的动态字符串（simple daynamic string）。SDS结构体包含三个变量，len用来记录长度，free用来记录未使用字节的数量，buf存储实际的字符串数组。2：SDS不以‘\0’为结束符，而是以len的长度标识 优点1：O(1)获取字符串长度。sdshdr结构体中，直接存储了字符串的长度。因此直接以sdshd">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://img.blog.csdn.net/20151219142351721">
 <meta property="og:image" content="http://img.blog.csdn.net/20151219153132066">
 <meta property="og:image" content="http://img.blog.csdn.net/20151219153151562">
@@ -123,8 +123,7 @@
 <meta property="og:updated_time" content="2017-03-01T10:32:59.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Redis数据结构（一）">
-<meta name="twitter:description" content="SDS简单动态字符串结构：1：SDS是在C语言字符串的基础上，构造的一种简单的动态字符串（simple daynamic string）。SDS结构体包含三个变量，len用来记录长度，free用来记录未使用字节的数量，buf存储实际的字符串数组。2：SDS不以‘\0’为结束符，而是以len的长度标识
-优点1：O(1)获取字符串长度。sdshdr结构体中，直接存储了字符串的长度。因此直接以sdshd">
+<meta name="twitter:description" content="SDS简单动态字符串结构：1：SDS是在C语言字符串的基础上，构造的一种简单的动态字符串（simple daynamic string）。SDS结构体包含三个变量，len用来记录长度，free用来记录未使用字节的数量，buf存储实际的字符串数组。2：SDS不以‘\0’为结束符，而是以len的长度标识 优点1：O(1)获取字符串长度。sdshdr结构体中，直接存储了字符串的长度。因此直接以sdshd">
 <meta name="twitter:image" content="http://img.blog.csdn.net/20151219142351721">
 
 
