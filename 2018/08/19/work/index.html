@@ -89,7 +89,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Redis," />
+  <meta name="keywords" content="职场," />
 
 
 
@@ -105,26 +105,18 @@
 
 
 
-<meta name="description" content="SDS简单动态字符串结构：1：SDS是在C语言字符串的基础上，构造的一种简单的动态字符串（simple daynamic string）。SDS结构体包含三个变量，len用来记录长度，free用来记录未使用字节的数量，buf存储实际的字符串数组。2：SDS不以‘\0’为结束符，而是以len的长度标识 优点1：O(1)获取字符串长度。sdshdr结构体中，直接存储了字符串的长度。因此直接以sdshd">
-<meta name="keywords" content="Redis">
+<meta name="description" content="松浦弥太郎说过，所谓工作就是证明自己有用。很大白话的道理，深表赞同。劳动者付出了劳动，雇佣者给与其报酬。报酬的高低取决于劳动者证明自己有多有用。 工作所需要的技能包含两个层面，其一是专业技能，其二是通用技能。我们能独立完成这项工作，依赖的是专业技能，即工作的专业性。不管是厨师、医生、会计、程序员还是地铁司机，专业度不过关是最难逾越的发展瓶颈。 人和人之间是一个复杂的关系网络，个体的表现不仅需要个人">
+<meta name="keywords" content="职场">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Redis数据结构（一）">
-<meta property="og:url" content="http://gglinux.com/2015/12/19/redis1/index.html">
+<meta property="og:title" content="小萌新变身社会人">
+<meta property="og:url" content="http://gglinux.com/2018/08/19/work/index.html">
 <meta property="og:site_name" content="gglinux&#39;s blog">
-<meta property="og:description" content="SDS简单动态字符串结构：1：SDS是在C语言字符串的基础上，构造的一种简单的动态字符串（simple daynamic string）。SDS结构体包含三个变量，len用来记录长度，free用来记录未使用字节的数量，buf存储实际的字符串数组。2：SDS不以‘\0’为结束符，而是以len的长度标识 优点1：O(1)获取字符串长度。sdshdr结构体中，直接存储了字符串的长度。因此直接以sdshd">
+<meta property="og:description" content="松浦弥太郎说过，所谓工作就是证明自己有用。很大白话的道理，深表赞同。劳动者付出了劳动，雇佣者给与其报酬。报酬的高低取决于劳动者证明自己有多有用。 工作所需要的技能包含两个层面，其一是专业技能，其二是通用技能。我们能独立完成这项工作，依赖的是专业技能，即工作的专业性。不管是厨师、医生、会计、程序员还是地铁司机，专业度不过关是最难逾越的发展瓶颈。 人和人之间是一个复杂的关系网络，个体的表现不仅需要个人">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://img.blog.csdn.net/20151219142351721">
-<meta property="og:image" content="http://img.blog.csdn.net/20151219153132066">
-<meta property="og:image" content="http://img.blog.csdn.net/20151219153151562">
-<meta property="og:image" content="http://img.blog.csdn.net/20151219155529547">
-<meta property="og:image" content="http://img.blog.csdn.net/20151219155858470">
-<meta property="og:image" content="http://img.blog.csdn.net/20151219160055049">
-<meta property="og:image" content="http://img.blog.csdn.net/20151219160222520">
-<meta property="og:updated_time" content="2017-03-01T10:32:59.000Z">
+<meta property="og:updated_time" content="2018-08-23T05:35:09.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Redis数据结构（一）">
-<meta name="twitter:description" content="SDS简单动态字符串结构：1：SDS是在C语言字符串的基础上，构造的一种简单的动态字符串（simple daynamic string）。SDS结构体包含三个变量，len用来记录长度，free用来记录未使用字节的数量，buf存储实际的字符串数组。2：SDS不以‘\0’为结束符，而是以len的长度标识 优点1：O(1)获取字符串长度。sdshdr结构体中，直接存储了字符串的长度。因此直接以sdshd">
-<meta name="twitter:image" content="http://img.blog.csdn.net/20151219142351721">
+<meta name="twitter:title" content="小萌新变身社会人">
+<meta name="twitter:description" content="松浦弥太郎说过，所谓工作就是证明自己有用。很大白话的道理，深表赞同。劳动者付出了劳动，雇佣者给与其报酬。报酬的高低取决于劳动者证明自己有多有用。 工作所需要的技能包含两个层面，其一是专业技能，其二是通用技能。我们能独立完成这项工作，依赖的是专业技能，即工作的专业性。不管是厨师、医生、会计、程序员还是地铁司机，专业度不过关是最难逾越的发展瓶颈。 人和人之间是一个复杂的关系网络，个体的表现不仅需要个人">
 
 
 
@@ -156,7 +148,7 @@
 
 
 
-  <title> Redis数据结构（一） | gglinux's blog </title>
+  <title> 小萌新变身社会人 | gglinux's blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -305,7 +297,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://gglinux.com/2015/12/19/redis1/">
+    <link itemprop="mainEntityOfPage" href="http://gglinux.com/2018/08/19/work/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="gglinux">
@@ -326,7 +318,7 @@
             
             
               
-                Redis数据结构（一）
+                小萌新变身社会人
               
             
           </h1>
@@ -350,7 +342,7 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a class="cloud-tie-join-count" href="/2015/12/19/redis1/#comments" itemprop="discussionUrl">
+                <a class="cloud-tie-join-count" href="/2018/08/19/work/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count join-count" itemprop="commentCount"></span>
                 </a>
               </span>
@@ -377,15 +369,95 @@
       
 
       
-        <h2 id="SDS简单动态字符串"><a href="#SDS简单动态字符串" class="headerlink" title="SDS简单动态字符串"></a>SDS简单动态字符串</h2><h3 id="结构："><a href="#结构：" class="headerlink" title="结构："></a>结构：</h3><p>1：SDS是在C语言字符串的基础上，构造的一种简单的动态字符串（simple daynamic string）。SDS结构体包含三个变量，len用来记录长度，free用来记录未使用字节的数量，buf存储实际的字符串数组。<br>2：SDS不以‘\0’为结束符，而是以len的长度标识<br><img src="http://img.blog.csdn.net/20151219142351721" alt="这里写图片描述"></p>
-<h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><p>1：O(1)获取字符串长度。sdshdr结构体中，直接存储了字符串的长度。因此直接以sdshdr.len读取字符串长度就可以了，相对于C语言的遍历。<br>2：防止缓冲区溢出。因为sds自动记录了字符串的长度，当需要扩充某个字符串时，会先检测长度是否满足。不满足，会先扩充sdshdr.buf的长度。而C语言，strcat会直接拼接两个string，后面的string可能会占用已经占用的内存区域。<br>3：减少字符串改变带来的内存重分配次数。简单一点说，当扩充字符串时，sds会给它多分配一些额外的内存。当缩减字符串时，并没有立即将其归回，而是用sdshdr.free记录。<br>4：二进制安全。直白点，就是不以’\0’为结束符，而是记录其二进制数据，即’\0’对应的00000000。结束是以sdshdr.len来标识的<br>5：可以重用部分C语言的函数。但因为结束机制不一样，也只是部分而已。</p>
-<h3 id="用处"><a href="#用处" class="headerlink" title="用处"></a>用处</h3><p>1：redis中常见的字符串值都是用sds实现的。例如，常用的键。</p>
-<h2 id="双向链表"><a href="#双向链表" class="headerlink" title="双向链表"></a>双向链表</h2><h3 id="结构"><a href="#结构" class="headerlink" title="结构"></a>结构</h3><p>1：节点（struct ListNode），包含前节点和后置节点两个指针域。<br>      链表(struct List)，包含头，尾节点。以及相关的操作函数。<br>      <img src="http://img.blog.csdn.net/20151219153132066" alt="这里写图片描述">    </p>
-<p><img src="http://img.blog.csdn.net/20151219153151562" alt="这里写图片描述"></p>
-<p>###优点<br>1：新增和删除元素非常方便。很大部分来自链表的优点<br>2：其中的value字段，可以用来存储其他的类型，非常方便扩展</p>
-<h3 id="用处-1"><a href="#用处-1" class="headerlink" title="用处"></a>用处</h3><p>1：redis中List数据类型就是用这个实现的</p>
-<h2 id="字典"><a href="#字典" class="headerlink" title="字典"></a>字典</h2><h3 id="结构-1"><a href="#结构-1" class="headerlink" title="结构"></a>结构</h3><p>1：首先说明下，字典也是由其他的数据结构构造的。它包括，哈希节点，哈希表，字典三个部分。哈希表连接哈希节点，字典包含两个哈希表。<br>2：哈希节点，包含三个域。键，值，下个节点的指针。其中下个节点是为解决哈希冲突的。<br><img src="http://img.blog.csdn.net/20151219155529547" alt="这里写图片描述"><br>3：哈希表，包含四个域。dictht.table，是一个数组，对应的值就是哈希表节点。dictht.size，总大小。sizemask，用来计算索引值。used，记录已经使用多少。<br><img src="http://img.blog.csdn.net/20151219155858470" alt="这里写图片描述"><br>4：字典，包含四个域。其中，ht就是指向上面的哈希表的。<br><img src="http://img.blog.csdn.net/20151219160055049" alt="这里写图片描述"><br>5：完整的结构，未进行rehash，存在冲突。<br><img src="http://img.blog.csdn.net/20151219160222520" alt="这里写图片描述"></p>
-<h3 id="优点-1"><a href="#优点-1" class="headerlink" title="优点"></a>优点</h3><p>1：有效解决了哈希冲突，通过dictEntry的next指针，将具有同一索引的值链接起来。<br>2：很方便就行rehash。我们知道到哈希表大小不足时，就很容易造成哈希冲突。此时便需要扩容。dict.ht[2]其中一个就是用来扩容的，当dictht.size == used时，便将dict.ht[1]扩大到used*2，再将dict.ht[0]缓慢哈希到dict.ht[1]。完成后，将dict.ht[0]指向dict.ht[1]，将dict.ht[1]置为空即可。</p>
+        <p>松浦弥太郎说过，所谓工作就是证明自己有用。很大白话的道理，深表赞同。劳动者付出了劳动，雇佣者给与其报酬。报酬的高低取决于劳动者证明自己有多有用。</p>
+<p>工作所需要的技能包含两个层面，其一是专业技能，其二是通用技能。我们能独立完成这项工作，依赖的是专业技能，即工作的专业性。不管是厨师、医生、会计、程序员还是地铁司机，专业度不过关是最难逾越的发展瓶颈。</p>
+<p>人和人之间是一个复杂的关系网络，个体的表现不仅需要个人专业能力，还需和群体互动，提升互动效率。这需要沟通表达能力、信息探索能力、阅读写作能力、时间管理能力，还有高情商。对刚毕业的小萌新来说，往往更看重专业技能的探索，忽视通用技能的重要性。因为通用技能的缺失，自己也碰壁过多次。</p>
+<p>《软技能–代码之外的生存指南》这本书是在2015年看的，书写的非常好。作者是一名国外的软件工程师，从技术人员的角度撰写的关于软件开发人员的职场发展。15年看完这本书后，对自己的启发也特别大。gglinux.com这个域名也是看完这本书之后决定长期使用的。另外也看过《学会提问-批判性思维指南》。除了这两本书以外，也参加了几场知乎的线上私家课和公司提供的通用技能培训。</p>
+<p>综合以前学习到的内容，结合自己的一些实际感悟，做一些总结。</p>
+<a id="more"></a>
+<h3 id="如何沟通"><a href="#如何沟通" class="headerlink" title="如何沟通"></a>如何沟通</h3><h4 id="沟通存在的障碍"><a href="#沟通存在的障碍" class="headerlink" title="沟通存在的障碍"></a>沟通存在的障碍</h4><ol>
+<li>个体的认知习惯、思维习惯、背景知识存在差异，会导致理解的偏差，这是实际存在的现状</li>
+<li>沟通工具和场景会影响实际效果。邮件、电话、微信、会议、文档等。使用的媒介会影响沟通效果</li>
+<li>双方存在的情绪问题</li>
+<li>沟通技巧的差异</li>
+<li>约哈里窗口</li>
+</ol>
+<h4 id="沟通中如何说"><a href="#沟通中如何说" class="headerlink" title="沟通中如何说"></a>沟通中如何说</h4><ol>
+<li>基于事实的陈述，注意细节和内容打动性</li>
+<li>针对事实进行筛选，陈述自己的观点</li>
+<li>注意沟通过程中的表达技巧、肢体语言、语速语调，这是习惯问题，需要大量练习</li>
+</ol>
+<h4 id="沟通中如何听"><a href="#沟通中如何听" class="headerlink" title="沟通中如何听"></a>沟通中如何听</h4><ol>
+<li>最重要的是同理性倾听，注意到对方的情感（换位思考）</li>
+<li>尝试3F原则：Feel,Felt,Found</li>
+</ol>
+<ul>
+<li>认可情绪</li>
+<li>分享对方的感受，感同身受</li>
+<li>提供帮助，当怎么做就会发现</li>
+</ul>
+<h4 id="沟通中如何问"><a href="#沟通中如何问" class="headerlink" title="沟通中如何问"></a>沟通中如何问</h4><ol>
+<li>原则在于收窄问题范围</li>
+</ol>
+<ul>
+<li>先开放式问题</li>
+<li>后封闭式问题</li>
+</ul>
+<h4 id="沟通对象的风格"><a href="#沟通对象的风格" class="headerlink" title="沟通对象的风格"></a>沟通对象的风格</h4><ol>
+<li>pdp性格差异</li>
+</ol>
+<ul>
+<li>老虎型，权威的领导者</li>
+<li>猫头鹰，追求精确的专家</li>
+<li>孔雀，有效的沟通者</li>
+<li>考拉，耐心的合作者</li>
+<li>变色龙，灵活的多面手</li>
+</ul>
+<h3 id="职场情商"><a href="#职场情商" class="headerlink" title="职场情商"></a>职场情商</h3><h4 id="如何让领导觉得你适合培养？"><a href="#如何让领导觉得你适合培养？" class="headerlink" title="如何让领导觉得你适合培养？"></a>如何让领导觉得你适合培养？</h4><ol>
+<li>接人待物的表现，外表干净、主动打招呼、餐桌文化</li>
+<li>对待时间的表现，提前到场、走路迅速、迅速回话</li>
+<li>对待杂事的表现，端茶倒水、调节空调、主动做杂事、熟练使用办公软件</li>
+<li>交付工作的表现，及时告知、第一时间回复别人</li>
+</ol>
+<h4 id="禁忌话题"><a href="#禁忌话题" class="headerlink" title="禁忌话题"></a>禁忌话题</h4><ol>
+<li>讨论私生活有界限，表现自己以光辉业绩为主</li>
+<li>给同事贴标签，下定义</li>
+<li>过度透露工作进度</li>
+<li>宣泄对同事和上司的不满</li>
+</ol>
+<h4 id="如何请人帮忙"><a href="#如何请人帮忙" class="headerlink" title="如何请人帮忙"></a>如何请人帮忙</h4><ol>
+<li>承诺回报</li>
+<li>强调不可替代性</li>
+<li>分解成更小的部分</li>
+<li>赋予新的意义</li>
+</ol>
+<h4 id="如何获得领导充分授权"><a href="#如何获得领导充分授权" class="headerlink" title="如何获得领导充分授权"></a>如何获得领导充分授权</h4><ol>
+<li>提高通用技能</li>
+<li>勤汇报！事事有交代，时时有反馈。可靠高效，做事透明</li>
+</ol>
+<h4 id="如何让你的赞美听起来真诚"><a href="#如何让你的赞美听起来真诚" class="headerlink" title="如何让你的赞美听起来真诚"></a>如何让你的赞美听起来真诚</h4><ol>
+<li>借美好事物表达赞美</li>
+<li>借别人的嘴表达赞美</li>
+<li>在比较中表达赞美</li>
+<li>借自己的感受表达赞美</li>
+<li>在具体行为和相关物上表达赞美</li>
+</ol>
+<h4 id="如何让同事接受你的不同观点"><a href="#如何让同事接受你的不同观点" class="headerlink" title="如何让同事接受你的不同观点"></a>如何让同事接受你的不同观点</h4><ol>
+<li>分解对方信念的组成部分，拆成更小片段，用细化的时间和场景重新评估</li>
+<li>把对方的信念转到另一个目标上</li>
+<li>给对方的信念找出反例</li>
+<li>语气比内容更重要</li>
+</ol>
+<h4 id="替同事背了黑锅怎么办"><a href="#替同事背了黑锅怎么办" class="headerlink" title="替同事背了黑锅怎么办"></a>替同事背了黑锅怎么办</h4><ol>
+<li>控制愤怒，意识到自己在夸大背黑锅带来的负面影响</li>
+<li>和自己的非理性信念辩论</li>
+<li>与关键人物对话，但不再愤怒了</li>
+</ol>
+<h4 id="内向性格如何克服紧张情绪"><a href="#内向性格如何克服紧张情绪" class="headerlink" title="内向性格如何克服紧张情绪"></a>内向性格如何克服紧张情绪</h4><ol>
+<li>接受紧张，但决不过分在意</li>
+<li>专注是紧张的天敌，头部长，尾部短</li>
+<li>别让自己总卡在缺乏练习上</li>
+</ol>
 
       
     </div>
@@ -436,7 +508,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Redis/" rel="tag"># Redis</a>
+            <a href="/tags/职场/" rel="tag"># 职场</a>
           
         </div>
       
@@ -449,15 +521,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2018/03/25/tapd/" rel="next" title="TAPD和敏捷研发">
+                <i class="fa fa-chevron-left"></i> TAPD和敏捷研发
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2015/12/20/redis2/" rel="prev" title="Redis数据结构（二）">
-                Redis数据结构（二） <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -632,7 +704,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#SDS简单动态字符串"><span class="nav-number">1.</span> <span class="nav-text">SDS简单动态字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#结构："><span class="nav-number">1.1.</span> <span class="nav-text">结构：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优点"><span class="nav-number">1.2.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用处"><span class="nav-number">1.3.</span> <span class="nav-text">用处</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#双向链表"><span class="nav-number">2.</span> <span class="nav-text">双向链表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#结构"><span class="nav-number">2.1.</span> <span class="nav-text">结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用处-1"><span class="nav-number">2.2.</span> <span class="nav-text">用处</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字典"><span class="nav-number">3.</span> <span class="nav-text">字典</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#结构-1"><span class="nav-number">3.1.</span> <span class="nav-text">结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优点-1"><span class="nav-number">3.2.</span> <span class="nav-text">优点</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#如何沟通"><span class="nav-number">1.</span> <span class="nav-text">如何沟通</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#沟通存在的障碍"><span class="nav-number">1.1.</span> <span class="nav-text">沟通存在的障碍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#沟通中如何说"><span class="nav-number">1.2.</span> <span class="nav-text">沟通中如何说</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#沟通中如何听"><span class="nav-number">1.3.</span> <span class="nav-text">沟通中如何听</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#沟通中如何问"><span class="nav-number">1.4.</span> <span class="nav-text">沟通中如何问</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#沟通对象的风格"><span class="nav-number">1.5.</span> <span class="nav-text">沟通对象的风格</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#职场情商"><span class="nav-number">2.</span> <span class="nav-text">职场情商</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#如何让领导觉得你适合培养？"><span class="nav-number">2.1.</span> <span class="nav-text">如何让领导觉得你适合培养？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#禁忌话题"><span class="nav-number">2.2.</span> <span class="nav-text">禁忌话题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#如何请人帮忙"><span class="nav-number">2.3.</span> <span class="nav-text">如何请人帮忙</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#如何获得领导充分授权"><span class="nav-number">2.4.</span> <span class="nav-text">如何获得领导充分授权</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#如何让你的赞美听起来真诚"><span class="nav-number">2.5.</span> <span class="nav-text">如何让你的赞美听起来真诚</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#如何让同事接受你的不同观点"><span class="nav-number">2.6.</span> <span class="nav-text">如何让同事接受你的不同观点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#替同事背了黑锅怎么办"><span class="nav-number">2.7.</span> <span class="nav-text">替同事背了黑锅怎么办</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#内向性格如何克服紧张情绪"><span class="nav-number">2.8.</span> <span class="nav-text">内向性格如何克服紧张情绪</span></a></li></ol></li></ol></div>
             
 
           </div>
