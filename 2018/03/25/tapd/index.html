@@ -113,15 +113,15 @@
 <meta property="og:site_name" content="gglinux&#39;s blog">
 <meta property="og:description" content="这篇文章，原计划是去年9月份写的，一直拖到了现在。主要原因在于一直抽不出时间，其次对整个敏捷研发，包括现如今的DevOps也只是浅尝辄止，害怕误人子弟和广告嫌疑。笔者一方面作为敏捷研发的实践者，另一方面作为敏捷研发的受益者。站在这两层身份上，浅谈下TAPD和敏捷研发。 TAPD介绍TAPD，是腾讯敏捷产品研发平台，强调敏捷迭代、小步快跑，使用范围包含腾讯和腾讯的合作伙伴，是腾讯敏捷研发的精髓，支撑">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://img-blog.csdn.net/20180325170325798?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2dnbGludXg=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
-<meta property="og:image" content="https://img-blog.csdn.net/20180325170423278?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2dnbGludXg=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
-<meta property="og:image" content="https://img-blog.csdn.net/20180325170725484?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2dnbGludXg=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
-<meta property="og:image" content="https://img-blog.csdn.net/20180325170904758?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2dnbGludXg=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
-<meta property="og:updated_time" content="2018-03-30T09:35:15.000Z">
+<meta property="og:image" content="https://gglinux-1255556715.cos.ap-chengdu.myqcloud.com/blog/tapd/20180325170325798.png">
+<meta property="og:image" content="https://gglinux-1255556715.cos.ap-chengdu.myqcloud.com/blog/tapd/20180325170423278.png">
+<meta property="og:image" content="https://gglinux-1255556715.cos.ap-chengdu.myqcloud.com/blog/tapd/20180325170725484.png">
+<meta property="og:image" content="https://gglinux-1255556715.cos.ap-chengdu.myqcloud.com/blog/tapd/4444.png">
+<meta property="og:updated_time" content="2018-08-25T07:25:26.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TAPD和敏捷研发">
 <meta name="twitter:description" content="这篇文章，原计划是去年9月份写的，一直拖到了现在。主要原因在于一直抽不出时间，其次对整个敏捷研发，包括现如今的DevOps也只是浅尝辄止，害怕误人子弟和广告嫌疑。笔者一方面作为敏捷研发的实践者，另一方面作为敏捷研发的受益者。站在这两层身份上，浅谈下TAPD和敏捷研发。 TAPD介绍TAPD，是腾讯敏捷产品研发平台，强调敏捷迭代、小步快跑，使用范围包含腾讯和腾讯的合作伙伴，是腾讯敏捷研发的精髓，支撑">
-<meta name="twitter:image" content="https://img-blog.csdn.net/20180325170325798?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2dnbGludXg=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta name="twitter:image" content="https://gglinux-1255556715.cos.ap-chengdu.myqcloud.com/blog/tapd/20180325170325798.png">
 
 
 
@@ -391,11 +391,11 @@
 <p>公司存在的目的是盈利，蛋糕只有这么大，快速占领市场才是王炸。敏捷研发对互联网公司来说，尤其是移动互联网软件开发而言是更适应的。敏捷研发的核心在于快速迭代，拥抱变化。目标是让客户满意(以用户价值为依归)，保证软件灵活度以适应极速变化的市场。通俗一点说，更快的适应市场，更好的赚钱。</p>
 <a id="more"></a>
 <h2 id="产品比较"><a href="#产品比较" class="headerlink" title="产品比较"></a>产品比较</h2><p>市场上，适合敏捷研发的产品大都使用过。国内的TAPD、Teambition、Tower、Worktile，国际的Jira、Redmine。下文的比较无”撕逼”之意，单纯为笔者使用感受。</p>
-<p>Tower、Worktile在大学期间用过，强调团队协作。从功能层面讲，比较适合小团队使用。UI特点，轻量级、单页应用、显示区域小。没有迭代的概念，需求是以任务的形式展现的。专业版具有视频通话功能，对小团队尤其适用。<br><img src="https://img-blog.csdn.net/20180325170325798?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2dnbGludXg=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="Tower特色"></p>
+<p>Tower、Worktile在大学期间用过，强调团队协作。从功能层面讲，比较适合小团队使用。UI特点，轻量级、单页应用、显示区域小。没有迭代的概念，需求是以任务的形式展现的。专业版具有视频通话功能，对小团队尤其适用。<br><img src="https://gglinux-1255556715.cos.ap-chengdu.myqcloud.com/blog/tapd/20180325170325798.png" alt="Tower特色"></p>
 <p>Jira没实际使用过，不做评论，开发者为Atlassian。Git客户端工具SourceTree也是Atlassian开发的，很出名的SaaS服务商。</p>
-<p>Redmine，实习时使用过，强调问题缺陷（BUG）管理。UI特点：页面老旧、偏传统，多页应用。功能特点简单、直接、上手快。<br><img src="https://img-blog.csdn.net/20180325170423278?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2dnbGludXg=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="Redmine特色"></p>
-<p>Teambition，玩过一段时间。个人感觉功能介于Tower、TAPD之间。存在不同的版本，简单版本不包含需求、缺陷、迭代。简单版本以任务的形式展开，界面简洁，单页内即可完成全部操作。专业版本（收费）才具有需求、缺陷、迭代等敏捷研发的概念。<br><img src="https://img-blog.csdn.net/20180325170725484?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2dnbGludXg=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="Teambition特色"></p>
-<p>TAPD开放产品，包含两个解决方案-轻量协作和敏捷研发。轻量协作：对标Tower，功能特点为看板+云文档+企业微信集成，为满足小团队的协作需要。敏捷研发功能特点包含需求、迭代、缺陷、测试计划／用例、发布评审、看板等。总体来看敏捷研发特性（能力）更强。整体UI特点：偏传统，多页应用。<br><img src="https://img-blog.csdn.net/20180325170904758?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2dnbGludXg=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="TAPD特色"></p>
+<p>Redmine，实习时使用过，强调问题缺陷（BUG）管理。UI特点：页面老旧、偏传统，多页应用。功能特点简单、直接、上手快。<br><img src="https://gglinux-1255556715.cos.ap-chengdu.myqcloud.com/blog/tapd/20180325170423278.png" alt="Redmine特色"></p>
+<p>Teambition，玩过一段时间。个人感觉功能介于Tower、TAPD之间。存在不同的版本，简单版本不包含需求、缺陷、迭代。简单版本以任务的形式展开，界面简洁，单页内即可完成全部操作。专业版本（收费）才具有需求、缺陷、迭代等敏捷研发的概念。<br><img src="https://gglinux-1255556715.cos.ap-chengdu.myqcloud.com/blog/tapd/20180325170725484.png" alt="Teambition特色"></p>
+<p>TAPD开放产品，包含两个解决方案-轻量协作和敏捷研发。轻量协作：对标Tower，功能特点为看板+云文档+企业微信集成，为满足小团队的协作需要。敏捷研发功能特点包含需求、迭代、缺陷、测试计划／用例、发布评审、看板等。总体来看敏捷研发特性（能力）更强。整体UI特点：偏传统，多页应用。<br><img src="https://gglinux-1255556715.cos.ap-chengdu.myqcloud.com/blog/tapd/4444.png" alt="TAPD特色"></p>
 <h2 id="TAPD特色"><a href="#TAPD特色" class="headerlink" title="TAPD特色"></a>TAPD特色</h2><h3 id="文档"><a href="#文档" class="headerlink" title="文档"></a>文档</h3><p>支持个人文档，项目文档。文档支持在线思维导图、富文本、Office全家桶。思维导图支持实时协作，支持转为需求。文档支持实时协作，支持markdown。曾经的公司使用Excel维护文档，无版本管理，无多人协作。在IM上互相转发，版本人工控制，效率低下。</p>
 <h3 id="工作流"><a href="#工作流" class="headerlink" title="工作流"></a>工作流</h3><p>工作流管理员可自由配置，支持自定义字段。很多人可能会问工作流是啥。举个例子，APP开发的过程通常为需求规划，开发，测试，发布。如果中间想增加UI设计、接口开发，这些都是完美支持的。工作流流转过程都可配置化，流转字段全部支持自定义。给团队极大的灵活性。</p>
 <h3 id="WiKi"><a href="#WiKi" class="headerlink" title="WiKi"></a>WiKi</h3><p>接口文档，曾被MediaWIKI支配过，其独特语法不忍直视。TAPD的WiKi支持markdown，用了很爽。WiKi支持附件，与TAPD本身都互相打通。</p>
