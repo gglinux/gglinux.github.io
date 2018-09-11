@@ -108,14 +108,14 @@
 <meta name="description" content="最早从Web2.0 Ajax技术开始兴起，就有提前后端分离了。从Gmail的单页应用，到现在的单页应用层出不穷。浏览器渲染引擎也一直在突破，越来越多的交互、计算放在了浏览器这一层。传统后端MVC架构，变成了前后端的MVC。后台的接口变成了模型层，逻辑处理层从CGI变成了JavaScript，展示层则还是标记语言HTML和CSS。">
 <meta name="keywords" content="架构">
 <meta property="og:type" content="article">
-<meta property="og:title" content="十年老树发新芽-前后端分离实践">
+<meta property="og:title" content="老树发新芽-前后端分离实践">
 <meta property="og:url" content="http://gglinux.com/2018/09/09/separate/index.html">
 <meta property="og:site_name" content="gglinux&#39;s blog">
 <meta property="og:description" content="最早从Web2.0 Ajax技术开始兴起，就有提前后端分离了。从Gmail的单页应用，到现在的单页应用层出不穷。浏览器渲染引擎也一直在突破，越来越多的交互、计算放在了浏览器这一层。传统后端MVC架构，变成了前后端的MVC。后台的接口变成了模型层，逻辑处理层从CGI变成了JavaScript，展示层则还是标记语言HTML和CSS。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-09-10T13:38:45.000Z">
+<meta property="og:updated_time" content="2018-09-11T01:58:01.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="十年老树发新芽-前后端分离实践">
+<meta name="twitter:title" content="老树发新芽-前后端分离实践">
 <meta name="twitter:description" content="最早从Web2.0 Ajax技术开始兴起，就有提前后端分离了。从Gmail的单页应用，到现在的单页应用层出不穷。浏览器渲染引擎也一直在突破，越来越多的交互、计算放在了浏览器这一层。传统后端MVC架构，变成了前后端的MVC。后台的接口变成了模型层，逻辑处理层从CGI变成了JavaScript，展示层则还是标记语言HTML和CSS。">
 
 
@@ -148,7 +148,7 @@
 
 
 
-  <title> 十年老树发新芽-前后端分离实践 | gglinux's blog </title>
+  <title> 老树发新芽-前后端分离实践 | gglinux's blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -318,7 +318,7 @@
             
             
               
-                十年老树发新芽-前后端分离实践
+                老树发新芽-前后端分离实践
               
             
           </h1>
@@ -352,7 +352,7 @@
 
           
           
-             <span id="/2018/09/09/separate/" class="leancloud_visitors" data-flag-title="十年老树发新芽-前后端分离实践">
+             <span id="/2018/09/09/separate/" class="leancloud_visitors" data-flag-title="老树发新芽-前后端分离实践">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -399,9 +399,10 @@
 <p>在前端方案的落地中，团队花费了很长时间进行框架的预研，最终选择了Vue。对业务而言，框架需要提供双向数据绑定、模版引擎、组件化、前端路由，还有能与jQuery组件进行通信，定制化程度较高。</p>
 <ol>
 <li>React意味着全局替换，替换成本过高，成果成型慢</li>
-<li>Jsx、Ts对偏后台同学而言，学习门槛较高</li>
+<li>JSX、TS对偏后台同学而言，学习门槛较高</li>
 <li>在国内Vue显然更受欢迎，文档、社区也更活跃</li>
 <li>React许可协议的具有潜在的不可控性</li>
+<li>前端同学对Vue理解更深刻</li>
 </ol>
 <h3 id="实际开发遇到的问题"><a href="#实际开发遇到的问题" class="headerlink" title="实际开发遇到的问题"></a>实际开发遇到的问题</h3><p>1.与jQuery组件通信：庞大的现有组件，短时间内非常难Vue化改造。必须采用hack的方式完成jQuery组件和Vue业务的通信。最终是选择发布订阅模式，收集组件的变更。如果Vue需要知道jQuery组件的变更，jQuery组件需要显式$emit通知到Vue。</p>
 <p>2.状态管理：状态管理的加入，会增加开发门槛，使用不恰当也会导致乱用。但如果后续引入，又会增加回炉再造的成本。其次不引入状态管理，全局变量的处理也是问题。</p>
@@ -428,7 +429,7 @@
 <li>系统性思维，无论前端还是后端，都具等同性。</li>
 </ol>
 <ul>
-<li>开发流程始终围绕：代码管理、开发调试、代码编译、项目构建、模块管理、配置部署、测试支撑、性能检测、安全扫描、规范约束、统计分析、运营支撑。</li>
+<li>开发流程：代码管理、开发调试、代码编译、项目构建、模块管理、配置部署、测试支撑、性能检测、安全扫描、规范约束、统计分析、运营支撑。</li>
 <li>开发指标：可用性、可靠性、可维护性、安全性。</li>
 </ul>
 
@@ -849,7 +850,7 @@
         var disqus_config = function () {
           this.page.url = 'http://gglinux.com/2018/09/09/separate/';
           this.page.identifier = '2018/09/09/separate/';
-          this.page.title = '十年老树发新芽-前后端分离实践';
+          this.page.title = '老树发新芽-前后端分离实践';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://gglinux.disqus.com/embed.js';
