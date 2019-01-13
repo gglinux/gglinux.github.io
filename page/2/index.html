@@ -663,7 +663,7 @@
 <li>确定好数据加载顺序，最基础的数据肯定是需要最先返回的，另外也要客户端的同学配合。 </li>
 <li>首屏内容是和用户的怀孕状态紧密联系在一起的，用户切换宝宝(怀孕中切换到宝宝已出生，宝宝A切换到宝宝B)时，API的刷新频率怎么控制。最后为了可操作性，采用了比较粗暴的做法，每次切换均会请求两次接口。</li>
 </ol>
-<p>完成分屏加载以后，用户进入首页的等待时间，已经由2-3S减为1S左右。不必像以前客户端拿到全部内容后，才去渲染界面。现在只需要拿到第一屏的接口，即可完成界面的渲染工作。<br>分屏后第一屏接口耗时<br><img src="http://img.blog.csdn.net/20170226153007559?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>分屏后第二屏接口耗时<br><img src="http://img.blog.csdn.net/20170226153030013?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>完成分屏加载以后，用户进入首页的等待时间，已经由2-3S减为1S左右。不必像以前客户端拿到全部内容后，才去渲染界面。现在只需要拿到第一屏的接口，即可完成界面的渲染工作。<br>分屏后第一屏接口耗时<br><img src="https://gglinux-1255556715.cos.ap-chengdu.myqcloud.com/blog/app_optimize/%E7%AC%AC%E4%B8%80%E5%B1%8F%E5%B9%95%E6%8E%A5%E5%8F%A3.png" alt="这里写图片描述"><br>分屏后第二屏接口耗时<br><img src="https://gglinux-1255556715.cos.ap-chengdu.myqcloud.com/blog/app_optimize/%E7%AC%AC%E4%BA%8C%E5%B1%8F%E5%B9%95%E6%8E%A5%E5%8F%A3.png" alt="这里写图片描述"></p>
 <h2 id="xhprof性能分析"><a href="#xhprof性能分析" class="headerlink" title="xhprof性能分析"></a>xhprof性能分析</h2><p>通过在alpha坏境和beta坏境部署Xhprof性能分析工具。我们可以看到实际的API在函数级别的性能损耗。这里不详述该工具的部署方式和使用方法。在Xhprof的帮助下，我们得到了以下几个结论。</p>
 <ol>
 <li>RPC采用的是HTTP协议，单纯的RPC调用便接近10MS的耗时。首屏RPC调用次数接近30次。</li>
@@ -672,8 +672,8 @@
 <li>数据表索引乱用，存在慢查询。</li>
 </ol>
 <p>结合上面几点，在实际操作过程中，由简到难，逐步完成。第一能减少RPC，便减少RPC请求。逻辑层数据由以前的多次获取改为一次获取。其次，服务层内部，不垮服务层不走RPC，直接以函数调用的方式请求。第三，热点不变动的数据，直接在逻辑层缓存，拿到后丢给API返回。第四，追踪MYSQL慢查询，优化查询SQL。完成后，第一屏性能提升30%～50%。第二屏提升40%～60%。实际结果可看下图</p>
-<p>第二次优化第一屏接口耗时<br><img src="http://img.blog.csdn.net/20170226153342986?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="第一屏接口"></p>
-<p>第二次优化第二屏接口耗时<br><img src="http://img.blog.csdn.net/20170226153405311?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="第二屏接口"></p>
+<p>第二次优化第一屏接口耗时<br><img src="https://gglinux-1255556715.cos.ap-chengdu.myqcloud.com/blog/app_optimize/%E7%AC%AC%E4%B8%80%E5%B1%8F%E5%B9%95%E8%80%97%E6%97%B6.png" alt="第一屏接口"></p>
+<p>第二次优化第二屏接口耗时<br><img src="https://gglinux-1255556715.cos.ap-chengdu.myqcloud.com/blog/app_optimize/%E7%AC%AC%E4%BA%8C%E5%B1%8F%E5%B9%95%E6%8E%A5%E5%8F%A3.png" alt="第二屏接口"></p>
 
           
         
@@ -804,18 +804,18 @@
       
         
           
-            <h2 id="InnoDB存储引擎（一）"><a href="#InnoDB存储引擎（一）" class="headerlink" title="InnoDB存储引擎（一）"></a>InnoDB存储引擎（一）</h2><h3 id="整体结构"><a href="#整体结构" class="headerlink" title="整体结构"></a>整体结构</h3><p><img src="http://img.blog.csdn.net/20170207195627096?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+            <h2 id="InnoDB存储引擎（一）"><a href="#InnoDB存储引擎（一）" class="headerlink" title="InnoDB存储引擎（一）"></a>InnoDB存储引擎（一）</h2><h3 id="整体结构"><a href="#整体结构" class="headerlink" title="整体结构"></a>整体结构</h3><p><img src="https://gglinux-1255556715.cos.ap-chengdu.myqcloud.com/blog/innondb1/1.png" alt="这里写图片描述"></p>
 <h3 id="内存池"><a href="#内存池" class="headerlink" title="内存池"></a>内存池</h3><ol>
 <li>维护线程／进程内部数据结构</li>
 <li>缓存磁盘文件（cache）</li>
 <li>对数据的更新或者新增操作，避免直接刷新磁盘</li>
-<li>重做日志缓冲（redo log）<br><img src="http://img.blog.csdn.net/20170207195648874?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></li>
+<li>重做日志缓冲（redo log）<br><img src="https://gglinux-1255556715.cos.ap-chengdu.myqcloud.com/blog/innondb1/2.png" alt="这里写图片描述"></li>
 </ol>
 <h3 id="后台线程"><a href="#后台线程" class="headerlink" title="后台线程"></a>后台线程</h3><ol>
 <li>Master Hhread，将更新的数据（包括新增和被修改的数据）异步刷新到磁盘，维护内存池和磁盘中的数据的一致性。</li>
 <li>IO Thread分为Insert buffer Thread,log thread,read thread,write thread。</li>
 <li>purge thread，回收undo log</li>
-<li>Page cleaner thread，刷新脏页到磁盘（由master thread 独立出来的）<br><img src="http://img.blog.csdn.net/20170207201334791?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></li>
+<li>Page cleaner thread，刷新脏页到磁盘（由master thread 独立出来的）<br><img src="https://gglinux-1255556715.cos.ap-chengdu.myqcloud.com/blog/innondb1/3.png" alt="这里写图片描述"></li>
 </ol>
 <p>Write Ahead log:是指当事务提交上，先做重做日志，再修改页。满足事务中持久性要求。</p>
 <p>Check Point：检查点技术，数据库系统为了缩短数据库发生宕机恢复所需的时间所采取的一种刷新脏页的方法。    检查点技术分为两种，sharp checkpoint和fuzzy checkpoint。sharp checkpoint用在数据库关机时，将所有的脏数据全部刷新到磁盘。fuzzy checkpoint是按照一定的策略定时部分的刷新脏页数据，较为复杂，此处不做介绍。</p>
@@ -827,7 +827,7 @@
 </ul>
 </li>
 <li>两次写（可靠性）<ul>
-<li>对某页写回磁盘的过程中，如果出现宕机，并且导致页破坏（无法使用重做日志）。会出现数据丢失的情况。针对此问题，mysql首先会将所有需要写入的页（2MB）全部刷回到共享表空间中（没有离散写），再将更新的数据写入到各自的表空间中。<br><img src="http://img.blog.csdn.net/20170207195837984?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></li>
+<li>对某页写回磁盘的过程中，如果出现宕机，并且导致页破坏（无法使用重做日志）。会出现数据丢失的情况。针对此问题，mysql首先会将所有需要写入的页（2MB）全部刷回到共享表空间中（没有离散写），再将更新的数据写入到各自的表空间中。<br><img src="https://gglinux-1255556715.cos.ap-chengdu.myqcloud.com/blog/innondb1/4.png" alt="这里写图片描述"></li>
 </ul>
 </li>
 <li>自适应哈希索引（性能提升）<ul>
@@ -1281,14 +1281,14 @@
         
           
             <h2 id="压缩列表"><a href="#压缩列表" class="headerlink" title="压缩列表"></a>压缩列表</h2><p>1：压缩列表是为了节省内存而设计的，是一种线性的数据结构。主要用在哈希和列表两种数据类型中。</p>
-<p>2：压缩列表包含主要包含五个部分，这五个部分顺序排列组合在一起。<br>结构如下图所示。<br><img src="http://img.blog.csdn.net/20160103164255998" alt="这里写图片描述"><br>表节点，有三个域组成。previous_entry_length,用来记录前一个节点的长度。encoding,记录下一个域的数据类型和长度。content,保存节点的值。<br><img src="http://img.blog.csdn.net/20160103164913156" alt="这里写图片描述"></p>
+<p>2：压缩列表包含主要包含五个部分，这五个部分顺序排列组合在一起。<br>结构如下图所示。<br><img src="https://gglinux-1255556715.cos.ap-chengdu.myqcloud.com/blog/redis2/1.png" alt="这里写图片描述"><br>表节点，有三个域组成。previous_entry_length,用来记录前一个节点的长度。encoding,记录下一个域的数据类型和长度。content,保存节点的值。<br><img src="https://gglinux-1255556715.cos.ap-chengdu.myqcloud.com/blog/redis2/2.png" alt="这里写图片描述"></p>
 <p>3：压缩列表有一种极端情况，会导致性能下降——连锁更新。previous_entry_length,记录的是上一节点的长度，当上一节点小于254字节时，该属性使用1字节存储。当大于254字节时，使用5字节。如果之前previous_entry_length都使用1字节，且长度都接近254字节时，会导致连锁更新的情况。</p>
-<h2 id="具体使用情况"><a href="#具体使用情况" class="headerlink" title="具体使用情况"></a>具体使用情况</h2><p>1：不同数据类型对应的编码对象<br><img src="http://img.blog.csdn.net/20160103172033023" alt="这里写图片描述"></p>
-<p>2：字符串对应的编码方式。1：整数值实现的字符串对象。2：embstr实现的字符串（类似SDS，用于保存端的字符串）。3：raw,SDS动态字符串<br><img src="http://img.blog.csdn.net/20160103173412166" alt="这里写图片描述"><br>转换规则：<br><img src="http://img.blog.csdn.net/20160103173455306" alt="这里写图片描述"></p>
-<p>3：列表对象，编码包含两种，ziplist(压缩列表),linkedlist(双向链表)。<br><img src="http://img.blog.csdn.net/20160103173649064" alt="这里写图片描述"><br>转换规则：<br>1：保存的所有字符串长度都小于64字节。<br>2：列表对象保存的元素数量小于512个。<br>当同时满足上面两条规则时，使用列表对象，否则使用链表对象。</p>
-<p>4：哈希对象，使用ziplist和hashtable编码<br>ziplist:<br><img src="http://img.blog.csdn.net/20160103174101939" alt="这里写图片描述"><br>hashtable:<br><img src="http://img.blog.csdn.net/20160103174151083" alt="这里写图片描述"><br>转换规则：<br>1：哈希对象保存的所有键和值的字符串长度都小于64字节。<br>2：保存的键值对数量小于512个。<br>同时满足，使用ziplist，否则使用hashtable.</p>
-<p>5:集合对象，使用intset或者hashtable编码。<br>intset:<br><img src="http://img.blog.csdn.net/20160103174706713" alt="这里写图片描述"><br>hashtable:<br><img src="http://img.blog.csdn.net/20160103174721415" alt="这里写图片描述"><br>转换规则：<br>1：集合对象保存的元素值都是整数。<br>2：集合对象保存的元素数量不超过512个。<br>同时满足上面两个条件，则使用intset，否则hashtable。</p>
-<p>6：有序集合，使用ziplist或者skiplist<br><img src="http://img.blog.csdn.net/20160103175034253" alt="这里写图片描述"><br>转换规则：<br>1：有序集合保存的元素数量小于128个。<br>2：保存的所有成员长度都小于64字节。<br>同时满足上面两个条件，则使用ziplist，否则skiplist。</p>
+<h2 id="具体使用情况"><a href="#具体使用情况" class="headerlink" title="具体使用情况"></a>具体使用情况</h2><p>1：不同数据类型对应的编码对象<br><img src="https://gglinux-1255556715.cos.ap-chengdu.myqcloud.com/blog/redis2/3.png" alt="这里写图片描述"></p>
+<p>2：字符串对应的编码方式。1：整数值实现的字符串对象。2：embstr实现的字符串（类似SDS，用于保存端的字符串）。3：raw,SDS动态字符串<br><img src="https://gglinux-1255556715.cos.ap-chengdu.myqcloud.com/blog/redis2/4.png" alt="这里写图片描述"><br>转换规则：<br><img src="https://gglinux-1255556715.cos.ap-chengdu.myqcloud.com/blog/redis2/5.png" alt="这里写图片描述"></p>
+<p>3：列表对象，编码包含两种，ziplist(压缩列表),linkedlist(双向链表)。<br><img src="https://gglinux-1255556715.cos.ap-chengdu.myqcloud.com/blog/redis2/6.png" alt="这里写图片描述"><br>转换规则：<br>1：保存的所有字符串长度都小于64字节。<br>2：列表对象保存的元素数量小于512个。<br>当同时满足上面两条规则时，使用列表对象，否则使用链表对象。</p>
+<p>4：哈希对象，使用ziplist和hashtable编码<br>ziplist:<br><img src="https://gglinux-1255556715.cos.ap-chengdu.myqcloud.com/blog/redis2/7.png" alt="这里写图片描述"><br>hashtable:<br><img src="https://gglinux-1255556715.cos.ap-chengdu.myqcloud.com/blog/redis2/8.png" alt="这里写图片描述"><br>转换规则：<br>1：哈希对象保存的所有键和值的字符串长度都小于64字节。<br>2：保存的键值对数量小于512个。<br>同时满足，使用ziplist，否则使用hashtable.</p>
+<p>5:集合对象，使用intset或者hashtable编码。<br>intset:<br><img src="https://gglinux-1255556715.cos.ap-chengdu.myqcloud.com/blog/redis2/9.png" alt="这里写图片描述"><br>hashtable:<br><img src="https://gglinux-1255556715.cos.ap-chengdu.myqcloud.com/blog/redis2/10.png" alt="这里写图片描述"><br>转换规则：<br>1：集合对象保存的元素值都是整数。<br>2：集合对象保存的元素数量不超过512个。<br>同时满足上面两个条件，则使用intset，否则hashtable。</p>
+<p>6：有序集合，使用ziplist或者skiplist<br><img src="https://gglinux-1255556715.cos.ap-chengdu.myqcloud.com/blog/redis2/11.png" alt="这里写图片描述"><br>转换规则：<br>1：有序集合保存的元素数量小于128个。<br>2：保存的所有成员长度都小于64字节。<br>同时满足上面两个条件，则使用ziplist，否则skiplist。</p>
 <p>基于数据结构的东西就写这么多吧，当然内容都是《redis设计与实现-黄健宏》上的。我只是个搬运工，这本书写的挺不错的，建议购买。更详细的实现细节，可以看redis源码。</p>
 
           
@@ -1420,14 +1420,13 @@
       
         
           
-            <h2 id="SDS简单动态字符串"><a href="#SDS简单动态字符串" class="headerlink" title="SDS简单动态字符串"></a>SDS简单动态字符串</h2><h3 id="结构："><a href="#结构：" class="headerlink" title="结构："></a>结构：</h3><p>1：SDS是在C语言字符串的基础上，构造的一种简单的动态字符串（simple daynamic string）。SDS结构体包含三个变量，len用来记录长度，free用来记录未使用字节的数量，buf存储实际的字符串数组。<br>2：SDS不以‘\0’为结束符，而是以len的长度标识<br><img src="http://img.blog.csdn.net/20151219142351721" alt="这里写图片描述"></p>
+            <h2 id="SDS简单动态字符串"><a href="#SDS简单动态字符串" class="headerlink" title="SDS简单动态字符串"></a>SDS简单动态字符串</h2><h3 id="结构："><a href="#结构：" class="headerlink" title="结构："></a>结构：</h3><p>1：SDS是在C语言字符串的基础上，构造的一种简单的动态字符串（simple daynamic string）。SDS结构体包含三个变量，len用来记录长度，free用来记录未使用字节的数量，buf存储实际的字符串数组。<br>2：SDS不以‘\0’为结束符，而是以len的长度标识<br><img src="https://gglinux-1255556715.cos.ap-chengdu.myqcloud.com/blog/redis1/1.png" alt="这里写图片描述"></p>
 <h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><p>1：O(1)获取字符串长度。sdshdr结构体中，直接存储了字符串的长度。因此直接以sdshdr.len读取字符串长度就可以了，相对于C语言的遍历。<br>2：防止缓冲区溢出。因为sds自动记录了字符串的长度，当需要扩充某个字符串时，会先检测长度是否满足。不满足，会先扩充sdshdr.buf的长度。而C语言，strcat会直接拼接两个string，后面的string可能会占用已经占用的内存区域。<br>3：减少字符串改变带来的内存重分配次数。简单一点说，当扩充字符串时，sds会给它多分配一些额外的内存。当缩减字符串时，并没有立即将其归回，而是用sdshdr.free记录。<br>4：二进制安全。直白点，就是不以’\0’为结束符，而是记录其二进制数据，即’\0’对应的00000000。结束是以sdshdr.len来标识的<br>5：可以重用部分C语言的函数。但因为结束机制不一样，也只是部分而已。</p>
 <h3 id="用处"><a href="#用处" class="headerlink" title="用处"></a>用处</h3><p>1：redis中常见的字符串值都是用sds实现的。例如，常用的键。</p>
-<h2 id="双向链表"><a href="#双向链表" class="headerlink" title="双向链表"></a>双向链表</h2><h3 id="结构"><a href="#结构" class="headerlink" title="结构"></a>结构</h3><p>1：节点（struct ListNode），包含前节点和后置节点两个指针域。<br>      链表(struct List)，包含头，尾节点。以及相关的操作函数。<br>      <img src="http://img.blog.csdn.net/20151219153132066" alt="这里写图片描述">    </p>
-<p><img src="http://img.blog.csdn.net/20151219153151562" alt="这里写图片描述"></p>
+<h2 id="双向链表"><a href="#双向链表" class="headerlink" title="双向链表"></a>双向链表</h2><h3 id="结构"><a href="#结构" class="headerlink" title="结构"></a>结构</h3><p>1：节点（struct ListNode），包含前节点和后置节点两个指针域。<br>​      链表(struct List)，包含头，尾节点。以及相关的操作函数。<br>​      <img src="https://gglinux-1255556715.cos.ap-chengdu.myqcloud.com/blog/redis1/2.png" alt="这里写图片描述"><br>​<br><img src="https://gglinux-1255556715.cos.ap-chengdu.myqcloud.com/blog/redis1/3.png" alt="这里写图片描述"></p>
 <p>###优点<br>1：新增和删除元素非常方便。很大部分来自链表的优点<br>2：其中的value字段，可以用来存储其他的类型，非常方便扩展</p>
 <h3 id="用处-1"><a href="#用处-1" class="headerlink" title="用处"></a>用处</h3><p>1：redis中List数据类型就是用这个实现的</p>
-<h2 id="字典"><a href="#字典" class="headerlink" title="字典"></a>字典</h2><h3 id="结构-1"><a href="#结构-1" class="headerlink" title="结构"></a>结构</h3><p>1：首先说明下，字典也是由其他的数据结构构造的。它包括，哈希节点，哈希表，字典三个部分。哈希表连接哈希节点，字典包含两个哈希表。<br>2：哈希节点，包含三个域。键，值，下个节点的指针。其中下个节点是为解决哈希冲突的。<br><img src="http://img.blog.csdn.net/20151219155529547" alt="这里写图片描述"><br>3：哈希表，包含四个域。dictht.table，是一个数组，对应的值就是哈希表节点。dictht.size，总大小。sizemask，用来计算索引值。used，记录已经使用多少。<br><img src="http://img.blog.csdn.net/20151219155858470" alt="这里写图片描述"><br>4：字典，包含四个域。其中，ht就是指向上面的哈希表的。<br><img src="http://img.blog.csdn.net/20151219160055049" alt="这里写图片描述"><br>5：完整的结构，未进行rehash，存在冲突。<br><img src="http://img.blog.csdn.net/20151219160222520" alt="这里写图片描述"></p>
+<h2 id="字典"><a href="#字典" class="headerlink" title="字典"></a>字典</h2><h3 id="结构-1"><a href="#结构-1" class="headerlink" title="结构"></a>结构</h3><p>1：首先说明下，字典也是由其他的数据结构构造的。它包括，哈希节点，哈希表，字典三个部分。哈希表连接哈希节点，字典包含两个哈希表。<br>2：哈希节点，包含三个域。键，值，下个节点的指针。其中下个节点是为解决哈希冲突的。<br><img src="https://gglinux-1255556715.cos.ap-chengdu.myqcloud.com/blog/redis1/4.png" alt="这里写图片描述"><br>3：哈希表，包含四个域。dictht.table，是一个数组，对应的值就是哈希表节点。dictht.size，总大小。sizemask，用来计算索引值。used，记录已经使用多少。<br><img src="https://gglinux-1255556715.cos.ap-chengdu.myqcloud.com/blog/redis1/5.png" alt="这里写图片描述"><br>4：字典，包含四个域。其中，ht就是指向上面的哈希表的。<br><img src="https://gglinux-1255556715.cos.ap-chengdu.myqcloud.com/blog/redis1/6.png?q-sign-algorithm=sha1&amp;q-ak=AKIDY1PgpsCQvEx0yot3RddSQOTP9jBSFSBk&amp;q-sign-time=1547362535;1547363435&amp;q-key-time=1547362535;1547363435&amp;q-header-list=&amp;q-url-param-list=&amp;q-signature=302a71de1e516d19422d995241e12ef9a46dbc83" alt="这里写图片描述"><br>5：完整的结构，未进行rehash，存在冲突。<br><img src="https://gglinux-1255556715.cos.ap-chengdu.myqcloud.com/blog/redis1/7.png" alt="这里写图片描述"></p>
 <h3 id="优点-1"><a href="#优点-1" class="headerlink" title="优点"></a>优点</h3><p>1：有效解决了哈希冲突，通过dictEntry的next指针，将具有同一索引的值链接起来。<br>2：很方便就行rehash。我们知道到哈希表大小不足时，就很容易造成哈希冲突。此时便需要扩容。dict.ht[2]其中一个就是用来扩容的，当dictht.size == used时，便将dict.ht[1]扩大到used*2，再将dict.ht[0]缓慢哈希到dict.ht[1]。完成后，将dict.ht[0]指向dict.ht[1]，将dict.ht[1]置为空即可。</p>
 
           
@@ -1614,7 +1613,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2018</span>
+  <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-"></i>
   </span>

@@ -113,15 +113,15 @@
 <meta property="og:site_name" content="gglinux&#39;s blog">
 <meta property="og:description" content="InnoDB存储引擎（一）整体结构 内存池 维护线程／进程内部数据结构 缓存磁盘文件（cache） 对数据的更新或者新增操作，避免直接刷新磁盘 重做日志缓冲（redo log）  后台线程 Master Hhread，将更新的数据（包括新增和被修改的数据）异步刷新到磁盘，维护内存池和磁盘中的数据的一致性。 IO Thread分为Insert buffer Thread,log thread,rea">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://img.blog.csdn.net/20170207195627096?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:image" content="http://img.blog.csdn.net/20170207195648874?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:image" content="http://img.blog.csdn.net/20170207201334791?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:image" content="http://img.blog.csdn.net/20170207195837984?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:updated_time" content="2017-02-28T04:14:10.000Z">
+<meta property="og:image" content="https://gglinux-1255556715.cos.ap-chengdu.myqcloud.com/blog/innondb1/1.png">
+<meta property="og:image" content="https://gglinux-1255556715.cos.ap-chengdu.myqcloud.com/blog/innondb1/2.png">
+<meta property="og:image" content="https://gglinux-1255556715.cos.ap-chengdu.myqcloud.com/blog/innondb1/3.png">
+<meta property="og:image" content="https://gglinux-1255556715.cos.ap-chengdu.myqcloud.com/blog/innondb1/4.png">
+<meta property="og:updated_time" content="2019-01-13T06:49:03.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="InnoDB存储引擎（一）">
 <meta name="twitter:description" content="InnoDB存储引擎（一）整体结构 内存池 维护线程／进程内部数据结构 缓存磁盘文件（cache） 对数据的更新或者新增操作，避免直接刷新磁盘 重做日志缓冲（redo log）  后台线程 Master Hhread，将更新的数据（包括新增和被修改的数据）异步刷新到磁盘，维护内存池和磁盘中的数据的一致性。 IO Thread分为Insert buffer Thread,log thread,rea">
-<meta name="twitter:image" content="http://img.blog.csdn.net/20170207195627096?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta name="twitter:image" content="https://gglinux-1255556715.cos.ap-chengdu.myqcloud.com/blog/innondb1/1.png">
 
 
 
@@ -384,18 +384,18 @@
       
 
       
-        <h2 id="InnoDB存储引擎（一）"><a href="#InnoDB存储引擎（一）" class="headerlink" title="InnoDB存储引擎（一）"></a>InnoDB存储引擎（一）</h2><h3 id="整体结构"><a href="#整体结构" class="headerlink" title="整体结构"></a>整体结构</h3><p><img src="http://img.blog.csdn.net/20170207195627096?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+        <h2 id="InnoDB存储引擎（一）"><a href="#InnoDB存储引擎（一）" class="headerlink" title="InnoDB存储引擎（一）"></a>InnoDB存储引擎（一）</h2><h3 id="整体结构"><a href="#整体结构" class="headerlink" title="整体结构"></a>整体结构</h3><p><img src="https://gglinux-1255556715.cos.ap-chengdu.myqcloud.com/blog/innondb1/1.png" alt="这里写图片描述"></p>
 <h3 id="内存池"><a href="#内存池" class="headerlink" title="内存池"></a>内存池</h3><ol>
 <li>维护线程／进程内部数据结构</li>
 <li>缓存磁盘文件（cache）</li>
 <li>对数据的更新或者新增操作，避免直接刷新磁盘</li>
-<li>重做日志缓冲（redo log）<br><img src="http://img.blog.csdn.net/20170207195648874?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></li>
+<li>重做日志缓冲（redo log）<br><img src="https://gglinux-1255556715.cos.ap-chengdu.myqcloud.com/blog/innondb1/2.png" alt="这里写图片描述"></li>
 </ol>
 <h3 id="后台线程"><a href="#后台线程" class="headerlink" title="后台线程"></a>后台线程</h3><ol>
 <li>Master Hhread，将更新的数据（包括新增和被修改的数据）异步刷新到磁盘，维护内存池和磁盘中的数据的一致性。</li>
 <li>IO Thread分为Insert buffer Thread,log thread,read thread,write thread。</li>
 <li>purge thread，回收undo log</li>
-<li>Page cleaner thread，刷新脏页到磁盘（由master thread 独立出来的）<br><img src="http://img.blog.csdn.net/20170207201334791?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></li>
+<li>Page cleaner thread，刷新脏页到磁盘（由master thread 独立出来的）<br><img src="https://gglinux-1255556715.cos.ap-chengdu.myqcloud.com/blog/innondb1/3.png" alt="这里写图片描述"></li>
 </ol>
 <p>Write Ahead log:是指当事务提交上，先做重做日志，再修改页。满足事务中持久性要求。</p>
 <p>Check Point：检查点技术，数据库系统为了缩短数据库发生宕机恢复所需的时间所采取的一种刷新脏页的方法。    检查点技术分为两种，sharp checkpoint和fuzzy checkpoint。sharp checkpoint用在数据库关机时，将所有的脏数据全部刷新到磁盘。fuzzy checkpoint是按照一定的策略定时部分的刷新脏页数据，较为复杂，此处不做介绍。</p>
@@ -407,7 +407,7 @@
 </ul>
 </li>
 <li>两次写（可靠性）<ul>
-<li>对某页写回磁盘的过程中，如果出现宕机，并且导致页破坏（无法使用重做日志）。会出现数据丢失的情况。针对此问题，mysql首先会将所有需要写入的页（2MB）全部刷回到共享表空间中（没有离散写），再将更新的数据写入到各自的表空间中。<br><img src="http://img.blog.csdn.net/20170207195837984?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></li>
+<li>对某页写回磁盘的过程中，如果出现宕机，并且导致页破坏（无法使用重做日志）。会出现数据丢失的情况。针对此问题，mysql首先会将所有需要写入的页（2MB）全部刷回到共享表空间中（没有离散写），再将更新的数据写入到各自的表空间中。<br><img src="https://gglinux-1255556715.cos.ap-chengdu.myqcloud.com/blog/innondb1/4.png" alt="这里写图片描述"></li>
 </ul>
 </li>
 <li>自适应哈希索引（性能提升）<ul>
@@ -733,7 +733,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2018</span>
+  <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-"></i>
   </span>

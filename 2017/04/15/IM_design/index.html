@@ -113,13 +113,13 @@
 <meta property="og:site_name" content="gglinux&#39;s blog">
 <meta property="og:description" content="即时通讯（Instant Messaging，简称IM）是一个实时通信系统，允许两人或多人使用网络实时的传递文字消息、文件、语音与视频交流。实现方式有两种。第一种基于Server转发的，Client双方通信会经过Server转发来完成消息传递。例如QQ、微信。 第二种是基于P2P(点对点)的。P2P的实现依赖于客户端之间的互联，但由于NAT与防火墙的存在，客户端无法直接互联，需要coturn服务器">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://img.blog.csdn.net/20170415181224996?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:image" content="http://img.blog.csdn.net/20170415181524357?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:updated_time" content="2017-04-15T10:54:39.000Z">
+<meta property="og:image" content="https://gglinux-1255556715.cos.ap-chengdu.myqcloud.com/blog/im/1.png">
+<meta property="og:image" content="https://gglinux-1255556715.cos.ap-chengdu.myqcloud.com/blog/im/2.png">
+<meta property="og:updated_time" content="2019-01-13T06:39:26.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="IM系统设计">
 <meta name="twitter:description" content="即时通讯（Instant Messaging，简称IM）是一个实时通信系统，允许两人或多人使用网络实时的传递文字消息、文件、语音与视频交流。实现方式有两种。第一种基于Server转发的，Client双方通信会经过Server转发来完成消息传递。例如QQ、微信。 第二种是基于P2P(点对点)的。P2P的实现依赖于客户端之间的互联，但由于NAT与防火墙的存在，客户端无法直接互联，需要coturn服务器">
-<meta name="twitter:image" content="http://img.blog.csdn.net/20170415181224996?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta name="twitter:image" content="https://gglinux-1255556715.cos.ap-chengdu.myqcloud.com/blog/im/1.png">
 
 
 
@@ -391,8 +391,8 @@
 <li>框架：Socket IO/Swoole</li>
 <li>关键点：可扩展，支持分布式部署。短链接负责业务逻辑，长链接负责Websocket。</li>
 </ol>
-<h3 id="总体架构图"><a href="#总体架构图" class="headerlink" title="总体架构图"></a>总体架构图</h3><p><img src="http://img.blog.csdn.net/20170415181224996?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="总体架构图"></p>
-<h3 id="时序图"><a href="#时序图" class="headerlink" title="时序图"></a>时序图</h3><p><img src="http://img.blog.csdn.net/20170415181524357?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ2dsaW51eA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<h3 id="总体架构图"><a href="#总体架构图" class="headerlink" title="总体架构图"></a>总体架构图</h3><p><img src="https://gglinux-1255556715.cos.ap-chengdu.myqcloud.com/blog/im/1.png" alt="总体架构图"></p>
+<h3 id="时序图"><a href="#时序图" class="headerlink" title="时序图"></a>时序图</h3><p><img src="https://gglinux-1255556715.cos.ap-chengdu.myqcloud.com/blog/im/2.png" alt="这里写图片描述"></p>
 <h2 id="详细实现"><a href="#详细实现" class="headerlink" title="详细实现"></a>详细实现</h2><h3 id="接入层实现"><a href="#接入层实现" class="headerlink" title="接入层实现"></a>接入层实现</h3><p>接入层的目的：1保证IM服务的可靠性，避免用户同时集中在同一聊天服务器中。2当聊天服务器压力过大时，能实现扩容。接入层可采用ngx_lua实现，保证性能。</p>
 <ol>
 <li>客户端请求接入IM，调用接入API。参数为:接入类型(群聊，私聊)，接入uid，群聊ID</li>
@@ -738,7 +738,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2018</span>
+  <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-"></i>
   </span>
