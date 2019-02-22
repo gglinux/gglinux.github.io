@@ -710,6 +710,151 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://gglinux.com/2018/02/22/svg2png/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="gglinux">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/dog.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="gglinux's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2018/02/22/svg2png/" itemprop="url">
+                  前端和后端实现SVG转图片
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/02/22/svg2png/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/02/22/svg2png/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/02/22/svg2png/" class="leancloud_visitors" data-flag-title="前端和后端实现SVG转图片">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="前端方案"><a href="#前端方案" class="headerlink" title="前端方案"></a>前端方案</h2><h3 id="实时保存为Base64"><a href="#实时保存为Base64" class="headerlink" title="实时保存为Base64"></a>实时保存为Base64</h3><p>用户通过界面操作SVG内容，当生成或者编辑SVG时，实时将SVG内容转换成Base64编码的img标签，塞回到原来的DOM节点中。此种方式在前端通过浏览器就可以完成，无须后端的参与。</p>
+<p>方案原理是使用canvas做中转，将svg+xml转换成png。在无需后端参与做二次处理时，可以满足业务场景。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">// 前端demo代码</div><div class="line">function drawInlineSVG($svg, callback) &#123;</div><div class="line">    </div><div class="line">    var svg = $svg[0];</div><div class="line">    svg.innerHTML = &apos;&lt;rect width=&quot;100%&quot; height=&quot;100%&quot; fill=&quot;#ffffff&quot;&gt;&lt;/rect&gt;&apos; + svg.innerHTML;</div><div class="line">    var svgData = new XMLSerializer().serializeToString( svg );</div><div class="line"></div><div class="line">    var canvas = document.createElement( &quot;canvas&quot; );</div><div class="line">    var ctx = canvas.getContext( &quot;2d&quot; );</div><div class="line"></div><div class="line">    var img = document.createElement( &quot;img&quot; );</div><div class="line">    img.setAttribute( &quot;src&quot;, &quot;data:image/svg+xml;base64,&quot; + btoa( unescape(encodeURIComponent(svgData)) ) );</div><div class="line"></div><div class="line">    img.onload = function () &#123;</div><div class="line">        ctx.drawImage( img, 0, 0 );</div><div class="line">        canvas.toDataURL( &quot;image/png&quot; );</div><div class="line">        callback &amp;&amp; callback(this);</div><div class="line">    &#125;;</div><div class="line">    var $img = $(img);</div><div class="line"></div><div class="line">    $img.height($svg.height());</div><div class="line">    $img.width($svg.width());</div><div class="line"></div><div class="line">    return $img;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="前端生成png，定时提交到后台"><a href="#前端生成png，定时提交到后台" class="headerlink" title="前端生成png，定时提交到后台"></a>前端生成png，定时提交到后台</h3><p>在需要后台做二次处理时，可以借助于上述的前端方案，通过ajax请求定时、实时的将图片上传到服务器。</p>
+<p>原理是使用字符串将base64编码的图片实时上传，在后台再做解码生成图片原型，落地到后台。因为需要实时转换和上传，对后端和前端的压力都比较大。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">// 前端demo代码</div><div class="line">var data = $(&apos;#canvasimage&apos;).attr(&apos;src&apos;); // Base 64</div><div class="line"></div><div class="line">$.ajax(&#123; </div><div class="line">    type: &quot;POST&quot;, </div><div class="line">    url: url,</div><div class="line">    dataType: &apos;text&apos;,</div><div class="line">    data: &#123;</div><div class="line">        base64data : data</div><div class="line">    &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">//后端demo代码</div><div class="line">$data = &apos;data:image/png;base64,AAAFBfj42Pj4&apos;;</div><div class="line"></div><div class="line">list($type, $data) = explode(&apos;;&apos;, $data);</div><div class="line">list(, $data)      = explode(&apos;,&apos;, $data);</div><div class="line">$data = base64_decode($data);</div><div class="line"></div><div class="line">file_put_contents(&apos;/tmp/image.png&apos;, $data);</div></pre></td></tr></table></figure>
+<h2 id="后端方案"><a href="#后端方案" class="headerlink" title="后端方案"></a>后端方案</h2><h3 id="引入PHP-imagemagic扩展"><a href="#引入PHP-imagemagic扩展" class="headerlink" title="引入PHP imagemagic扩展"></a>引入PHP imagemagic扩展</h3><p>PHP的imagemagic扩展，可以对SVG操作。使用方法也很简单。但因为imagemagic爆出的安全问题，生产环境一直没有装此扩展。对安全性要求不高的业务，可以使用。<a href="https://www.cvedetails.com/vulnerability-list/vendor_id-1749/Imagemagick.html" target="_blank" rel="noopener">https://www.cvedetails.com/vulnerability-list/vendor_id-1749/Imagemagick.html</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$image = new Imagick();</div><div class="line">$image-&gt;readImageBlob(file_get_contents(&apos;image.svg&apos;));</div><div class="line">$image-&gt;setImageFormat(&quot;png24&quot;);</div><div class="line">$image-&gt;resizeImage(1024, 768, imagick::FILTER_LANCZOS, 1); </div><div class="line">$image-&gt;writeImage(&apos;image.png&apos;);</div></pre></td></tr></table></figure>
+<h3 id="引入batik-rasterizer"><a href="#引入batik-rasterizer" class="headerlink" title="引入batik-rasterizer"></a>引入batik-rasterizer</h3><p>batik-rasterizer是Apache基金会下使用Java编写的处理SVG的工具包，要求安装Java 1.6以上的运行时。原理是使用Mozilla Rhino作为JavaScript引擎，生成了一套浏览器环境。<a href="https://xmlgraphics.apache.org/batik/tools/rasterizer.html" target="_blank" rel="noopener">https://xmlgraphics.apache.org/batik/tools/rasterizer.html</a></p>
+<p>建议使用最高版本的发布包，高版本对SVG和样式的支持性会更好。目前最新版batik-rasterizer已经支持<style></style>和外部引用CSS样式，但不支持SVG中foreignObject和通过xmlns=”<a href="http://www.w3.org/1999/xhtml&quot;引用HTML标签。" target="_blank" rel="noopener">http://www.w3.org/1999/xhtml&quot;引用HTML标签。</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">## shell调用</div><div class="line">java -jar batik-rasterizer.jar samples/batikFX.svg</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div></pre></td><td class="code"><pre><div class="line">## PHP调用</div><div class="line">function export($svg, $output_full_path, $type = &apos;png&apos;, $width = null) &#123;</div><div class="line"></div><div class="line">	if (get_magic_quotes_gpc()) &#123;</div><div class="line">		$svg = stripslashes($svg);	</div><div class="line">	&#125;</div><div class="line">	if(strpos($svg,&quot;&lt;!ENTITY&quot;) !== false)&#123;</div><div class="line">		return false;</div><div class="line">	&#125;</div><div class="line">	if ($type == &apos;png&apos;) &#123;</div><div class="line">		$typeString = &apos;-m image/png&apos;;</div><div class="line">		</div><div class="line">	&#125; elseif ($type == &apos;jpeg&apos;) &#123;</div><div class="line">		$typeString = &apos;-m image/jpeg&apos;;</div><div class="line"></div><div class="line">	&#125; elseif ($type == &apos;pdf&apos;) &#123;</div><div class="line">		$typeString = &apos;-m application/pdf&apos;;</div><div class="line">		$ext = &apos;pdf&apos;;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	$svgTmpPathArr = explode(&apos;/&apos;, $output_full_path);</div><div class="line">	unset($svgTmpPathArr[count($svgTmpPathArr)-1]);</div><div class="line"></div><div class="line">	$tempName = time() . rand();</div><div class="line">	$svgTmpPath = implode(&apos;/&apos;, $svgTmpPathArr) . &quot;/$tempName.svg&quot;;</div><div class="line"></div><div class="line">	if (!file_put_contents($svgTmpPath, $svg)) &#123; </div><div class="line">		return false;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	if (!empty($width)) &#123;</div><div class="line">		$width = (int)$width;</div><div class="line">		if ($width) &#123;</div><div class="line">			$width = &quot;-w $width&quot;;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	if(!file_exists($output_full_path)) &#123; </div><div class="line">		$handle = fopen($output_full_path, &quot;w&quot;);</div><div class="line">		fclose($handle);</div><div class="line">	&#125;</div><div class="line">	@shell_exec(&quot;java -jar &quot;.  $batik_rasterizer_path .&quot; $typeString -d $output_full_path $width $svgTmpPath&quot;);</div><div class="line">	unlink($svgTmpPath);</div><div class="line"></div><div class="line">	if (!is_file($output_full_path) || filesize($output_full_path) &lt; 10) &#123;</div><div class="line">		return false;</div><div class="line">	&#125; else &#123;</div><div class="line">		return $output_full_path;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">function transfer_svg_to_images($content) &#123;</div><div class="line">	$images = array();</div><div class="line">	//特殊样式的处理</div><div class="line">	$svg_tag_pattern = &apos;/(&lt;rect[^&lt;]*?)\&gt;\&lt;\/rect\&gt;/i&apos;;</div><div class="line">	$styles = &apos; style=&quot;fill:#ececff; stroke:#9370db; stroke-width:1&quot;&apos;;</div><div class="line">	$content = preg_replace_callback($svg_tag_pattern, function($matches) use($styles) &#123;			</div><div class="line">	 	return str_replace($matches[1], $matches[1] . $styles, $matches[0]);</div><div class="line">	&#125;, $content);</div><div class="line">	//移除不支持标签</div><div class="line">	$svg_tag_pattern = &apos;/(&lt;div xmlns=[^&lt;]*?\&gt;)[\s\S]*?(\&lt;\/div\&gt;)/i&apos;;</div><div class="line">	$content = preg_replace_callback($svg_tag_pattern, function($matches) &#123;		</div><div class="line">	 	$tmp_str = str_replace($matches[1], &apos;&lt;text y=&quot;10&quot;&gt;&apos;, $matches[0]);</div><div class="line">	 	$tmp_str = str_replace($matches[2], &apos;&lt;/text&gt;&apos;,$tmp_str);</div><div class="line">	 	$tmp_str = str_replace(&apos;span&apos;, &apos;tspan&apos;,$tmp_str);</div><div class="line">	 	return $tmp_str;</div><div class="line">	&#125;, $content);</div><div class="line"></div><div class="line">	//移除不支持标签</div><div class="line">	$content = str_replace(&apos;foreignObject&apos;, &apos;g&apos;, $content);</div><div class="line">	$svg_str_pattern = &apos;/\&lt;svg[\s\S]*?\&lt;\/svg\&gt;/i&apos;;//匹配富文本中SVG内容</div><div class="line">	$ret = preg_replace_callback($svg_str_pattern, function($matches) use(&amp;$images) &#123;</div><div class="line">		$image_path =  &apos;/tmp/&apos;. time(). rand() .&apos;svg.png&apos;;</div><div class="line">		$image_path = export($matches[0], $image_path); //实际导出处理</div><div class="line">		$ret_path = null;</div><div class="line">		if(file_exists($image_path))&#123;</div><div class="line">			$images[] = $image_path;</div><div class="line">			$ret_path = &apos;&lt;img src=&quot;&apos; . $image_path . &apos;&quot; /&gt;&apos;;</div><div class="line">		&#125;</div><div class="line">		return $ret_path;</div><div class="line">	&#125;, $content);</div><div class="line">	return array($ret, $images);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="其他问题"><a href="#其他问题" class="headerlink" title="其他问题"></a>其他问题</h2><p>SVG本身是属于W3C XML的分支，浏览器的实现方式和支持程度也不一样，在后端尤其如此。因为本身的语言标准以及CSS样式控制的问题，导致实际图片和浏览器预览都有差异，往往都需要使用正则对原始SVG文本做hack处理。尤其是后端的两种导出方式。</p>
+<p>前端相比后端转换，兼容性和支持性会好很多。当然具体使用那种转换方式，还是需要针对业务场景。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://gglinux.com/2017/06/23/tencent/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1515,141 +1660,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://gglinux.com/2017/04/01/php7_install/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="gglinux">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/dog.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="gglinux's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/04/01/php7_install/" itemprop="url">
-                  PHP 7下安装Swoole和Yar,Yaf
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/04/01/php7_install/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/04/01/php7_install/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2017/04/01/php7_install/" class="leancloud_visitors" data-flag-title="PHP 7下安装Swoole和Yar,Yaf">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>周末闲来无事，玩玩swoole。笔者开发坏境：CentOS 7，PHP 7.0.16</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/04/01/php7_install/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1699,7 +1709,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-count">19</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1710,7 +1720,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">7</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1721,7 +1731,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-count">18</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
