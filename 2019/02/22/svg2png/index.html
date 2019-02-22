@@ -89,7 +89,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="面试," />
+  <meta name="keywords" content="SVG," />
 
 
 
@@ -105,18 +105,18 @@
 
 
 
-<meta name="description" content="毕业一年了，上上下下经历了不少公司。自己创过业，也在B轮公司待过，也在D轮做过事，另外也在上市公司做过螺丝钉。林林总总算下来，也有五家公司了。也是挺折腾的。经常有人会觉得，这小伙沉不下来。其实对应聘者而言，反反复复更换工作，当然有其不好之处。 但从另一方面考虑有些人为什么会频繁更换工作呢？人往往喜欢待在舒适区，待久了一个地方就懒的去更换巢穴。频繁的跳出舒适区，也是对自己发展现状不满意的宣泄。这也是">
-<meta name="keywords" content="面试">
+<meta name="description" content="前端方案实时保存为Base64用户通过界面操作SVG内容，当生成或者编辑SVG时，实时将SVG内容转换成Base64编码的img标签，塞回到原来的DOM节点中。此种方式在前端通过浏览器就可以完成，无须后端的参与。 方案原理是使用canvas做中转，将svg+xml转换成png。在无需后端参与做二次处理时，可以满足业务场景。 1234567891011121314151617181920212223">
+<meta name="keywords" content="SVG">
 <meta property="og:type" content="article">
-<meta property="og:title" content="公司那些事">
-<meta property="og:url" content="http://gglinux.com/2017/06/23/tencent/index.html">
+<meta property="og:title" content="前端和后端实现SVG转图片">
+<meta property="og:url" content="http://gglinux.com/2019/02/22/svg2png/index.html">
 <meta property="og:site_name" content="gglinux&#39;s blog">
-<meta property="og:description" content="毕业一年了，上上下下经历了不少公司。自己创过业，也在B轮公司待过，也在D轮做过事，另外也在上市公司做过螺丝钉。林林总总算下来，也有五家公司了。也是挺折腾的。经常有人会觉得，这小伙沉不下来。其实对应聘者而言，反反复复更换工作，当然有其不好之处。 但从另一方面考虑有些人为什么会频繁更换工作呢？人往往喜欢待在舒适区，待久了一个地方就懒的去更换巢穴。频繁的跳出舒适区，也是对自己发展现状不满意的宣泄。这也是">
+<meta property="og:description" content="前端方案实时保存为Base64用户通过界面操作SVG内容，当生成或者编辑SVG时，实时将SVG内容转换成Base64编码的img标签，塞回到原来的DOM节点中。此种方式在前端通过浏览器就可以完成，无须后端的参与。 方案原理是使用canvas做中转，将svg+xml转换成png。在无需后端参与做二次处理时，可以满足业务场景。 1234567891011121314151617181920212223">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-06-24T03:09:24.000Z">
+<meta property="og:updated_time" content="2019-02-22T16:15:42.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="公司那些事">
-<meta name="twitter:description" content="毕业一年了，上上下下经历了不少公司。自己创过业，也在B轮公司待过，也在D轮做过事，另外也在上市公司做过螺丝钉。林林总总算下来，也有五家公司了。也是挺折腾的。经常有人会觉得，这小伙沉不下来。其实对应聘者而言，反反复复更换工作，当然有其不好之处。 但从另一方面考虑有些人为什么会频繁更换工作呢？人往往喜欢待在舒适区，待久了一个地方就懒的去更换巢穴。频繁的跳出舒适区，也是对自己发展现状不满意的宣泄。这也是">
+<meta name="twitter:title" content="前端和后端实现SVG转图片">
+<meta name="twitter:description" content="前端方案实时保存为Base64用户通过界面操作SVG内容，当生成或者编辑SVG时，实时将SVG内容转换成Base64编码的img标签，塞回到原来的DOM节点中。此种方式在前端通过浏览器就可以完成，无须后端的参与。 方案原理是使用canvas做中转，将svg+xml转换成png。在无需后端参与做二次处理时，可以满足业务场景。 1234567891011121314151617181920212223">
 
 
 
@@ -148,7 +148,7 @@
 
 
 
-  <title> 公司那些事 | gglinux's blog </title>
+  <title> 前端和后端实现SVG转图片 | gglinux's blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -297,7 +297,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://gglinux.com/2017/06/23/tencent/">
+    <link itemprop="mainEntityOfPage" href="http://gglinux.com/2019/02/22/svg2png/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="gglinux">
@@ -318,7 +318,7 @@
             
             
               
-                公司那些事
+                前端和后端实现SVG转图片
               
             
           </h1>
@@ -342,9 +342,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/06/23/tencent/#comments" itemprop="discussionUrl">
+                <a href="/2019/02/22/svg2png/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/06/23/tencent/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2019/02/22/svg2png/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -352,7 +352,7 @@
 
           
           
-             <span id="/2017/06/23/tencent/" class="leancloud_visitors" data-flag-title="公司那些事">
+             <span id="/2019/02/22/svg2png/" class="leancloud_visitors" data-flag-title="前端和后端实现SVG转图片">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -379,85 +379,21 @@
       
 
       
-        <p>毕业一年了，上上下下经历了不少公司。自己创过业，也在B轮公司待过，也在D轮做过事，另外也在上市公司做过螺丝钉。林林总总算下来，也有五家公司了。也是挺折腾的。经常有人会觉得，这小伙沉不下来。其实对应聘者而言，反反复复更换工作，当然有其不好之处。</p>
-<p>但从另一方面考虑有些人为什么会频繁更换工作呢？人往往喜欢待在舒适区，待久了一个地方就懒的去更换巢穴。频繁的跳出舒适区，也是对自己发展现状不满意的宣泄。这也是对笔者频繁更换工作的一种解释吧。我是觉得适当时机跳出舒适区，是对个人职业发展的追求。</p>
-<p>入职腾讯也有两周了，这期间经常有人问我腾讯的面试情况。在不违反公司制度的前提下，我会简单介绍有关问题。其次会比较下我目前待过几家公司的特点。</p>
-<a id="more"></a>
-<h3 id="腾讯面试"><a href="#腾讯面试" class="headerlink" title="腾讯面试"></a>腾讯面试</h3><p>经历过三次腾讯面试（手动捂脸），第一次是2015年校招面试IEG后台开发岗，结果是到HR面终止。校招面试流程为：网申-》笔试-》一轮专业面(有笔试)-》二轮专业面-》HR面。面经我就不细述了，牛客网有很多。自己之前也写过<a href="http://blog.csdn.net/gglinux/article/details/49050023" target="_blank" rel="noopener">一篇</a>。</p>
-<p>第二次是2016年大学毕业，从美图离职那次。面试的SNG腾讯云的运营开发岗，结果是一面结束。面试流程为：拉勾-》面试(有笔试)-》结束。社招，有两年工作经验的面试者，应聘的成功率会高很多。不建议刚毕业通过社招途径进入。</p>
-<p>第三次是2017年工作一年后。面试的TEG后台开发岗，顺利入职。面试流程为：内推-》一面专业面（有笔试）-》二面专业面-》3面HR面-》沟通薪资-》背景调查-》发放offer-》确定入职时间-》入职。专业一面会问的比较详细，如果一面专业面搞定，后面基本过过流程，所以主要是一面。一面侧重点，一是项目相关，另外是专业基础。社招，项目相关的会比较多，注意所做项目的深度。这些都是笔者的一些感受，每个岗位可能都不一样，不可以偏概全。</p>
-<h3 id="腾讯生活"><a href="#腾讯生活" class="headerlink" title="腾讯生活"></a>腾讯生活</h3><p>说几个感受比较深刻的吧。腾讯有内部食堂，价格实惠，笔者所在食堂味道一般（和工作地点有关）。深圳地区早晚有班车，通勤方便，笔者上下班基本都坐班车了。超过8点，有18元晚餐券。开发设备配置较好，两台电脑。想内推的可发简历到：gglinux@163.com。</p>
-<h3 id="特点比较"><a href="#特点比较" class="headerlink" title="特点比较"></a>特点比较</h3><p>以下评价为个人观点，每家公司都会变化，不代表100%实际情况。A-》最好、B-》其次、C-》较差、D-》比较差，四个等级。建议职场新人能去大公司，还是去大公司。</p>
-<table>
-<thead>
-<tr>
-<th>公司</th>
-<th>初创(橙讯)</th>
-<th>B轮(金斧子)</th>
-<th>D轮(辣妈帮)</th>
-<th>上市公司(美图)</th>
-<th>BAT(腾讯) </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>福利待遇</td>
-<td>D</td>
-<td>C</td>
-<td>C</td>
-<td>B</td>
-<td>A </td>
-</tr>
-<tr>
-<td>技术氛围</td>
-<td>C</td>
-<td>B</td>
-<td>C</td>
-<td>B</td>
-<td>A </td>
-</tr>
-<tr>
-<td>职业发展</td>
-<td>C</td>
-<td>B</td>
-<td>B</td>
-<td>B</td>
-<td>A </td>
-</tr>
-<tr>
-<td>加班情况</td>
-<td>C</td>
-<td>C</td>
-<td>B</td>
-<td>A</td>
-<td>C </td>
-</tr>
-<tr>
-<td>应聘难度</td>
-<td>B</td>
-<td>B</td>
-<td>B</td>
-<td>C</td>
-<td>D </td>
-</tr>
-<tr>
-<td>员工忠诚度</td>
-<td>B</td>
-<td>C</td>
-<td>C</td>
-<td>B</td>
-<td>A </td>
-</tr>
-<tr>
-<td>开发配置</td>
-<td>C</td>
-<td>C</td>
-<td>C</td>
-<td>A</td>
-<td>B </td>
-</tr>
-</tbody>
-</table>
+        <h2 id="前端方案"><a href="#前端方案" class="headerlink" title="前端方案"></a>前端方案</h2><h3 id="实时保存为Base64"><a href="#实时保存为Base64" class="headerlink" title="实时保存为Base64"></a>实时保存为Base64</h3><p>用户通过界面操作SVG内容，当生成或者编辑SVG时，实时将SVG内容转换成Base64编码的img标签，塞回到原来的DOM节点中。此种方式在前端通过浏览器就可以完成，无须后端的参与。</p>
+<p>方案原理是使用canvas做中转，将svg+xml转换成png。在无需后端参与做二次处理时，可以满足业务场景。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">// 前端demo代码</div><div class="line">function drawInlineSVG($svg, callback) &#123;</div><div class="line">    </div><div class="line">    var svg = $svg[0];</div><div class="line">    svg.innerHTML = &apos;&lt;rect width=&quot;100%&quot; height=&quot;100%&quot; fill=&quot;#ffffff&quot;&gt;&lt;/rect&gt;&apos; + svg.innerHTML;</div><div class="line">    var svgData = new XMLSerializer().serializeToString( svg );</div><div class="line"></div><div class="line">    var canvas = document.createElement( &quot;canvas&quot; );</div><div class="line">    var ctx = canvas.getContext( &quot;2d&quot; );</div><div class="line"></div><div class="line">    var img = document.createElement( &quot;img&quot; );</div><div class="line">    img.setAttribute( &quot;src&quot;, &quot;data:image/svg+xml;base64,&quot; + btoa( unescape(encodeURIComponent(svgData)) ) );</div><div class="line"></div><div class="line">    img.onload = function () &#123;</div><div class="line">        ctx.drawImage( img, 0, 0 );</div><div class="line">        canvas.toDataURL( &quot;image/png&quot; );</div><div class="line">        callback &amp;&amp; callback(this);</div><div class="line">    &#125;;</div><div class="line">    var $img = $(img);</div><div class="line"></div><div class="line">    $img.height($svg.height());</div><div class="line">    $img.width($svg.width());</div><div class="line"></div><div class="line">    return $img;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="前端生成png，定时提交到后台"><a href="#前端生成png，定时提交到后台" class="headerlink" title="前端生成png，定时提交到后台"></a>前端生成png，定时提交到后台</h3><p>在需要后台做二次处理时，可以借助于上述的前端方案，通过ajax请求定时、实时的将图片上传到服务器。</p>
+<p>原理是使用字符串将base64编码的图片实时上传，在后台再做解码生成图片原型，落地到后台。因为需要实时转换和上传，对后端和前端的压力都比较大。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">// 前端demo代码</div><div class="line">var data = $(&apos;#canvasimage&apos;).attr(&apos;src&apos;); // Base 64</div><div class="line"></div><div class="line">$.ajax(&#123; </div><div class="line">    type: &quot;POST&quot;, </div><div class="line">    url: url,</div><div class="line">    dataType: &apos;text&apos;,</div><div class="line">    data: &#123;</div><div class="line">        base64data : data</div><div class="line">    &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">//后端demo代码</div><div class="line">$data = &apos;data:image/png;base64,AAAFBfj42Pj4&apos;;</div><div class="line"></div><div class="line">list($type, $data) = explode(&apos;;&apos;, $data);</div><div class="line">list(, $data)      = explode(&apos;,&apos;, $data);</div><div class="line">$data = base64_decode($data);</div><div class="line"></div><div class="line">file_put_contents(&apos;/tmp/image.png&apos;, $data);</div></pre></td></tr></table></figure>
+<h2 id="后端方案"><a href="#后端方案" class="headerlink" title="后端方案"></a>后端方案</h2><h3 id="引入PHP-imagemagic扩展"><a href="#引入PHP-imagemagic扩展" class="headerlink" title="引入PHP imagemagic扩展"></a>引入PHP imagemagic扩展</h3><p>PHP的imagemagic扩展，可以对SVG操作。使用方法也很简单。但因为imagemagic爆出的安全问题，生产环境一直没有装此扩展。对安全性要求不高的业务，可以使用。<a href="https://www.cvedetails.com/vulnerability-list/vendor_id-1749/Imagemagick.html" target="_blank" rel="noopener">https://www.cvedetails.com/vulnerability-list/vendor_id-1749/Imagemagick.html</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$image = new Imagick();</div><div class="line">$image-&gt;readImageBlob(file_get_contents(&apos;image.svg&apos;));</div><div class="line">$image-&gt;setImageFormat(&quot;png24&quot;);</div><div class="line">$image-&gt;resizeImage(1024, 768, imagick::FILTER_LANCZOS, 1); </div><div class="line">$image-&gt;writeImage(&apos;image.png&apos;);</div></pre></td></tr></table></figure>
+<h3 id="引入batik-rasterizer"><a href="#引入batik-rasterizer" class="headerlink" title="引入batik-rasterizer"></a>引入batik-rasterizer</h3><p>batik-rasterizer是Apache基金会下使用Java编写的处理SVG的工具包，要求安装Java 1.6以上的运行时。原理是使用Mozilla Rhino作为JavaScript引擎，生成了一套浏览器环境。<a href="https://xmlgraphics.apache.org/batik/tools/rasterizer.html" target="_blank" rel="noopener">https://xmlgraphics.apache.org/batik/tools/rasterizer.html</a></p>
+<p>建议使用最高版本的发布包，高版本对SVG和样式的支持性会更好。目前最新版batik-rasterizer已经支持<style></style>和外部引用CSS样式，但不支持SVG中foreignObject和通过xmlns=”<a href="http://www.w3.org/1999/xhtml&quot;引用HTML标签。" target="_blank" rel="noopener">http://www.w3.org/1999/xhtml&quot;引用HTML标签。</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">## shell调用</div><div class="line">java -jar batik-rasterizer.jar samples/batikFX.svg</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div></pre></td><td class="code"><pre><div class="line">## PHP调用</div><div class="line">function export($svg, $output_full_path, $type = &apos;png&apos;, $width = null) &#123;</div><div class="line"></div><div class="line">	if (get_magic_quotes_gpc()) &#123;</div><div class="line">		$svg = stripslashes($svg);	</div><div class="line">	&#125;</div><div class="line">	if(strpos($svg,&quot;&lt;!ENTITY&quot;) !== false)&#123;</div><div class="line">		return false;</div><div class="line">	&#125;</div><div class="line">	if ($type == &apos;png&apos;) &#123;</div><div class="line">		$typeString = &apos;-m image/png&apos;;</div><div class="line">		</div><div class="line">	&#125; elseif ($type == &apos;jpeg&apos;) &#123;</div><div class="line">		$typeString = &apos;-m image/jpeg&apos;;</div><div class="line"></div><div class="line">	&#125; elseif ($type == &apos;pdf&apos;) &#123;</div><div class="line">		$typeString = &apos;-m application/pdf&apos;;</div><div class="line">		$ext = &apos;pdf&apos;;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	$svgTmpPathArr = explode(&apos;/&apos;, $output_full_path);</div><div class="line">	unset($svgTmpPathArr[count($svgTmpPathArr)-1]);</div><div class="line"></div><div class="line">	$tempName = time() . rand();</div><div class="line">	$svgTmpPath = implode(&apos;/&apos;, $svgTmpPathArr) . &quot;/$tempName.svg&quot;;</div><div class="line"></div><div class="line">	if (!file_put_contents($svgTmpPath, $svg)) &#123; </div><div class="line">		return false;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	if (!empty($width)) &#123;</div><div class="line">		$width = (int)$width;</div><div class="line">		if ($width) &#123;</div><div class="line">			$width = &quot;-w $width&quot;;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	if(!file_exists($output_full_path)) &#123; </div><div class="line">		$handle = fopen($output_full_path, &quot;w&quot;);</div><div class="line">		fclose($handle);</div><div class="line">	&#125;</div><div class="line">	@shell_exec(&quot;java -jar &quot;.  $batik_rasterizer_path .&quot; $typeString -d $output_full_path $width $svgTmpPath&quot;);</div><div class="line">	unlink($svgTmpPath);</div><div class="line"></div><div class="line">	if (!is_file($output_full_path) || filesize($output_full_path) &lt; 10) &#123;</div><div class="line">		return false;</div><div class="line">	&#125; else &#123;</div><div class="line">		return $output_full_path;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">function transfer_svg_to_images($content) &#123;</div><div class="line">	$images = array();</div><div class="line">	//特殊样式的处理</div><div class="line">	$svg_tag_pattern = &apos;/(&lt;rect[^&lt;]*?)\&gt;\&lt;\/rect\&gt;/i&apos;;</div><div class="line">	$styles = &apos; style=&quot;fill:#ececff; stroke:#9370db; stroke-width:1&quot;&apos;;</div><div class="line">	$content = preg_replace_callback($svg_tag_pattern, function($matches) use($styles) &#123;			</div><div class="line">	 	return str_replace($matches[1], $matches[1] . $styles, $matches[0]);</div><div class="line">	&#125;, $content);</div><div class="line">	//移除不支持标签</div><div class="line">	$svg_tag_pattern = &apos;/(&lt;div xmlns=[^&lt;]*?\&gt;)[\s\S]*?(\&lt;\/div\&gt;)/i&apos;;</div><div class="line">	$content = preg_replace_callback($svg_tag_pattern, function($matches) &#123;		</div><div class="line">	 	$tmp_str = str_replace($matches[1], &apos;&lt;text y=&quot;10&quot;&gt;&apos;, $matches[0]);</div><div class="line">	 	$tmp_str = str_replace($matches[2], &apos;&lt;/text&gt;&apos;,$tmp_str);</div><div class="line">	 	$tmp_str = str_replace(&apos;span&apos;, &apos;tspan&apos;,$tmp_str);</div><div class="line">	 	return $tmp_str;</div><div class="line">	&#125;, $content);</div><div class="line"></div><div class="line">	//移除不支持标签</div><div class="line">	$content = str_replace(&apos;foreignObject&apos;, &apos;g&apos;, $content);</div><div class="line">	$svg_str_pattern = &apos;/\&lt;svg[\s\S]*?\&lt;\/svg\&gt;/i&apos;;//匹配富文本中SVG内容</div><div class="line">	$ret = preg_replace_callback($svg_str_pattern, function($matches) use(&amp;$images) &#123;</div><div class="line">		$image_path =  &apos;/tmp/&apos;. time(). rand() .&apos;svg.png&apos;;</div><div class="line">		$image_path = export($matches[0], $image_path); //实际导出处理</div><div class="line">		$ret_path = null;</div><div class="line">		if(file_exists($image_path))&#123;</div><div class="line">			$images[] = $image_path;</div><div class="line">			$ret_path = &apos;&lt;img src=&quot;&apos; . $image_path . &apos;&quot; /&gt;&apos;;</div><div class="line">		&#125;</div><div class="line">		return $ret_path;</div><div class="line">	&#125;, $content);</div><div class="line">	return array($ret, $images);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="其他问题"><a href="#其他问题" class="headerlink" title="其他问题"></a>其他问题</h2><p>SVG本身是属于W3C XML的分支，浏览器的实现方式和支持程度也不一样，在后端尤其如此。因为本身的语言标准以及CSS样式控制的问题，导致实际图片和浏览器预览都有差异，往往都需要使用正则对原始SVG文本做hack处理。尤其是后端的两种导出方式。</p>
+<p>前端相比后端转换，兼容性和支持性会好很多。当然具体使用那种转换方式，还是需要针对业务场景。</p>
 
       
     </div>
@@ -508,7 +444,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/面试/" rel="tag"># 面试</a>
+            <a href="/tags/SVG/" rel="tag"># SVG</a>
           
         </div>
       
@@ -521,8 +457,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/05/31/yii2-plus/" rel="next" title="yii2-plus">
-                <i class="fa fa-chevron-left"></i> yii2-plus
+              <a href="/2018/09/09/separate/" rel="next" title="老树发新芽-前后端分离实践">
+                <i class="fa fa-chevron-left"></i> 老树发新芽-前后端分离实践
               </a>
             
           </div>
@@ -530,10 +466,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/03/25/tapd/" rel="prev" title="TAPD和敏捷研发">
-                TAPD和敏捷研发 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -745,7 +677,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#腾讯面试"><span class="nav-number">1.</span> <span class="nav-text">腾讯面试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#腾讯生活"><span class="nav-number">2.</span> <span class="nav-text">腾讯生活</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特点比较"><span class="nav-number">3.</span> <span class="nav-text">特点比较</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前端方案"><span class="nav-number">1.</span> <span class="nav-text">前端方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#实时保存为Base64"><span class="nav-number">1.1.</span> <span class="nav-text">实时保存为Base64</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#前端生成png，定时提交到后台"><span class="nav-number">1.2.</span> <span class="nav-text">前端生成png，定时提交到后台</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#后端方案"><span class="nav-number">2.</span> <span class="nav-text">后端方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#引入PHP-imagemagic扩展"><span class="nav-number">2.1.</span> <span class="nav-text">引入PHP imagemagic扩展</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#引入batik-rasterizer"><span class="nav-number">2.2.</span> <span class="nav-text">引入batik-rasterizer</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他问题"><span class="nav-number">3.</span> <span class="nav-text">其他问题</span></a></li></ol></div>
             
 
           </div>
@@ -878,9 +810,9 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'http://gglinux.com/2017/06/23/tencent/';
-          this.page.identifier = '2017/06/23/tencent/';
-          this.page.title = '公司那些事';
+          this.page.url = 'http://gglinux.com/2019/02/22/svg2png/';
+          this.page.identifier = '2019/02/22/svg2png/';
+          this.page.title = '前端和后端实现SVG转图片';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://gglinux.disqus.com/embed.js';
