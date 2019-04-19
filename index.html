@@ -297,6 +297,164 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://gglinux.com/2019/02/22/phpexcel/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="gglinux">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/dog.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="gglinux's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2019/02/22/phpexcel/" itemprop="url">
+                  导出数据到Excel的实用方案
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/02/22/phpexcel/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2019/02/22/phpexcel/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2019/02/22/phpexcel/" class="leancloud_visitors" data-flag-title="导出数据到Excel的实用方案">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="处理前-库的选择"><a href="#处理前-库的选择" class="headerlink" title="处理前-库的选择"></a>处理前-库的选择</h3><p>实际工作场景中，经常需要将系统中数据导出为Excel，便于产品和运营查阅和二次处理。本文详细介绍了使用PHP导出数据的方法。</p>
+<p>PHP操作Excel主要有两个第三方库，一个是<a href="https://github.com/PHPOffice/PHPExcel" target="_blank" rel="noopener">PHPExcel</a>，另外一个是<a href="https://github.com/PHPOffice/PhpSpreadsheet" target="_blank" rel="noopener">PhpSpreadsheet</a>。其中PhpSpreadsheet是PHPExcel的升级版本。</p>
+<p>PHPExcel本身支持超链接、样式设置（字体、颜色、边框线、对齐等）、行高列宽设置、表格冻结、公式、合并单元格、多表格等特性。从官方文档得知，PHPExcel支持PHP5.2版本，代码质量和性能会低于PhpSpreadsheet。另外PHPExcel从2015年便不再维护，因此很难从社区增加新特性和处理历史缺陷。PHPExcel支持xls和xlsx两种格式，xls是Microsoft Excel 2003以下版本支持的文件，xlsx是Microsoft Excel 2007以后开始的。</p>
+<p>PhpSpreadsheet是下一代的PHPExcel，支持PHP5.6及以上，可以处理Microsoft Excel和LibreOffice Calc。PhpSpreadsheet作为下一代的PHPExcel，目前得到社区持续维护。</p>
+<p>基于本身业务特点，以及疑难问题的快速处理，最终选择了PHPExcel作为导出的基础库，并且采用xls文件格式。PHPExcel库因为历史久远，积累了很多其他用户踩过的坑，也便于我们处理类似疑难问题。</p>
+<blockquote>
+<p> 下文所述的方法是将内容导出为xls文件格式。</p>
+</blockquote>
+<h3 id="处理中-内容的处理"><a href="#处理中-内容的处理" class="headerlink" title="处理中-内容的处理"></a>处理中-内容的处理</h3><h4 id="处理多sheet"><a href="#处理多sheet" class="headerlink" title="处理多sheet"></a>处理多sheet</h4><ul>
+<li>核心方法：$obj_phpexcel-&gt;createSheet(​$i);<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">$obj_phpexcel = new PHPExcel();</div><div class="line">$sheet_datas;//实际数据</div><div class="line">$sheet_name = &apos;test&apos;;</div><div class="line">foreach($sheet_datas as $i =&gt; $sheet_data) &#123;</div><div class="line">	$obj_phpexcel-&gt;createSheet($i);</div><div class="line">	$obj_phpexcel-&gt;setActiveSheetIndex($sheet_index);</div><div class="line">	$obj_phpexcel-&gt;getActiveSheet()-&gt;setTitle($sheet_name);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="处理样式"><a href="#处理样式" class="headerlink" title="处理样式"></a>处理样式</h4><ul>
+<li>核心方法： $obj_phpexcel-&gt;getActiveSheet()-&gt;getStyle(‘A1’)-&gt;applyFromArray($style_array);<br>getStyle的参数为实际坐标，比如A1，代表A列的第1行的单元格。applyFromArray的参数为样式配置。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div></pre></td><td class="code"><pre><div class="line">//样式配置</div><div class="line">$style_array = array(</div><div class="line">    &apos;alignment&apos; =&gt; array(</div><div class="line">        &apos;horizontal&apos; =&gt;</div><div class="line">            PHPExcel_Style_Alignment::HORIZONTAL_GENERAL           = &apos;general&apos;</div><div class="line">            PHPExcel_Style_Alignment::HORIZONTAL_LEFT              = &apos;left&apos;</div><div class="line">            PHPExcel_Style_Alignment::HORIZONTAL_RIGHT             = &apos;right&apos;</div><div class="line">            PHPExcel_Style_Alignment::HORIZONTAL_CENTER            = &apos;center&apos;</div><div class="line">            PHPExcel_Style_Alignment::HORIZONTAL_CENTER_CONTINUOUS = &apos;centerContinuous&apos;</div><div class="line">            PHPExcel_Style_Alignment::HORIZONTAL_JUSTIFY           = &apos;justify&apos;</div><div class="line">        &apos;vertical&apos; =&gt;</div><div class="line">            PHPExcel_Style_Alignment::VERTICAL_BOTTOM  = &apos;bottom&apos;</div><div class="line">            PHPExcel_Style_Alignment::VERTICAL_TOP     = &apos;top&apos;</div><div class="line">            PHPExcel_Style_Alignment::VERTICAL_CENTER  = &apos;center&apos;</div><div class="line">            PHPExcel_Style_Alignment::VERTICAL_JUSTIFY = &apos;justify&apos;</div><div class="line">        &apos;rotation&apos; =&gt; (int)</div><div class="line">        &apos;wrap&apos; =&gt; (boolean)</div><div class="line">        &apos;shrinkToFit&apos; =&gt; (boolean)</div><div class="line">        &apos;indent&apos; =&gt; (int)</div><div class="line">    )</div><div class="line">    &apos;borders&apos; =&gt; array(</div><div class="line">        &apos;allborders&apos; =&gt; array(</div><div class="line">            &apos;style&apos; =&gt; </div><div class="line">                PHPExcel_Style_Border::BORDER_NONE               = &apos;none&apos;;</div><div class="line">                PHPExcel_Style_Border::BORDER_DASHDOT            = &apos;dashDot&apos;;</div><div class="line">                PHPExcel_Style_Border::BORDER_DASHDOTDOT         = &apos;dashDotDot&apos;;</div><div class="line">                PHPExcel_Style_Border::BORDER_DASHED             = &apos;dashed&apos;;</div><div class="line">                PHPExcel_Style_Border::BORDER_DOTTED             = &apos;dotted&apos;;</div><div class="line">                PHPExcel_Style_Border::BORDER_DOUBLE             = &apos;double&apos;;</div><div class="line">                PHPExcel_Style_Border::BORDER_HAIR               = &apos;hair&apos;;</div><div class="line">                PHPExcel_Style_Border::BORDER_MEDIUM             = &apos;medium&apos;;</div><div class="line">                PHPExcel_Style_Border::BORDER_MEDIUMDASHDOT      = &apos;mediumDashDot&apos;;</div><div class="line">                PHPExcel_Style_Border::BORDER_MEDIUMDASHDOTDOT   = &apos;mediumDashDotDot&apos;;</div><div class="line">                PHPExcel_Style_Border::BORDER_MEDIUMDASHED       = &apos;mediumDashed&apos;;</div><div class="line">                PHPExcel_Style_Border::BORDER_SLANTDASHDOT       = &apos;slantDashDot&apos;;</div><div class="line">                PHPExcel_Style_Border::BORDER_THICK              = &apos;thick&apos;;</div><div class="line">                PHPExcel_Style_Border::BORDER_THIN               = &apos;thin&apos;;</div><div class="line">            &apos;color&apos; =&gt; array(</div><div class="line">                &apos;rgb&apos; =&gt;</div><div class="line">                    PHPExcel_Style_Color::COLOR_BLACK            = &apos;FF000000&apos;;</div><div class="line">                    PHPExcel_Style_Color::COLOR_WHITE            = &apos;FFFFFFFF&apos;;</div><div class="line">                    PHPExcel_Style_Color::COLOR_RED              = &apos;FFFF0000&apos;;</div><div class="line">                    PHPExcel_Style_Color::COLOR_DARKRED          = &apos;FF800000&apos;;</div><div class="line">                    PHPExcel_Style_Color::COLOR_BLUE             = &apos;FF0000FF&apos;;</div><div class="line">                    PHPExcel_Style_Color::COLOR_DARKBLUE         = &apos;FF000080&apos;;</div><div class="line">                    PHPExcel_Style_Color::COLOR_GREEN            = &apos;FF00FF00&apos;;</div><div class="line">                    PHPExcel_Style_Color::COLOR_DARKGREEN        = &apos;FF008000&apos;;</div><div class="line">                    PHPExcel_Style_Color::COLOR_YELLOW           = &apos;FFFFFF00&apos;;</div><div class="line">                    PHPExcel_Style_Color::COLOR_DARKYELLOW       = &apos;FF808000&apos;;</div><div class="line">            )</div><div class="line"></div><div class="line">        )</div><div class="line">        &apos;left&apos; =&gt; // See &apos;allborders&apos;</div><div class="line">        &apos;top&apos; =&gt; // See &apos;allborders&apos;</div><div class="line">        &apos;right&apos; =&gt; // See &apos;allborders&apos;</div><div class="line">        &apos;bottom&apos; =&gt; // See &apos;allborders&apos;</div><div class="line">        &apos;diagonal&apos; =&gt;</div><div class="line">        &apos;diagonaldirection&apos; =&gt; </div><div class="line">    )</div><div class="line">    &apos;fill&apos; =&gt; array(</div><div class="line">        &apos;type&apos; =&gt;</div><div class="line">            PHPExcel_Style_Fill::FILL_NONE                         = &apos;none&apos;;</div><div class="line">            PHPExcel_Style_Fill::FILL_SOLID                        = &apos;solid&apos;;</div><div class="line">            PHPExcel_Style_Fill::FILL_GRADIENT_LINEAR              = &apos;linear&apos;;</div><div class="line">            PHPExcel_Style_Fill::FILL_GRADIENT_PATH                = &apos;path&apos;;</div><div class="line">            PHPExcel_Style_Fill::FILL_PATTERN_DARKDOWN             = &apos;darkDown&apos;;</div><div class="line">            PHPExcel_Style_Fill::FILL_PATTERN_DARKGRAY             = &apos;darkGray&apos;;</div><div class="line">            PHPExcel_Style_Fill::FILL_PATTERN_DARKGRID             = &apos;darkGrid&apos;;</div><div class="line">            PHPExcel_Style_Fill::FILL_PATTERN_DARKHORIZONTAL       = &apos;darkHorizontal&apos;;</div><div class="line">            PHPExcel_Style_Fill::FILL_PATTERN_DARKTRELLIS          = &apos;darkTrellis&apos;;</div><div class="line">            PHPExcel_Style_Fill::FILL_PATTERN_DARKUP               = &apos;darkUp&apos;;</div><div class="line">            PHPExcel_Style_Fill::FILL_PATTERN_DARKVERTICAL         = &apos;darkVertical&apos;;</div><div class="line">            PHPExcel_Style_Fill::FILL_PATTERN_GRAY0625             = &apos;gray0625&apos;;</div><div class="line">            PHPExcel_Style_Fill::FILL_PATTERN_GRAY125              = &apos;gray125&apos;;</div><div class="line">            PHPExcel_Style_Fill::FILL_PATTERN_LIGHTDOWN            = &apos;lightDown&apos;;</div><div class="line">            PHPExcel_Style_Fill::FILL_PATTERN_LIGHTGRAY            = &apos;lightGray&apos;;</div><div class="line">            PHPExcel_Style_Fill::FILL_PATTERN_LIGHTGRID            = &apos;lightGrid&apos;;</div><div class="line">            PHPExcel_Style_Fill::FILL_PATTERN_LIGHTHORIZONTAL      = &apos;lightHorizontal&apos;;</div><div class="line">            PHPExcel_Style_Fill::FILL_PATTERN_LIGHTTRELLIS         = &apos;lightTrellis&apos;;</div><div class="line">            PHPExcel_Style_Fill::FILL_PATTERN_LIGHTUP              = &apos;lightUp&apos;;</div><div class="line">            PHPExcel_Style_Fill::FILL_PATTERN_LIGHTVERTICAL        = &apos;lightVertical&apos;;</div><div class="line">            PHPExcel_Style_Fill::FILL_PATTERN_MEDIUMGRAY           = &apos;mediumGray&apos;;</div><div class="line">        &apos;rotation&apos; =&gt; (double)</div><div class="line">        &apos;startcolor&apos; =&gt; // See &apos;borders&apos; =&gt; &apos;allborders&apos; =&gt; &apos;color&apos;</div><div class="line">        &apos;endcolor&apos; =&gt; // See &apos;borders&apos; =&gt; &apos;allborders&apos; =&gt; &apos;color&apos;</div><div class="line">        &apos;color&apos; =&gt; // See &apos;borders&apos; =&gt; &apos;allborders&apos; =&gt; &apos;color&apos;</div><div class="line">    ) </div><div class="line">    &apos;font&apos; =&gt; array(</div><div class="line">        &apos;name&apos; =&gt;</div><div class="line">            &apos;Arial&apos;</div><div class="line">            &apos;Calibri&apos;</div><div class="line">            // etc.</div><div class="line">        &apos;bold&apos; =&gt; (boolean)</div><div class="line">        &apos;italic&apos; =&gt; (boolean)</div><div class="line">        &apos;superScript&apos; =&gt; (boolean)</div><div class="line">        &apos;subScript&apos; =&gt; (boolean)</div><div class="line">        &apos;underline&apos; =&gt; (boolean)</div><div class="line">        &apos;strike&apos; =&gt; (boolean)</div><div class="line">        &apos;size&apos; =&gt; (float)</div><div class="line">        &apos;color&apos; =&gt; // See &apos;borders&apos; =&gt; &apos;allborders&apos; =&gt; &apos;color&apos;</div><div class="line">    )</div><div class="line">    &apos;numberformat&apos; =&gt;</div><div class="line">    &apos;protection&apos; =&gt;</div><div class="line">)</div></pre></td></tr></table></figure>
+<h4 id="写入数据"><a href="#写入数据" class="headerlink" title="写入数据"></a>写入数据</h4><ul>
+<li>核心方法：$obj_phpexcel-&gt;getActiveSheet()-&gt;setCellValueExplicit(‘A1’, $value, $dtype);<br>dtype区分不同的数据类型，定义见PHPExcel\Cell\DataType.php<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">/* Data types */</div><div class="line">const TYPE_STRING2  = &apos;str&apos;;</div><div class="line">const TYPE_STRING   = &apos;s&apos;;</div><div class="line">const TYPE_FORMULA  = &apos;f&apos;;</div><div class="line">const TYPE_NUMERIC  = &apos;n&apos;;</div><div class="line">const TYPE_BOOL     = &apos;b&apos;;</div><div class="line">const TYPE_NULL     = &apos;null&apos;;</div><div class="line">const TYPE_INLINE   = &apos;inlineStr&apos;;</div><div class="line">const TYPE_ERROR    = &apos;e&apos;;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="处理超链接"><a href="#处理超链接" class="headerlink" title="处理超链接"></a>处理超链接</h4><p>核心方法：$obj_phpexcel-&gt;getActiveSheet()-&gt;getCell(‘A1’)-&gt;getHyperlink()-&gt;setUrl($URL);</p>
+<h4 id="处理公式"><a href="#处理公式" class="headerlink" title="处理公式"></a>处理公式</h4><p>核心方法：$obj_phpexcel-&gt;getActiveSheet()-&gt;setCellValue(‘A1’, ‘=SUM(A10:E9)’);</p>
+<h4 id="合并单元格"><a href="#合并单元格" class="headerlink" title="合并单元格"></a>合并单元格</h4><p>核心方法：$obj_phpexcel-&gt;getActiveSheet()-&gt;mergeCells(‘A1:C1’);</p>
+<h4 id="列宽和行高"><a href="#列宽和行高" class="headerlink" title="列宽和行高"></a>列宽和行高</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">//列宽</div><div class="line">$obj_phpexcel-&gt;getActiveSheet()-&gt;getColumnDimension($column_label)-&gt;setWidth($value);</div><div class="line">//行高</div><div class="line">$obj_phpexcel-&gt;getActiveSheet()-&gt;getRowDimension($key)-&gt;setRowHeight($value);</div></pre></td></tr></table></figure>
+<h4 id="表格冻结"><a href="#表格冻结" class="headerlink" title="表格冻结"></a>表格冻结</h4><p>核心方法：$obj_phpexcel-&gt;getActiveSheet()-&gt;freezePane(‘D2’);</p>
+<h3 id="其他问题"><a href="#其他问题" class="headerlink" title="其他问题"></a>其他问题</h3><h4 id="实际值、像素值隐射"><a href="#实际值、像素值隐射" class="headerlink" title="实际值、像素值隐射"></a>实际值、像素值隐射</h4><p>PHPExcel没办法将像素值，转化为Microsoft Excel实际的宽度和高度值。如果直接将像素值设置为Excel的实际值，会导致内容存在差异。经过测试得知，Excel实际值和像素值之间满足线性关系。知道问题原因，处理起来便很简单。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">private function _get_excel_real_width($value) &#123;</div><div class="line">	return $value/7;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="横坐标处理"><a href="#横坐标处理" class="headerlink" title="横坐标处理"></a>横坐标处理</h4><p>Excel的横坐标为A、B….、AA、AB类型，需要将PHP数组下标转化为Excel的横坐标。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">private function _get_sheet_col_label($index) &#123;</div><div class="line"></div><div class="line">	if (isset($this-&gt;_col_label_map[$index])) &#123;</div><div class="line">		return $this-&gt;_col_label_map[$index];</div><div class="line">	&#125;</div><div class="line">	$abc = &apos;ABCDEFGHIJKLMNOPQRSTUVWXYZ&apos;;</div><div class="line">	for ($i=0; $i &lt; 600; $i++) &#123; //最高支持600列</div><div class="line">		$a = (int)($i / 26);</div><div class="line">		$b = $i % 26;</div><div class="line">		$column_label = &apos;&apos;;</div><div class="line">		if ($a == 0) &#123;</div><div class="line">			$column_label = $column_label . substr($abc, $b, 1);</div><div class="line">		&#125; else &#123;</div><div class="line">			$a = $a -1;</div><div class="line">			$column_label = substr($abc, $a, 1) . substr($abc, $b, 1); </div><div class="line">		&#125;</div><div class="line">		$this-&gt;_col_label_map[($i)] = $column_label; </div><div class="line">	&#125;</div><div class="line">	return $this-&gt;_col_label_map[$index];</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="默认的样式处理"><a href="#默认的样式处理" class="headerlink" title="默认的样式处理"></a>默认的样式处理</h4><p>Excel本身的表格框线无法通过PHPExcel设置，需要trick处理。另外Excel的样式属性与css样式属性也会有差异，需要注意下。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">//设置Excel默认框线</div><div class="line"> $style_array = array(</div><div class="line">      &apos;borders&apos; =&gt; array(</div><div class="line">          &apos;allborders&apos; =&gt; array(</div><div class="line">                &apos;style&apos; =&gt; PHPExcel_Style_Border::BORDER_THIN,</div><div class="line">    			&apos;color&apos; =&gt; array(&apos;rgb&apos; =&gt; &apos;DDDDDD&apos;)</div><div class="line">          )</div><div class="line">      )</div><div class="line">  );</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://gglinux.com/2019/02/22/svg2png/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1525,141 +1683,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://gglinux.com/2017/04/08/learn_new/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="gglinux">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/dog.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="gglinux's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/04/08/learn_new/" itemprop="url">
-                  如何高效率的学习新技术
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/04/08/learn_new/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/04/08/learn_new/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2017/04/08/learn_new/" class="leancloud_visitors" data-flag-title="如何高效率的学习新技术">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>除了拼搏和努力，成功也是有方法的。写这个话题，用以阐述下自己学习新技术的一套形而上学的东西，希望能给大家带来帮助。当然，每个人都有自己的方法论，适合自己的即是最好的。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/04/08/learn_new/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1709,7 +1732,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-count">20</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
